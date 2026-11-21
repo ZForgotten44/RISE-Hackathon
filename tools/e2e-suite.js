@@ -11,7 +11,6 @@ window.__suite=async function(slug){
  const sig=()=>root.querySelector('.stage').innerText.length+'|'+root.querySelectorAll('svg circle,.tok,.tile.gone,.cell.filled,.qz-cell svg,.tt-cell.f,.zdt,.crp').length;
  const s0=sig(), m0=moves(); const S=slug;
  if(S==='4x4-tic-tac-toe'){ ck(document.querySelector('#b4 .cell:not(.filled)')); }
- else if(S==='recursive-tic-tac-toe'){ ck(document.querySelector('#bu .mini.active .cell:not(.filled), #bu .cell:not(.filled)')); }
  else if(S==='3d-tic-tac-toe'){ $('vFlat').click(); await sleep(200); ck(document.querySelector('#flat .cell:not(.filled)')); }
  else if(S==='nim'){ ck(document.querySelector('#nBoard .tok:not(.column)')); }
  else if(S==='chomp'){ ck(document.querySelector('#cBoard button.tile')); await sleep(300); const c=[...document.querySelectorAll('#cSelPanel button')].find(b=>b.textContent==='confirm'); if(c) c.click(); }

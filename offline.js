@@ -58,9 +58,12 @@ async function fontURLs(){ const out=new Set(); performance.getEntriesByType('re
 /* stamped files (?v=hash), sounds, fonts and pictures never change at the same address, so a saved copy is kept; an
    unstamped script or page is fetched again on every save so it matches the current site */
 const fixed=u=>/[?&]v=/.test(u)||/\.(mp3|woff2|png|svg|webp|jpg|ico)$/.test(u.split('?')[0])||/^https?:/.test(u);
+/* saving runs in the background with two downloads at a time and stops the moment the page is left, so it never
+   holds the connections the next page needs (a half-finished save simply continues on a later visit) */
+const stop=new AbortController(); addEventListener('pagehide',()=>{ try{ stop.abort(); }catch(e){} });
 async function putAll(c,urls,{cors}={}){ const miss=[]; for(const u of urls){ if(fixed(u)&&await c.match(u,{ignoreVary:true})) continue; miss.push(u); }
-  let i=0; const worker=async()=>{ while(i<miss.length){ const u=miss[i++]; const r=await fetch(u,cors?{mode:'cors',credentials:'omit'}:{cache:'no-cache'}); if(!r.ok) throw new Error('could not save '+u); await c.put(u,r); } };
-  await Promise.all([worker(),worker(),worker(),worker()]); }
+  let i=0; const worker=async()=>{ while(i<miss.length){ const u=miss[i++]; const r=await fetch(u,Object.assign({signal:stop.signal},cors?{mode:'cors',credentials:'omit'}:{cache:'no-cache'})); if(!r.ok) throw new Error('could not save '+u); await c.put(u,r); } };
+  await Promise.all([worker(),worker()]); }
 async function verify(c,urls){ for(const u of urls) if(!(await c.match(u,{ignoreVary:true}))) return false; return true; }
 let busy=null;
 async function save(slug,opts){ opts=opts||{}; if(!hasCaches||!canSW) throw new Error('This browser can’t save games for offline play.');
@@ -73,8 +76,7 @@ async function forgetStale(){ if(!hasCaches) return; const m=await manifest(); i
   const c=await caches.open(CACHE); for(const req of await c.keys()){ const u=new URL(req.url); if(u.origin!==location.origin) continue; const k=u.pathname+u.search; if(!keep.has(k)) await c.delete(req); } }
 /* a match in progress on this device for that game (its saved resume slot) */
 function matchOpen(slug){ try{ const g=JSON.parse(localStorage.getItem('zf-match-v1')||'{}'); const id=((window.ZF&&ZF.GAMES)||[]).find(x=>x.slug===slug); if(id&&g[id.id]) return true;
-  const t=JSON.parse(localStorage.getItem('ttt-saved-v1')||'{}'); if(slug==='nim'&&t.nim) return true; if(slug==='chomp'&&t.chomp) return true;
-  if(slug==='recursive-tic-tac-toe'&&localStorage.getItem('zf-ult-match-v1')) return true; }catch(e){} return false; }
+  const t=JSON.parse(localStorage.getItem('ttt-saved-v1')||'{}'); if(slug==='nim'&&t.nim) return true; if(slug==='chomp'&&t.chomp) return true; }catch(e){} return false; }
 /* bring saved games up to the current version, quietly, only for games with no unfinished match, and only online */
 async function refreshIfIdle(){ if(!canSW||!hasCaches||navigator.onLine===false||busy) return; const m=await manifest(); if(!m) return; const s=savedMap();
   const stale=Object.keys(s).filter(k=>s[k].v!==m.version&&m.games[k]&&!matchOpen(k)); if(!stale.length) return;

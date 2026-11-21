@@ -31,7 +31,7 @@ write('arcade/index.html',page('Arcade · Z Forgotten Games','/arcade',ARCADE_DE
 write('arcade.html',page('Arcade · Z Forgotten Games','/arcade',ARCADE_DESC,{head:arcadeHead}));
 /* the heading each game's entry screen shows (its id is <prefix>Title, its one-line premise <prefix>Blurb). The scripts
    fill the same heading again when they run; writing it here means the first HTML already names the game. */
-const ENTRY={'recursive-tic-tac-toe':'entry',nim:'nim',chomp:'ch'};
+const ENTRY={nim:'nim',chomp:'ch'};
 const entryOf=slug=>ENTRY[slug]||'gx';   // every other game uses the shared entry screen (games2/3/4.js)
 function gamePage(slug,name,desc){ const m=SEO[slug], url=SITE+'/'+slug;
   const head=social(m.t,url,m.d)+ld({'@context':'https://schema.org','@type':'VideoGame',name,url,description:m.d,genre:m.genre,playMode:m.play,
@@ -58,6 +58,6 @@ GAMES.forEach(([slug,name,desc])=>write(slug+'/index.html',gamePage(slug,name,de
 const MOVED=[];
 MOVED.forEach(([from,to])=>write(from+'/index.html',`<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><title>Moved · Z Forgotten Games</title><meta name="robots" content="noindex"><link rel="canonical" href="https://zfgames.org/${to}"><meta http-equiv="refresh" content="0; url=/${to}"><script>location.replace('/${to}'+location.search+location.hash)</script></head><body><p>This game moved to <a href="/${to}">/${to}</a>.</p></body></html>\n`));
 /* retired addresses that were never a game: the old party hub became cards in All Games */
-const RETIRED=[];
+const RETIRED=[['recursive-tic-tac-toe','arcade']];
 fs.writeFileSync(path.join(root,'_redirects'),'# Renamed games and retired pages keep their old addresses (written by tools/build-routes.js)\n'+MOVED.concat(RETIRED).map(([a,b])=>`/${a} /${b} 301\n/${a}/ /${b} 301`).join('\n')+'\n');
 console.log(out.length+' pages written: '+out.join(', '));

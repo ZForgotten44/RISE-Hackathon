@@ -31,7 +31,7 @@ a span{color:var(--g5);font-weight:500;font-size:13px}
 </main>
 <script>
 (function(){ try{ if(localStorage.getItem('zf-invert')==='1') document.documentElement.setAttribute('data-inv',''); }catch(e){}
-  var names={'recursive-tic-tac-toe':'Recursive Tic-Tac-Toe','gold-coin':'The Gold Coin','chomp':'Chomp','nim':'Nim','pentago':'Pentago','notakto':'Notakto','toot-otto':'TOOT & OTTO','sim':'Sim'};
+  var names={"gold-coin": "Bao Gold", "chomp": "Cacao", "nim": "Pingala’s Piles", "pentago": "Maya Wheels", "notakto": "Kolam", "toot-otto": "Viloma", "sim": "Sona", "morabaraba": "Morabaraba", "chaupar": "Chaupar", "dasapada": "Dasapada", "patolli": "Patolli"};
   var s={}; try{ s=JSON.parse(localStorage.getItem('zf-offline-saved')||'{}'); }catch(e){}
   var ks=Object.keys(s).filter(function(k){ return names[k]; }); if(!ks.length) return;
   var box=document.getElementById('saved'); box.innerHTML='<p style="margin-top:22px">These games are saved here and work offline:</p><ul>'+ks.map(function(k){ return '<li><a href="/'+k+'">'+names[k].replace(/&/g,'&amp;')+' <span>Play →</span></a></li>'; }).join('')+'</ul>';

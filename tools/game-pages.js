@@ -11,13 +11,6 @@
      genre  for the VideoGame structured data; play: its playMode values
    build-routes.js stops if a game is missing here, or two pages share a title or description. */
 module.exports={
- 'recursive-tic-tac-toe':{
-  t:'Recursive Tic-Tac-Toe (Ultimate Tic-Tac-Toe) — Play Free | ZF Games',
-  d:'Play Recursive Tic-Tac-Toe, also called Ultimate Tic-Tac-Toe, free on ZF Games: nine boards in one. Play an expert computer, a friend on one device, or online.',
-  intro:'Recursive Tic-Tac-Toe, also known as Ultimate Tic-Tac-Toe, puts nine small tic-tac-toe boards inside one big one. The cell you choose sends your opponent to the matching board, so every move is also a choice of where they play next.',
-  tip:'Before you mark a cell, look at the board it sends your opponent to. Avoid sending them to a board they can win, or to a closed board, which lets them play anywhere.',
-  ways:'Against the computer (it plays at expert level), with two players on one device, or online with a friend.',
-  rel:['notakto'],genre:'Strategy board game',play:['SinglePlayer','MultiPlayer']},
  'gold-coin':{
   t:'Bao Gold (The Gold Coin Game) — Play Free Online | ZF Games',
   d:'Play The Gold Coin game free on ZF Games. Learn the rules, explore the strategy, and challenge a friend or the computer.',
@@ -53,7 +46,7 @@ module.exports={
   intro:'Notakto is a misère form of tic-tac-toe. Both players place X, a board with three in a row is closed, and whoever closes the last open board loses.',
   tip:'On a single board, the first player can force a win by starting in the centre. With three boards the winning side depends on how the boards combine, and the computer plays them perfectly.',
   ways:'Against the computer on one or three boards, with two players on one device, or online with a friend.',
-  rel:['recursive-tic-tac-toe','nim'],genre:'Strategy board game',play:['SinglePlayer','MultiPlayer']},
+  rel:['nim'],genre:'Strategy board game',play:['SinglePlayer','MultiPlayer']},
  'toot-otto':{
   t:'Viloma (TOOT & OTTO) — Play the Letter Strategy Game Free | ZF Games',
   d:'Play TOOT & OTTO free on ZF Games: drop a T or an O and spell your word in a line of four, but never spell your opponent’s. Play the computer, a friend or online.',

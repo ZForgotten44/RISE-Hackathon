@@ -49,7 +49,7 @@
   const inGame=()=>keyOf(location.pathname)!==null;
   /* the strategy and game-theory pages (shared.js's 'strategy' and 'stories' tags; listed here because this file loads
      before shared.js) */
-  const STRATEGY=new Set(['gold-coin','nim','chomp','4x4-tic-tac-toe','3d-tic-tac-toe','recursive-tic-tac-toe','notakto','sim','pentago','toot-otto','connect-four','quarto','domineering','last-message','crowded-room','take-two','can-you-force-it']);
+  const STRATEGY=new Set(['gold-coin','nim','chomp','4x4-tic-tac-toe','3d-tic-tac-toe','notakto','sim','pentago','toot-otto','connect-four','quarto','domineering','last-message','crowded-room','take-two','can-you-force-it']);
   const PINNED={home:0,arcade:3,strategy:2};                     // file indexes: zfgames-1, zfgames-4, zfgames-3
   /* where a path's music belongs: {key, file}. key is what "entering somewhere new" is compared on (all strategy
      pages share one, so moving between them never restarts anything); file is the pinned file, or null for a game
@@ -256,7 +256,14 @@
   const onGesture=e=>{ if(e.type==='pointerdown'&&e.pointerType!=='mouse') return; if(e.type==='keydown'&&e.key==='Escape') return; tryStart(true); };
   ['pointerdown','pointerup','touchend','click','keydown'].forEach(ev=>document.addEventListener(ev,onGesture,{capture:true,passive:true}));
   document.addEventListener('visibilitychange',()=>{ if(document.hidden) savePos(); else tryStart(); });
-  addEventListener('pagehide',savePos); addEventListener('beforeunload',savePos);
+  addEventListener('beforeunload',savePos);
+  /* leaving the page lets go of every music file it was downloading. A paused <audio> keeps its half-finished download
+     open, and a page kept in the back/forward cache keeps its element too, so each page change left one or two more
+     open connections behind until the browser had none left for the next page, which then never finished loading
+     (arcade to home, or into a game and back). A page restored from that cache builds a fresh element (pageshow). */
+  let released=null;
+  addEventListener('pagehide',()=>{ savePos(); released={idx,t:pendingPos?pendingPos.t:audio.currentTime};
+    discard(prepared); prepared=null; pendingPos=null; discard(warm); warm=null; discard(audio); });
 
   /* ---- leaving this page for another game's page (a homepage card or its Play, a link to another game): pages
      are separate loads, so the switch itself happens on arrival (see pageKey above). While music is actually
@@ -282,7 +289,6 @@
     e.preventDefault(); navigating=true;
     const pick=pickFor(d,TRACKS[idx][0]); savePos();
     lsSet(NEXTKEY,pick?{key:d.key,idx:pick.idx,t:pick.t,at:Date.now()}:{key:d.key,keep:true,at:Date.now()});
-    if(pick) try{ warm=new Audio(FILES[TRACKS[pick.idx][0]]); warm.preload='auto'; warm.volume=0; }catch(err){}
     rampTo(0,NAV_FADE); setTimeout(()=>{ location.href=u.href; },NAV_FADE);
   });
 
@@ -295,6 +301,7 @@
   // The restored page's own file is the one playing again, so it (and this page's game) become the bookmark, and
   // a page frozen mid nav-fade gets its volume back instead of resuming at zero.
   addEventListener('pageshow',e=>{ if(!e.persisted) return;
+    if(released){ audio=makeAudio(released.idx,released.t); idx=released.idx; released=null; playing=false; transitioning=false; }
     navigating=false; discard(warm); warm=null; if(lsGet(NEXTKEY)!==null) lsSet(NEXTKEY,null);
     /* the restored page's own element is playing the right file for this page only if nothing moved on meanwhile:
        re-decide against this page's destination (a pinned page that was frozen mid-switch gets its own file back) */

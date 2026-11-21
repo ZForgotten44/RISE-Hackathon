@@ -9,7 +9,6 @@
 (function(){
 'use strict';
 const R={
-  'recursive-tic-tac-toe':['Win three small boards in a line on the big board.','Mark one empty cell in the small board you were sent to.','The cell you pick sends your opponent to the board in the same position.','Three claimed boards in a line wins. All boards closed with no line is a draw.'],
   'gold-coin':['Be the one who takes the gold coin.','Slide one coin left, or take the leftmost coin.','Coins never move right, pass another coin or share a space. You cannot pass your turn.','Taking the gold ends the game at once and wins. Pennies count for nothing.'],
   '3d-tic-tac-toe':['Three of your marks in one straight line inside the 3×3×3 cube.','Place one mark on any empty spot, on any of the three layers.','Every straight line counts: along an edge, across a face, or through the centre.','The first line of three wins.'],
   'chomp':['Make your opponent take the poisoned tile.','Pick a tile. It goes, with every tile at or below it and at or to its left.','The poisoned tile is the top-right corner.','Whoever takes the poisoned tile loses. There are no draws.'],

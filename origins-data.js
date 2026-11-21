@@ -145,18 +145,6 @@ root.ZF_ORIGINS={
       {title:'Chomp', url:'https://en.wikipedia.org/wiki/Chomp', publisher:'Wikipedia'}
     ]}
   },
-  'recursive-tic-tac-toe':{
-    snippets:["Honest truth: this one is modern, not ancient.", "It runs on recursion: things built from smaller copies of themselves.", "Every move wins a square and sends your opponent somewhere else.", "Plain tic-tac-toe draws. Nest it once and it becomes a battle."],
-    where:{ published:true,
-      intro:[
-        'Tic-tac-toe, but every square is a game. Honest truth: this one is modern, not ancient. It blew up online in the 2010s. It runs on one of the most powerful ideas in computing, recursion: things built from smaller copies of themselves.',
-        'Every move is two moves. You win a square in one small board, and you send your opponent to play somewhere else. Normal tic-tac-toe always draws; nest it once and it becomes a real battle. The inventor is unknown. Math teacher Ben Orlin popularised it in 2013.'
-      ]
-    },
-    sources:{ published:true, links:[
-      {title:'Ultimate tic-tac-toe', url:'https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe', publisher:'Wikipedia'}
-    ]}
-  },
   'morabaraba':{
     snippets:["In Southern Africa, cattle were wealth.","Herd boys scratched these boards into rock near the grazing grounds.","Every piece is a cow, and every capture is a raid.","In 1996 South Africa made it an official mind sport.","Build a mill you can open and close, and fire every other turn."],
     names:[{text:'Morabaraba',language:'Sesotho'},{text:'Umlabalaba',language:'isiZulu'},{text:'Mlabalaba',language:'isiXhosa'},{text:'Mmela',language:'Setswana'}],

@@ -801,7 +801,7 @@ addEventListener('resize',()=>setTimeout(drawTrace,120)); addEventListener('pops
    It never visits fast-action games in play, and it stays away while the tutorial, a dialog or a text field is open. ---------- */
 if(window.ZFSideDuck){
   const BOOK=ZFSideDuck.BOOK, slug=location.pathname.replace(/^\/+|\/+$/g,'').split('/')[0];
-  const OWN={'3d-tic-tac-toe':'Three dimensions. Same questionable decisions.','recursive-tic-tac-toe':'A board inside a board. I’ve stopped asking.','4x4-tic-tac-toe':'Four in a row. One more than I can manage.',
+  const OWN={'3d-tic-tac-toe':'Three dimensions. Same questionable decisions.','4x4-tic-tac-toe':'Four in a row. One more than I can manage.',
     nim:'Piles of tokens. Piles of decisions.',chomp:'I hear the corner square tastes awful.',domineering:'Vertical or horizontal. I’m mostly round.',pentago:'Place, then twist. Like a duck dance.',
     'gold-coin':'I’d take the gold. I don’t have hands.',sim:'Six dots. Lots of lines. No pressure.',quarto:'You choose their piece. They choose yours. Very polite.',
     notakto:'Everyone plays X. Nobody plays nice.','connect-four':'Four in a row. Ducks only need one.','toot-otto':'TOOT, OTTO. I only spell QUACK.'};

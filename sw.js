@@ -11,19 +11,22 @@
 const CACHE='zf-offline';
 const FONT_HOSTS=['fonts.googleapis.com','fonts.gstatic.com'];
 self.addEventListener('install',()=>self.skipWaiting());
-self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
+/* navigation preload: the browser starts loading a page itself, at full priority, while this worker wakes up, so
+   having the worker never makes moving between pages slower */
+self.addEventListener('activate',e=>e.waitUntil((async()=>{ try{ if(self.registration.navigationPreload) await self.registration.navigationPreload.enable(); }catch(err){} await self.clients.claim(); })()));
 
 const norm=u=>{ const x=new URL(u); let p=x.pathname.replace(/\/index\.html$/,'').replace(/\/+$/,''); return p||'/'; };
 function timeout(ms){ return new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms)); }
 
-async function page(req){ const c=await caches.open(CACHE); const key=norm(req.url); const saved=await c.match(key);
+async function page(req,pre){ const c=await caches.open(CACHE); const key=norm(req.url); const saved=await c.match(key);
   try{ /* with a saved copy, a slow network falls back to it after a short wait instead of leaving a blank screen */
-    const net=fetch(req); const r=await (saved?Promise.race([net,timeout(3500)]):net); if(r&&(r.ok||!saved)) return r; return saved||r; }
+    const net=(pre?Promise.resolve(pre).then(r=>r||fetch(req)):fetch(req)); const r=await (saved?Promise.race([net,timeout(3500)]):net); if(r&&(r.ok||!saved)) return r; return saved||r; }
   catch(e){ if(saved) return saved; const fb=await c.match('/offline.html'); return fb||new Response('<!doctype html><meta charset="utf-8"><title>Offline</title><p>You’re offline, and this page isn’t saved on this device yet.</p>',{headers:{'content-type':'text/html; charset=utf-8'}}); } }
 
 async function ranged(req,res){ const range=req.headers.get('range'); if(!range||!res) return res;
-  const buf=await res.arrayBuffer(); const m=/bytes=(\d*)-(\d*)/.exec(range); if(!m) return new Response(buf,{status:200,headers:res.headers});
-  const size=buf.byteLength; let start=m[1]===''?size-(+m[2]):+m[1]; let end=m[1]===''||m[2]===''?size-1:Math.min(+m[2],size-1); start=Math.max(0,start);
+  /* a Blob slice, not a copy: the soundtrack is ~20 MB and an <audio> element asks for many ranges */
+  const buf=await res.blob(); const m=/bytes=(\d*)-(\d*)/.exec(range); if(!m) return new Response(buf,{status:200,headers:res.headers});
+  const size=buf.size; let start=m[1]===''?size-(+m[2]):+m[1]; let end=m[1]===''||m[2]===''?size-1:Math.min(+m[2],size-1); start=Math.max(0,start);
   if(start>end||start>=size) return new Response(null,{status:416,headers:{'content-range':`bytes */${size}`}});
   const h=new Headers(res.headers); h.set('content-range',`bytes ${start}-${end}/${size}`); h.set('content-length',String(end-start+1)); h.set('accept-ranges','bytes');
   return new Response(buf.slice(start,end+1),{status:206,statusText:'Partial Content',headers:h}); }
@@ -46,5 +49,5 @@ self.addEventListener('fetch',e=>{ const req=e.request; if(req.method!=='GET') r
   if(FONT_HOSTS.includes(url.hostname)) return e.respondWith(font(req));
   if(url.origin!==location.origin) return;
   if(url.pathname==='/sw.js'||url.pathname==='/offline-manifest.json') return;   // always fresh from the network
-  if(req.mode==='navigate') return e.respondWith(page(req));
+  if(req.mode==='navigate') return e.respondWith(page(req,e.preloadResponse));
   e.respondWith(asset(req)); });

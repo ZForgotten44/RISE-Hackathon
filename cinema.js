@@ -406,25 +406,6 @@ chomp:{ score:'lake', scenes:[
  { place:'Today', sub:'In Chomp every bite costs you, and one square is poisoned. The first player can always win.', note:'Schuh (1952) and Gale (1974) made Chomp. It has no Mesoamerican origin: the link is chocolate.',
    svg:()=>{ let s=''; for(let r=0;r<4;r++) for(let c=0;c<7;c++){ const x=166+c*44, y=80+r*44, gone=(r>=2&&c>=4); s+=P(`M${x} ${y} h40 v40 h-40 Z`,(r===0&&c===0?'gf':'g2f')+(gone?' gone':''),gone?`--d:0s`:''); }
     return s+G(P('M166 80 l40 40 M206 80 l-40 40','thick'),'','')+D('M342 166 C360 150 400 150 470 166','gd',3.4,.6); } }
-]},
-'recursive-tic-tac-toe':{ score:'modern', scenes:[
- { place:'Honest truth', sub:'This one is modern, not ancient. It spread online in the 2010s.',
-   svg:()=>{ let s=P('M200 60 L560 60 L560 240 L200 240 Z','f')+P('M190 240 L570 240','thick'); for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=ttt(330+j*34,92+i*34,28,'thin',.6+(i*3+j)*.1);
-    s+=D('M330 92 L330 194 L432 194 L432 92 Z','',.4,.6)+D('M364 92 L364 194 M398 92 L398 194 M330 126 L432 126 M330 160 L432 160','thick',.5,.6);
-    return D('M0 300 L640 300','',0,1)+s+fig({x:150,y:300,kind:'shirt',hair:'short',c:'up',st:'--d:.3s'}); } },
- { place:'Recursion', sub:'It runs on recursion: things built from smaller copies of themselves.',
-   svg:()=>{ const lv=(x,y,w,d,dl)=>{ let s=ttt(x,y,w,d===0?'thick':'thin',dl); if(d<2) for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=lv(x+j*w/3+w/30,y+i*w/3+w/30,w/3-w/15,d+1,dl+.8+(d?0:(i*3+j)*.08)); return s; };
-    return G(lv(185,45,270,0,.2),'kbz','transform-origin:50% 50%'); } },
- { place:'Every move is two moves', sub:'Every move wins a square in a small board, and sends your opponent to play somewhere else.',
-   svg:()=>{ const X0=185, Y0=45, W=270; let s=ttt(X0,Y0,W,'thick',0); for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=ttt(X0+j*90+10,Y0+i*90+10,70,'thin',.1);
-    s+=G(xo(X0+10+70*5/6,Y0+90+10+70/6,7,0,'thick'),'up','--d:1.2s');
-    s+=D(`M${X0+184} ${Y0+8} h78 v78 h-78 Z`,'gd thick',2.2,.6)+D(`M${X0+76} ${Y0+110} C${X0+130} ${Y0+60} ${X0+170} ${Y0+50} ${X0+186} ${Y0+48}`,'gd',2,.8);
-    return s; } },
- { place:'Why it works', sub:'Plain tic-tac-toe always ends in a draw. Nest it once and it becomes a real battle.', note:'The inventor is unknown. Maths teacher Ben Orlin made it popular in 2013.',
-   svg:()=>{ const draw=[[0,1,0],[0,1,1],[1,0,0]]; let s=ttt(90,90,150,'thick',.1); draw.forEach((r,i)=>r.forEach((v,j)=>{ s+=G(xo(115+j*50,115+i*50,13,v,'thick'),'fi',`--d:${.3+(i*3+j)*.1}s`); }));
-    s+=TX(165,280,'DRAW','fi','--d:1.4s')+ttt(400,90,150,'thick',.1); for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=ttt(405+j*50,95+i*50,40,'thin s',.2);
-    [[0,0,0],[1,1,1],[0,2,0],[2,2,1]].forEach(([i,j,v],n)=>{ s+=G(xo(425+j*50,115+i*50,16,v,'thick'+(n===3?' gd':'')),'up',`--d:${1.6+n*.4}s`); });
-    return s+TX(475,280,'A REAL FIGHT','fi','--d:3.4s'); } }
 ]}
 };
 

@@ -18,7 +18,7 @@
 </script>
 <script src="/theme.js?v=2d54ba4d"></script>
 <script src="/sound.js?v=90368e02"></script>
-<script src="/music.js?v=a5570acd"></script>
+<script src="/music.js?v=5e683752"></script>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
@@ -62,7 +62,7 @@
    ?room=CODE, the same address as an invite link, so the nickname, duck and joining steps are the game's usual ones. */
 (function(){
   const $=id=>document.getElementById(id), RC=window.ZFRoomCodes;
-  const ONLINE={nim:['nim','Nim'],pentago:['pentago','Pentago'],notakto:['notakto','Notakto'],toot:['toot-otto','TOOT & OTTO'],sim:['sim','Sim'],gold:['gold-coin','The Gold Coin'],ult:['recursive-tic-tac-toe','Recursive Tic-Tac-Toe']};
+  const ONLINE={nim:['nim','Nim'],pentago:['pentago','Pentago'],notakto:['notakto','Notakto'],toot:['toot-otto','TOOT & OTTO'],sim:['sim','Sim'],gold:['gold-coin','The Gold Coin']};
   const form=$('joinForm'), inp=$('code'), btn=$('joinBtn'), msg=$('codeMsg');
   const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const ls=k=>{ try{ return localStorage.getItem(k); }catch(e){ return null; } };
@@ -130,6 +130,6 @@
   if(matchMedia('(hover:hover) and (pointer:fine)').matches) inp.focus();
 })();
 </script>
-<script src="/offline.js?v=c3feb060"></script>
+<script src="/offline.js?v=62a5d5dd"></script>
 </body>
 </html>

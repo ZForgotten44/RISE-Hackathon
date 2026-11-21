@@ -118,7 +118,6 @@ function secSources(d){ const s=d.sources; if(!s||!s.published) return '';
 const EXPLORE={
   nim:(host,c)=>window.ZFEntry&&ZFEntry.mount('nim',host,{get:()=>({piles:(c.piles||[3,4,5]).map(x=>BigInt(x)),misere:!!c.misere})}),
   chomp:(host,c)=>window.ZFEntry&&ZFEntry.mount('chomp',host,{get:()=>({len:c.len||[5,5,5,5],C:c.C||5})}),
-  'recursive-tic-tac-toe':host=>window.ZFEntry&&ZFEntry.mount('ult',host),
 };
 ['gold-coin:gold','pentago:pentago','notakto:notakto','toot-otto:toot','sim:sim'].forEach(x=>{ const [slug,id]=x.split(':');
   EXPLORE[slug]=(host,c)=>{ const d=window.ZFX&&ZFX.def(id); const f=d&&(d.entryDemo||d.demo); if(f) f(host,Object.assign({mode:'play',opp:'2p'},d.defaults||{},c.opt||{})); }; });

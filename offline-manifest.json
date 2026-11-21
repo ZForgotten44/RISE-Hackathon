@@ -1,5 +1,5 @@
 {
- "version": "45529c344d15",
+ "version": "deb6382465f5",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -10,12 +10,12 @@
   "/arcade-duck-top.svg",
   "/arcade-games.js?v=43febad6",
   "/arcade-main.js?v=c301f86a",
-  "/arcade-wire.js?v=fb0c3c87",
+  "/arcade-wire.js?v=4846c829",
   "/arcade.css?v=2716c656",
   "/audio/duck-squeak.mp3",
   "/audio/zfgames-3.mp3",
   "/author-duck.png",
-  "/cinema.js?v=79f7ceca",
+  "/cinema.js?v=80d51251",
   "/coach.js?v=6bd2206e",
   "/cursor.js?v=cd3951a0",
   "/duck-face.png",
@@ -44,40 +44,36 @@
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
-  "/lessons.js?v=55580e61",
-  "/match.js?v=dd450256",
-  "/music.js?v=a5570acd",
+  "/lessons.js?v=4eff30f6",
+  "/match.js?v=2a2d0d29",
+  "/music.js?v=5e683752",
   "/offline.html",
-  "/offline.js?v=c3feb060",
+  "/offline.js?v=62a5d5dd",
   "/online-gold.js?v=835ede4d",
   "/online-nim.js?v=938a3a19",
   "/online-notakto.js?v=b00d79c8",
   "/online-pentago.js?v=75f59ba2",
-  "/online-recursive.js?v=fa23e45f",
   "/online-rooms.js?v=fc808795",
   "/online-sim.js?v=33a408c6",
   "/online-toot.js?v=fe7e9309",
-  "/origins-data.js?v=c0bb89d0",
-  "/origins.js?v=0048b475",
+  "/origins-data.js?v=393cb1e4",
+  "/origins.js?v=155f21d9",
   "/party-duck.js?v=14515603",
   "/react.js?v=0cfa1a13",
-  "/rules-summary.js?v=f48836b4",
-  "/shared.js?v=629f8b23",
-  "/shell.js?v=82aec1c6",
+  "/rules-summary.js?v=0ed96124",
+  "/shared.js?v=df15897d",
+  "/shell.js?v=55711e55",
   "/side-duck.js?v=851c58a9",
   "/site.css?v=76e3772a",
   "/site.webmanifest",
   "/sound.js?v=90368e02",
   "/story-ticker.js?v=293ef7ff",
   "/theme.js?v=2d54ba4d",
-  "/traces.js?v=cb511b6d",
-  "/turn-timer.js?v=16c5eb30",
+  "/traces.js?v=396ed312",
+  "/turn-timer.js?v=935a1aca",
   "/zart.js?v=4bafc2c6"
  ],
  "games": {
-  "recursive-tic-tac-toe": [
-   "/recursive-tic-tac-toe"
-  ],
   "gold-coin": [
    "/gold-coin"
   ],
@@ -112,5 +108,5 @@
    "/patolli"
   ]
  },
- "bytes": 23861568
+ "bytes": 23847478
 }

@@ -1,2 +1,3 @@
 # Renamed games and retired pages keep their old addresses (written by tools/build-routes.js)
-
+/recursive-tic-tac-toe /arcade 301
+/recursive-tic-tac-toe/ /arcade 301

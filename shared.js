@@ -261,7 +261,6 @@ const ART={
 const GAMES=[
 /* default order, used by the homepage carousel and the All Games page (filters keep this relative order). Party games
    (party-app.js + server/party) run one room on a shared screen with everyone playing on their own phone. */
- {id:'ult',name:'Recursive Tic-Tac-Toe',rule:'Your cell picks the board your opponent plays next.',meta:'1–2 players · expert computer',slug:'recursive-tic-tac-toe',link:'/recursive-tic-tac-toe',art:ART.ult()},
  {id:'gold',name:'Bao Gold',aka:'The Gold Coin',rule:'Slide a coin left, or take the leftmost coin. Whoever takes the gold wins.',meta:'1–2 players · perfect computer · analysis by Hamkins',slug:'gold-coin',link:'/gold-coin',art:ART.gold()},
  {id:'chomp',name:'Cacao',aka:'Chomp',rule:'Bite a tile and everything below-left of it. The corner is poison.',meta:'1–2 players · exact solver',slug:'chomp',link:'/chomp',art:ART.chomp()},
  {id:'nim',name:'Pingala’s Piles',aka:'Nim',rule:'Take any number from one pile. Last token wins, or loses.',meta:'1–2 players · normal & misère',slug:'nim',link:'/nim',art:ART.nim()},
@@ -278,13 +277,12 @@ const GAMES=[
 /* Infinitely More articles by Joel David Hamkins: credited for the explanation and analysis, not as the inventor of each game */
 const AUTHOR={name:'Joel David Hamkins',url:'https://substack.com/@joeldavidhamkins'};
 const CREDIT={
- 'recursive-tic-tac-toe':{url:'https://www.infinitelymore.xyz/p/tic-tac-toe-and-variants',title:'Tic-Tac-Toe and Variants'},
  'nim':{url:'https://www.infinitelymore.xyz/p/game-of-nim',title:'The Game of Nim'},
  'chomp':{url:'https://www.infinitelymore.xyz/p/chomp',title:'Chomp'},
  'gold-coin':{url:'https://www.infinitelymore.xyz/p/gold-coin-game',title:'The Gold Coin'}};
 /* games with a real, working "online friend" room (see each game's own online-*.js adapter). Their card's label
    row says Online, with a green dot. Keep this in sync with each register()'s own online() hook. */
-const ONLINE_IDS=new Set(['c4','nim','gold','sim','pentago','toot','domineering','notakto','ult','pond','trap','tail']);
+const ONLINE_IDS=new Set(['c4','nim','gold','sim','pentago','toot','domineering','notakto','pond','trap','tail']);
 /* party games run in a shared room too; their label says Party, with a muted purple dot, and nothing else is stacked on it */
 const PARTY_IDS=new Set(['quack','explain','duckoff','wrongpond','normal','court','mafia']);
 function creditHTML(slug,full){ const c=CREDIT[slug]; if(!c) return ''; const a=`<a href="${AUTHOR.url}" target="_blank" rel="noopener noreferrer">${AUTHOR.name}</a>`, im=`<a class="cr-go" href="${c.url}" target="_blank" rel="noopener noreferrer" title="${c.title}"><i>Infinitely More</i> ↗</a>`;

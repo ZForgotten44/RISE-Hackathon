@@ -13,7 +13,7 @@
 <meta property="og:description" content="Host a game room on Z Forgotten Games. Choose a two-player game, set it up, and invite friends with a code or link. Free, no account needed.">
 <script src="/theme.js?v=2d54ba4d"></script>
 <script src="/sound.js?v=90368e02"></script>
-<script src="/music.js?v=a5570acd"></script>
+<script src="/music.js?v=5e683752"></script>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
@@ -32,7 +32,7 @@
 <script src="/duck.js?v=ee1c558d"></script>
 <script src="/party-duck.js?v=14515603"></script>
 <script src="/heritage-art.js?v=96eb478d"></script>
-<script src="/shared.js?v=629f8b23"></script>
+<script src="/shared.js?v=df15897d"></script>
 </head>
 <body data-tone="dark">
 
@@ -70,7 +70,7 @@
   const grid=ZF.renderGrid($('picks'),{num:false,room:true,only:g=>g.mode==='online'||g.mode==='party'});
   const cards=[...grid.children], byId=Object.fromEntries(ZF.GAMES.map(g=>[g.id,g]));
   /* words people search for here that the names and premises don't say */
-  const TERMS={ult:'strategy board tic tac toe',gold:'strategy coins',domineering:'strategy dominoes',nim:'strategy math piles',pentago:'strategy marbles',notakto:'strategy tic tac toe',toot:'strategy words letters',sim:'strategy graph triangles',pond:'couples partner date predict two',trap:'platformer build race obstacles trap two',tail:'snake slither grow cut steal tail arcade group',quack:'funny writing answers vote comedy',duckoff:'drawing draw sketch impostor bluff',explain:'impostor bluff questions social deduction',wrongpond:'impostor words clues social deduction',normal:'funny writing rules vote comedy',court:'funny trial judge vote comedy roleplay',mafia:'impostor werewolf secret roles social deduction'};
+  const TERMS={gold:'strategy coins',domineering:'strategy dominoes',nim:'strategy math piles',pentago:'strategy marbles',notakto:'strategy tic tac toe',toot:'strategy words letters',sim:'strategy graph triangles',pond:'couples partner date predict two',trap:'platformer build race obstacles trap two',tail:'snake slither grow cut steal tail arcade group',quack:'funny writing answers vote comedy',duckoff:'drawing draw sketch impostor bluff',explain:'impostor bluff questions social deduction',wrongpond:'impostor words clues social deduction',normal:'funny writing rules vote comedy',court:'funny trial judge vote comedy roleplay',mafia:'impostor werewolf secret roles social deduction'};
   const norm=s=>String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
   const q=$('pickSearch'), fbtns=[...document.querySelectorAll('.cfilters button')]; let filter='all';
   function apply(){ const t=norm(q.value).trim().split(/\s+/).filter(Boolean); let n=0;
@@ -83,6 +83,6 @@
   $('pickClear').onclick=()=>{ q.value=''; filter='all'; fbtns.forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.f==='all'))); apply(); q.focus(); };
 })();
 </script>
-<script src="/offline.js?v=c3feb060"></script>
+<script src="/offline.js?v=62a5d5dd"></script>
 </body>
 </html>

@@ -289,47 +289,8 @@ const GoldCoinRules = {
   },
 };
 
-/* ================= Recursive Tic-Tac-Toe (ULT) rules — an independent, from-scratch engine (not the client's
-   engines.js ULT object, whose ULT.play mutates state in place; this one only ever returns fresh state) =================
-   cells[0..80]: board b = floor(i/9), cell-in-board c = i%9. bw[b] in {0,1,2,3}: 0 open, 1/2 won by that player,
-   3 neutral (full, no line). next: which board the player to move must play in, or -1 for a free choice. */
-const UL_LINES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
-function ulBoardWinner(cells, b) {
-  const base = b * 9;
-  for (const [a, c, d] of UL_LINES) { const v = cells[base + a]; if (v && v === cells[base + c] && v === cells[base + d]) return v; }
-  for (let c = 0; c < 9; c++) if (!cells[base + c]) return 0;
-  return 3; // full, no line — neutral
-}
-function ulMacroWinner(bw) {
-  for (const [a, c, d] of UL_LINES) { const v = bw[a]; if (v && v !== 3 && v === bw[c] && v === bw[d]) return v; }
-  return 0;
-}
-const UltRules = {
-  parseCreate(msg) { return { firstPolicy: firstPolicyOf(msg.first) }; },
-  parseCustomize(msg) { return { firstPolicy: firstPolicyOf(msg.first) }; },
-  initialState() { return { cells: new Array(81).fill(0), bw: new Array(9).fill(0), next: -1 }; },
-  previewFields() { return {}; },
-  snapshotFields(setup, state) { return { cells: state.cells, bw: state.bw, next: state.next }; },
-  applyMove(setup, state, seat, msg) {
-    const i = msg.i | 0;
-    if (i < 0 || i >= 81) fail('bad_move', 'That square does not exist.');
-    const b = Math.floor(i / 9), c = i % 9;
-    if (state.next !== -1 && state.next !== b) fail('bad_move', 'That board is not open to play in right now.');
-    if (state.bw[b]) fail('bad_move', 'That board is already closed.');
-    if (state.cells[i]) fail('bad_move', 'That square is already taken.');
-    const cells = state.cells.slice(), bw = state.bw.slice();
-    cells[i] = seat;
-    const w = ulBoardWinner(cells, b);
-    if (w) bw[b] = w;
-    const macro = ulMacroWinner(bw);
-    const next = bw[c] === 0 ? c : -1;
-    if (macro) return { state: { cells, bw, next }, lastMove: { seat, i }, terminal: { winner: macro }, nextTurn: null };
-    if (bw.every(v => v !== 0)) return { state: { cells, bw, next }, lastMove: { seat, i }, terminal: { winner: 0 }, nextTurn: null };
-    return { state: { cells, bw, next }, lastMove: { seat, i }, terminal: null, nextTurn: seat === 1 ? 2 : 1 };
-  },
-};
 
-const RULES = { nim: NimRules, pentago: PentagoRules, notakto: NotaktoRules, toot: TootOttoRules, sim: SimRules, gold: GoldCoinRules, ult: UltRules };
+const RULES = { nim: NimRules, pentago: PentagoRules, notakto: NotaktoRules, toot: TootOttoRules, sim: SimRules, gold: GoldCoinRules };
 
 class Room {
   constructor(game, hostNickname, setup) {

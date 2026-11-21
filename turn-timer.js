@@ -21,7 +21,7 @@ const $=id=>document.getElementById(id);
 const KEY='zf-move-timer';
 const MODES=[['off','No timer'],['quick','Quick'],['standard','Standard'],['think','Thinking time'],['custom','Custom']];
 const BASE={quick:30,standard:60,think:120};
-const DEEP={'connect-four':1,pentago:1,quarto:1,'recursive-tic-tac-toe':1,'3d-tic-tac-toe':1,domineering:1,sim:1,'toot-otto':1,chomp:1};
+const DEEP={'connect-four':1,pentago:1,quarto:1,'3d-tic-tac-toe':1,domineering:1,sim:1,'toot-otto':1,chomp:1};
 const slugNow=()=>location.pathname.replace(/^\/+|\/+$/g,'').split('/')[0]||'';
 const lsGet=(k,d)=>{ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } };
 const lsSet=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };

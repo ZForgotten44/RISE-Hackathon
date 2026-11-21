@@ -13,7 +13,7 @@
      arcade-games.js's nimEnterFresh/chEnterFresh. A room code in the URL is the one exception: the online-*.js
      adapter for that game owns the whole flow (join preview or reconnect), so no local dialog opens on top of it. */
   const open=(id,rules)=>{
-    if(window.ZFX&&ZFX.has(id)) ZFX.open(id,false,true); else if(id==='nim') ZFA.nimRoute(); else if(id==='chomp') ZFA.chRoute(); else if(!(id==='ult'&&window.__ultResume&&__ultResume())) openSetup(id);
+    if(window.ZFX&&ZFX.has(id)) ZFX.open(id,false,true); else if(id==='nim') ZFA.nimRoute(); else if(id==='chomp') ZFA.chRoute(); else openSetup(id);
     if(rules) setTimeout(()=>ZFShell.openRules(),120); };
   const routeId=()=>{ const seg=location.pathname.replace(/^\/+|\/+$/g,'').split('/')[0]; return ID[seg]||null; };
   /* old links (arcade.html#nim, arcade.html#nim/rules) are upgraded in place: same page, address rewritten, no redirect */

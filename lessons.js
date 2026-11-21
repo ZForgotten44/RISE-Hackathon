@@ -271,7 +271,7 @@ function gold(){ let A=null; const G=window.ZF_E.GOLD, Z=window.ZART; const CW=4
  {kind:'more',title:'Discover: the arithmetic',text:'Piles are balanced when their binary digits <b>cancel out</b>. That test (called XOR, or the Nim-sum) is the mathematics behind the game. <b>You only see it if you press the button.</b>',mount(h,a){ A=a; let shown=false; let redraw; const T=track(h,{n:11,pens:[2,5],gold:10,pairs:2,noTake:true,move(m,b,s,t){ if(redraw) redraw(); }, extra(bar){ const b=$('button','ls-btn'+(shown?'':' ghost'),shown?'Hide the arithmetic':'Show the arithmetic'); b.type='button'; b.onclick=()=>{ shown=!shown; T.draw(); rebuild(); }; bar.appendChild(b); }}); const box=$('div'); h.appendChild(box); const rebuild=()=>{ box.innerHTML=''; if(shown){ redraw=pileView(box,T,'xor'); redraw(); } else redraw=null; }; a.note('Optional. The strategy works without it.'); return {reset(){ T.reset(); shown=false; T.draw(); rebuild(); }}; }}
  ]; }
 
-const TABLE={ '4x4-tic-tac-toe':ttt4,'recursive-tic-tac-toe':ult,'3d-tic-tac-toe':cube,'nim':nim,'chomp':chomp,'quarto':quarto,'sim':sim,'pentago':pentago,'toot-otto':toot,'domineering':domineering,'notakto':notakto,'crowded-room':crowd,'last-message':message,'gold-coin':gold };
+const TABLE={ '4x4-tic-tac-toe':ttt4,'3d-tic-tac-toe':cube,'nim':nim,'chomp':chomp,'quarto':quarto,'sim':sim,'pentago':pentago,'toot-otto':toot,'domineering':domineering,'notakto':notakto,'crowded-room':crowd,'last-message':message,'gold-coin':gold };
 const EXTRA={};
 window.ZLessons={ add(slug,fn){ EXTRA[slug]=fn; }, get(slug){ try{ if(EXTRA[slug]) return EXTRA[slug](); return TABLE[slug]?TABLE[slug]():null; }catch(e){ console.error(e); return null; } }, has:slug=>!!(TABLE[slug]||EXTRA[slug]) };
 })();

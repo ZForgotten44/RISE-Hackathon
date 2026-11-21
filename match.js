@@ -30,7 +30,7 @@ const clean=d=>window.ZPDuck?ZPDuck.clean(d||{}):(d||{});
 /* each player's piece, word or direction where the game has one; otherwise who moves first */
 const XG='<svg viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>', OG='<svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="3.8" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
 const VG='<svg viewBox="0 0 12 12"><rect x="3.8" y="1" width="4.4" height="10" rx="1.2" fill="currentColor"/></svg>', HG='<svg viewBox="0 0 12 12"><rect x="1" y="3.8" width="10" height="4.4" rx="1.2" fill="currentColor"/></svg>';
-const ROLES={ '4x4-tic-tac-toe':[XG,OG], 'recursive-tic-tac-toe':[XG,OG], '3d-tic-tac-toe':[XG,OG], 'toot-otto':['TOOT','OTTO'], domineering:[VG+'Vertical',HG+'Horizontal'], notakto:['',''] };
+const ROLES={ '4x4-tic-tac-toe':[XG,OG], '3d-tic-tac-toe':[XG,OG], 'toot-otto':['TOOT','OTTO'], domineering:[VG+'Vertical',HG+'Horizontal'], notakto:['',''] };
 const roleOf=seat=>{ const slug=location.pathname.replace(/^\/+|\/+$/g,'').split('/')[0], r=ROLES[slug]; return r?r[seat-1]:seat===1?'1st':'2nd'; };
 
 const CSS=`
