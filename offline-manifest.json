@@ -1,5 +1,5 @@
 {
- "version": "2df9c9343cbc",
+ "version": "45529c344d15",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -45,7 +45,7 @@
   "/icon-192.png",
   "/icon-512.png",
   "/lessons.js?v=55580e61",
-  "/match.js?v=3a4cf064",
+  "/match.js?v=dd450256",
   "/music.js?v=a5570acd",
   "/offline.html",
   "/offline.js?v=c3feb060",
@@ -59,11 +59,11 @@
   "/online-toot.js?v=fe7e9309",
   "/origins-data.js?v=c0bb89d0",
   "/origins.js?v=0048b475",
-  "/party-duck.js?v=aefb47b3",
+  "/party-duck.js?v=14515603",
   "/react.js?v=0cfa1a13",
   "/rules-summary.js?v=f48836b4",
-  "/shared.js?v=ff181ab2",
-  "/shell.js?v=e2bccffe",
+  "/shared.js?v=629f8b23",
+  "/shell.js?v=82aec1c6",
   "/side-duck.js?v=851c58a9",
   "/site.css?v=76e3772a",
   "/site.webmanifest",
@@ -112,5 +112,5 @@
    "/patolli"
   ]
  },
- "bytes": 23861710
+ "bytes": 23861568
 }

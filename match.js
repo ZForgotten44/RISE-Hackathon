@@ -162,7 +162,7 @@ let peer={};   // the online opponent's duck, from the room server (online-rooms
    with its level), everyone else their own customized duck. The matchup, the setup card, the result dialog and the
    reactions all ask here, so no screen can fall back to a default duck for the computer. */
 function duckHTML(p,o){ o=o||{}; if(!window.ZPDuck||!p) return '';
-  if(p.cpu&&ZPDuck.mansy){ const lv=p.diff?diffWord(p.diff):''; return ZPDuck.mansy(Object.assign({},o,{label:o.label||`Computer${lv?', '+lv+' level':''}: Mansy’s duck`})); }
+  if(p.cpu&&ZPDuck.mansy){ const lv=p.diff?diffWord(p.diff):''; return ZPDuck.mansy(Object.assign({},o,{label:o.label||`Computer${lv?', '+lv+' level':''}: Z Forgotten’s duck`})); }
   return ZPDuck.html({nick:p.nick,duck:p.duck},o); }
 function read(root){ const f=ROOTS[root]; const r=f&&f(); if(!r||!(r.opp==='ai'||r.opp==='2p'||r.opp==='online')) return null;
   const pr=profile(); let players;

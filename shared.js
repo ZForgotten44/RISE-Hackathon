@@ -320,7 +320,6 @@ GAMES.forEach(g=>{ g.tags=TAGS[g.id]||['strategy'];
   g.mode=party?'party':online?'online':null;
   g.keywords=(KEYWORDS[g.id]||'')+(online?' online friends remote':'')+(g.modes.local?' two players same device':''); });
 function injectCSS(){ if(document.getElementById('zf-cards')) return; const st=document.createElement('style'); st.id='zf-cards'; st.textContent=CSS+EXTRA; document.head.appendChild(st); }
-/* NEW pills wiggle once when their card scrolls into view, at a staggered random moment, and occasionally again; never together or continuously */
 /* Phones have no hover, so pages call these instead: liveCard(c,true) plays a card's illustration (the same
    animation hover plays, via .live, without the hover colours), and liveCard(c,false) freezes it where it is (.held).
    Playing a frozen card resumes it; one whose run already finished starts again from the top. Loops that never end
@@ -354,7 +353,7 @@ function makeCard(g,i,opts){
   const c=document.createElement('article'); c.className='gcard'; c.dataset.id=g.id; if(opts.drag) c.setAttribute('data-cursor-drag','');
   const labels=`<div class="gmeta glabels">${g.mode?`<span class="mode ${g.mode}"><span class="dot" aria-hidden="true"></span>${g.mode==='party'?'Party':'Online'}</span><span class="sep" aria-hidden="true">·</span>`:''}<span class="count">${count}</span></div>`;
   /* the number is a position in the homepage carousel; the All Games grid passes num:false (filtered results would read
-     01, 04, 05 like gaps or a ranking) and keeps the empty row so the NEW pill and the art sit exactly where they did */
+     01, 04, 05 like gaps or a ranking) and keeps the empty row so the art sits exactly where it did */
   const num=opts.num===false?'':String(i+1).padStart(2,'0');
   c.innerHTML=`<div class="gi"${num?'':' aria-hidden="true"'}>${num}</div><div class="art">${g.art}</div><h3><a class="cardlink" href="${href}" draggable="false"${room&&!pick?` aria-label="${g.name}: set up room"`:''}>${g.name}</a>${g.aka?`<small class="aka">${g.aka}</small>`:''}</h3><div class="rule">${g.rule}</div>${labels}<div class="acts"><span class="playbtn" aria-hidden="true">${pick?'Play →':room?'Set up room →':'Play ↗'}</span><a class="rules-link" href="${g.link}#rules" draggable="false" data-cursor="RULES" aria-label="${g.name} rules">Rules</a></div>`;
   const go=(kind,e)=>{ if(opts.shouldSuppress&&opts.shouldSuppress()){ e.preventDefault(); return; } if(opts.onOpen&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey){ e.preventDefault(); opts.onOpen(g,kind,e); } };
