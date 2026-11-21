@@ -1,6 +1,6 @@
-/* cinema.js: a short film that opens a heritage game. The first time someone opens Morabaraba, Chaupar, Dasapada or
-   Patolli, a window rises over the page and plays four drawn scenes of where the game comes from: the place, the
-   people of the time, the board, and what happened to it. Each scene has a subtitle (our narration) and, where it
+/* cinema.js: a short film that opens each game. The first time someone opens a game, a window rises over the page
+   and plays four drawn scenes of where the game (or the idea behind it) comes from: the place, the people of the
+   time, the idea, and where the game stands today. Modern games say plainly that they are modern. Each scene has a subtitle (our narration) and, where it
    matters, a small note on how sure we are. A score made for each game (Web Audio, nothing downloaded) plays only
    after the visitor taps Sound on; the site music steps aside while it does.
    - Skip, ×, Esc or Play close it, and it shrinks into the corner, where the story card (story-ticker.js) carries on.
@@ -21,7 +21,7 @@ const P=(d,c,st)=>`<path d="${d}"${c?` class="${c}"`:''}${st?` style="${st}"`:''
 const D=(d,c,dl,t)=>`<path pathLength="1" d="${d}" class="dr${c?' '+c:''}" style="--d:${dl||0}s${t?`;--t:${t}s`:''}"/>`;   // draws itself on
 const C=(x,y,r,c,st)=>`<circle cx="${x}" cy="${y}" r="${r}"${c?` class="${c}"`:''}${st?` style="${st}"`:''}/>`;
 const G=(inner,c,st,tr)=>`<g${tr?` transform="${tr}"`:''}><g${c?` class="${c}"`:''}${st?` style="${st}"`:''}>${inner}</g></g>`;
-const TX=(x,y,s,c)=>`<text x="${x}" y="${y}"${c?` class="${c}"`:''}>${s}</text>`;
+const TX=(x,y,s,c,st)=>`<text x="${x}" y="${y}"${c?` class="${c}"`:''}${st?` style="${st}"`:''}>${s}</text>`;
 const f1=n=>Math.round(n*10)/10;
 
 /* people: anonymous, faceless, dressed for their time. feet at 0, about 110 tall standing.
@@ -31,6 +31,7 @@ function hair(h,y){
   if(h==='turban') return P(`M-9.6 ${y-1} C-11 ${y-15} 11 ${y-15} 9.6 ${y-1} C4 ${y-4.5} -4 ${y-4.5} -9.6 ${y-1}Z`,'f')+P(`M-6 ${y-10.5} C-1 ${y-6} 4 ${y-6} 8 ${y-8}`,'thin');
   if(h==='bun') return P(`M-8.6 ${y} C-9 ${y-11} 9 ${y-11} 8.6 ${y} C4 ${y-3} -4 ${y-3} -8.6 ${y}Z`,'fc')+C(2,y-10.5,4,'fc');
   if(h==='short') return P(`M-8.6 ${y} C-9 ${y-11} 9 ${y-11} 8.6 ${y} C4 ${y-3} -4 ${y-3} -8.6 ${y}Z`,'fc');
+  if(h==='kofia') return P(`M-9 ${y-3} L-8.4 ${y-12} L8.4 ${y-12} L9 ${y-3} Z`,'f')+P(`M-8.6 ${y-7.5} L8.6 ${y-7.5}`,'thin');
   if(h==='fringe') return P(`M-8.8 ${y+3} C-10 ${y-11} 10 ${y-11} 8.8 ${y+3} L8 ${y-2} C3 ${y-4} -3 ${y-4} -8 ${y-2}Z`,'fc');
   return '';
 }
@@ -43,12 +44,16 @@ function fig(o){
     else if(k==='dhoti') s=P('M-6.5 -32 L-7 0 M6.5 -32 L7 0')+P('M-9 -86 C-10 -74 -9 -63 -8 -56 L8 -56 C9 -63 10 -74 9 -86 Z',fill)+P('M-9.5 -56 L9.5 -56 L11 -32 L2.5 -32 L0 -42 L-2.5 -32 L-11 -32 Z',fill)+arms;
     else if(k==='blanket') s=P('M-5 -40 L-6 0 M5 -40 L6 0')+P('M-13 -88 C-15 -72 -16 -54 -15 -38 L15 -38 C16 -54 15 -72 13 -88 Z',fill)+P('M-15.4 -50 L15.4 -50 M-15.6 -46 L15.6 -46','thin')+P('M10 -80 C14 -72 16 -66 18 -62')+(o.staff?P('M17 -84 L25 0'):'');
     else if(k==='cloak') s=P('M-6 -38 L-7 0 M6 -38 L7 0')+P('M-9 -86 C-10 -72 -9 -50 -8 -40 L8 -40 C9 -50 10 -72 9 -86Z',fill)+P('M-3 -40 L3 -40 L2 -30 L-2 -30Z',fill)+P('M-11 -87 L9 -87 L14 -34 L-14 -44 Z',fill)+C(7,-86,2.5,'fc')+P('M-11 -82 C-15 -72 -16 -62 -15 -52');
+    else if(k==='saree') s=P('M-9 -86 L9 -86 L12 -56 C14 -36 16 -16 18 -1 L-18 -1 C-16 -16 -14 -36 -12 -56 Z',fill)+P('M-9 -86 C-2 -74 6 -64 12 -56 M-12 -56 C-4 -50 6 -50 12 -56','thin')+P('M-3 -30 L-4 -1 M3 -30 L3 -1','thin')+arms;
+    else if(k==='kanzu') s=P('M-9 -86 L9 -86 L11 -56 L13 -1 L-13 -1 L-11 -56 Z',fill)+P('M0 -86 L0 -70','thin')+arms;
+    else if(k==='shirt') s=P('M-7 -50 L-8 0 M7 -50 L8 0')+P('M-9 -86 C-10 -72 -9 -56 -9 -48 L9 -48 C9 -56 10 -72 9 -86Z',fill)+P('M-3 -86 L0 -80 L3 -86','thin')+arms;
     else if(k==='monk') s=P('M-6 -5 L-6 0 M6 -5 L6 0')+P('M-10 -86 C-13 -60 -15 -30 -14 -5 L14 -5 C15 -30 13 -60 10 -86 Z',fill)+P('M-10 -86 C0 -70 8 -50 14 -32','thin')+P('M-10 -83 C-14 -70 -11 -58 -7 -54 M10 -83 C14 -70 11 -58 7 -54')+P('M-8.5 -55 Q0 -44 8.5 -55 Z','f');
     s+=P('M-2.5 -89.6 L-2.5 -86 M2.5 -89.6 L2.5 -86')+C(0,-98,8.5,'f')+hair(o.hair,-98);
   } else if(pose==='sit'){
-    const legs=P('M-28 -1 C-20 -19 20 -19 28 -1 C14 3 -14 3 -28 -1Z',k==='jama'?fill:'f')+P('M-6 -6 C0 -10 6 -8 12 -4','thin');
+    const legs=P('M-28 -1 C-20 -19 20 -19 28 -1 C14 3 -14 3 -28 -1Z',['jama','saree','kanzu'].includes(k)?fill:'f')+P('M-6 -6 C0 -10 6 -8 12 -4','thin');
     let torso;
-    if(k==='jama') torso=P('M-9 -58 L9 -58 L12 -26 L-12 -26 Z',fill)+P('M-12 -30 L12 -30','thin');
+    if(k==='jama'||k==='kanzu') torso=P('M-9 -58 L9 -58 L12 -26 L-12 -26 Z',fill)+(k==='jama'?P('M-12 -30 L12 -30','thin'):P('M0 -58 L0 -46','thin'));
+    else if(k==='saree') torso=P('M-9 -58 L9 -58 L12 -26 L-12 -26 Z',fill)+P('M-9 -58 C-2 -48 6 -36 12 -28','thin');
     else if(k==='cloak') torso=P('M-9 -58 C-10 -46 -9 -34 -9 -26 L9 -26 C9 -34 10 -46 9 -58Z','f')+P('M-11 -59 L9 -59 L13 -24 L-13 -30 Z',fill)+C(7,-58,2.5,'fc');
     else if(k==='blanket') torso=P('M-13 -60 C-15 -48 -16 -36 -15 -24 L15 -24 C16 -36 15 -48 13 -60 Z',fill)+P('M-15.4 -34 L15.4 -34 M-15.6 -30 L15.6 -30','thin');
     else torso=P('M-9 -58 C-10 -46 -9 -34 -9 -26 L9 -26 C9 -34 10 -46 9 -58Z',fill)+(k==='dhoti'?P('M-20 -8 C-10 -16 10 -16 20 -8','thin'):'');
@@ -69,6 +74,20 @@ function cow(x,y,s,c,st,spot){
   return G(b,c||'',st||'',`translate(${x} ${y}) scale(${s})`);
 }
 const birds=(x,y,dl)=>G(P(`M${x} ${y} q6 -6 12 0 q6 -6 12 0`,'thin')+P(`M${x+30} ${y-12} q5 -5 10 0 q5 -5 10 0`,'thin'),'wk',`--x:120px;--t:9s;--d:${dl||0}s`);
+/* a sona / kolam line: one unbroken curve that bounces at 45 degrees round an m x n grid of dots (one line when m and n
+   share no factor). Returns the dots and the smoothed path. */
+function mirror(m,n,u,ox,oy){
+  const W=2*m, H=2*n; let x=1, y=0, dx=1, dy=1; const pts=[[x,y]];
+  for(let g=0;g<400;g++){ const tx=dx>0?W-x:x, ty=dy>0?H-y:y, t=Math.min(tx,ty); x+=dx*t; y+=dy*t; if(x===0||x===W) dx=-dx; if(y===0||y===H) dy=-dy; if(x===1&&y===0&&dx===1&&dy===1) break; pts.push([x,y]); }
+  const at=([a,b])=>`${f1(ox+a*u)} ${f1(oy+b*u)}`, mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2], k=pts.length;
+  const near=(p,q,r)=>{ const dx=q[0]-p[0], dy=q[1]-p[1], l=Math.hypot(dx,dy); return [p[0]+dx*r/l,p[1]+dy*r/l]; };   // round only close to each bounce, so every dot keeps its own loop
+  let d=`M${at(near(pts[0],pts[1],.7))}`; for(let i=1;i<=k;i++){ const P0=pts[i%k], a=near(P0,pts[i-1],.7), b=near(P0,pts[(i+1)%k],.7); d+=` L${at(a)} Q${at(P0)} ${at(b)}`; }
+  let dots=''; for(let i=0;i<m;i++) for(let j=0;j<n;j++) dots+=C(f1(ox+(2*i+1)*u),f1(oy+(2*j+1)*u),3,'fc');
+  return {d:d+'Z',dots};
+}
+function gear(r,N){ let d=''; for(let i=0;i<N*4;i++){ const a=(i+(i%4===1||i%4===3?.35*(i%4===1?-1:1):0))*Math.PI*2/(N*4), rr=(i%4===1||i%4===2)?r+15:r; d+=(i?' L':'M')+f1(Math.cos(a)*rr)+' '+f1(Math.sin(a)*rr); } return d+'Z'; }
+const ttt=(x,y,w,c,dl)=>D(`M${x+w/3} ${y} L${x+w/3} ${y+w} M${x+2*w/3} ${y} L${x+2*w/3} ${y+w} M${x} ${y+w/3} L${x+w} ${y+w/3} M${x} ${y+2*w/3} L${x+w} ${y+2*w/3}`,c,dl,.9);
+const xo=(x,y,r,o,c,st)=>o?C(x,y,r,c||'',st):P(`M${x-r} ${y-r} L${x+r} ${y+r} M${x+r} ${y-r} L${x-r} ${y+r}`,c||'',st);
 const grass=(x0,x1,y,step)=>{ let d=''; for(let x=x0;x<x1;x+=step){ const j=(x*7)%13; d+=`M${x+j} ${y} l-4 -8 M${x+j+2} ${y} l0 -11 M${x+j+4} ${y} l4 -8 `; } return P(d,'s thin'); };
 
 /* boards laid on the ground: board coordinates projected onto the floor (y squashed by k), so lines keep their width */
@@ -100,7 +119,7 @@ function patolliSquares(pj,cls,dl){   // squares along the two arms of the X, as
   return s;
 }
 
-/* ---------- the four films ---------- */
+/* ---------- the films ---------- */
 const FILMS={
 morabaraba:{ score:'mbira', scenes:[
  { place:'Southern Africa', sub:'In Southern Africa, cattle were wealth. They paid lobola, sealed alliances and ranked families.',
@@ -234,6 +253,178 @@ patolli:{ score:'lake', scenes:[
     return P(blocks,'s4 thin')+D(grid,'s thin',0,1.4)+patolliSquares(pj,'',.6)
      +G(P('M0 0 L-10 18 L10 18 Z','gf')+P('M0 0 L0 -26','thin'),'fi','--d:2.6s','translate(470 140)')
      +G(G(P('M0 0 L46 -30','thick')+P('M-4 2 L-12 12 M0 4 L-6 15 M4 4 L0 16','thin'),'scrub',''),'','','translate(398 306)'); } }
+]},
+nim:{ score:'grove', scenes:[
+ { place:'India · c. 300 BCE', sub:'Around 300 BCE, the Indian scholar Pingala set out to list every possible rhythm in Sanskrit poetry.',
+   svg:()=>{ const tree=P('M120 290 L120 130 M120 190 L96 160 M120 170 L146 140')+P('M60 136 C48 96 96 66 124 84 C150 60 200 86 186 128 C176 150 76 158 60 136 Z','g2f');
+    let leaves=''; for(let i=0;i<4;i++) leaves+=P(`M${400+i*3} ${296-i*7} L${500+i*3} ${296-i*7} C${506+i*3} ${296-i*7} ${506+i*3} ${288-i*7} ${500+i*3} ${288-i*7} L${400+i*3} ${288-i*7} C${394+i*3} ${288-i*7} ${394+i*3} ${296-i*7} ${400+i*3} ${296-i*7}Z`,'f');
+    return D('M0 290 L640 290','',0,1.2)+G(tree,'up','--d:.2s')+C(520,90,16,'gd rise')
+     +fig({x:300,y:292,pose:'sit',kind:'dhoti',hair:'bun',arm:'reach',c:'up',st:'--d:.5s'})
+     +G(P('M330 262 L392 262 C398 262 398 256 392 256 L330 256 C324 256 324 262 330 262Z','f')+leaves,'fi','--d:.9s')
+     +D('M338 259 q4 -4 8 0 q4 4 8 0 q4 -4 8 0 q4 4 8 0 q4 -4 8 0 q4 4 8 0','thin',1.4,2)+birds(380,100,.6); } },
+ { place:'Light and heavy', sub:'His trick: every syllable is light or heavy, a 0 or a 1.',
+   svg:()=>{ const pat=[1,0,0,1,0,1,1,0]; let s='';
+    pat.forEach((h,i)=>{ const x=124+i*56; s+=G(h?P(`M${x-14} 130 L${x+14} 130`,'thick'):P(`M${x-12} 118 C${x-12} 142 ${x+12} 142 ${x+12} 118`,'thick'),'up',`--d:${.3+i*.18}s`);
+      s+=G(TX(x,226,h?'1':'0','tbig'+(i===5?' tg':'')),'up',`--d:${2+i*.18}s`); });
+    return s+TX(320,74,'A LINE OF VERSE','fi')+D('M100 170 L540 170','s thin',1.6,1)+TX(320,286,'THE SAME LINE IN 0S AND 1S','fi','--d:3.4s'); } },
+ { place:'Counting the patterns', sub:'Listing every pattern this way is binary counting, about 1,900 years before Europe “discovered” it.',
+   svg:()=>{ let s=''; for(let r=0;r<8;r++){ const b=[(r>>2)&1,(r>>1)&1,r&1]; b.forEach((v,c)=>{ const x=220+c*36, y=60+r*30;
+      s+=G(v?P(`M${x-10} ${y} L${x+10} ${y}`,'thick'):P(`M${x-9} ${y-8} C${x-9} ${y+8} ${x+9} ${y+8} ${x+9} ${y-8}`,'thick'),'fi',`--d:${.3+r*.3}s`); });
+      s+=G(TX(420,60+r*30+8,String(r),'tbig'+(r===7?' tg':'')),'fi',`--d:${.5+r*.3}s`); }
+    return s+D('M370 44 L370 300','s thin',.2,1.2); } },
+ { place:'Today', sub:'It is also how you beat Nim: write each heap in 0s and 1s, and keep every column even.', note:'Nim does not come from Pingala: the link is binary. Charles Bouton named and solved Nim in 1901.',
+   svg:()=>{ const heaps=[3,5,6]; let s='';
+    heaps.forEach((h,k)=>{ const x=150+k*170; for(let i=0;i<h;i++) s+=C(x+(i%3-1)*22,250-Math.floor(i/3)*22-(i%3===1?0:0),9,(k===2&&i>=5?'gf':'fc')+' fi',`--d:${.2+k*.3+i*.05}s`);
+      const b=h.toString(2).padStart(3,'0'); s+=G(TX(x,300,b.split('').join(' '),'tbig'),'fi',`--d:${1.6+k*.3}s`); });
+    return D('M60 270 L580 270','s thin',0,1)+s+TX(320,334,'EVERY COLUMN HAS TWO 1S: EVEN, SO THIS HEAP SET IS SAFE','fi','--d:3s'); } }
+]},
+sim:{ score:'mbira', scenes:[
+ { place:'Angola, Zambia, DR Congo', sub:'Chokwe storytellers press dots into the sand, and tell a story as they draw.',
+   svg:()=>{ const fire=G(G(P('M320 300 C304 280 312 262 320 244 C328 262 336 280 320 300Z','gf'),'fl','')+P('M300 304 L340 298 M302 298 L338 304','thin'),'fi','--d:.3s');
+    let dots=''; for(let i=0;i<4;i++) for(let j=0;j<3;j++) dots+=C(200+i*16,316+j*8,2,'fc fi',`--d:${1+i*.1+j*.1}s`);
+    return D('M0 290 L640 290','',0,1.2)+fire+P('M0 0 L640 0','s')
+     +fig({x:240,y:300,pose:'sit',kind:'dhoti',hair:'short',arm:'reach',c:'up',st:'--d:.6s'})
+     +fig({x:420,y:300,pose:'sit',kind:'cloak',hair:'short',flip:1,s:.9,c:'up',st:'--d:.8s'})+fig({x:500,y:300,pose:'sit',kind:'dhoti',hair:'bun',flip:1,s:.8,c:'up',st:'--d:1s'})
+     +dots+G(P('M50 290 L50 240 L114 240 L114 290 Z','f s4')+P('M40 242 L82 196 L124 242 Z','f s4')+P('M74 290 L74 262 L90 262 L90 290','s4'),'','')+P('M548 66 C534 72 534 96 548 102 C528 104 518 84 526 72 C530 66 540 62 548 66Z','s'); } },
+ { place:'A sona in the sand', sub:'Mid-story, they sweep one unbroken line around the dots, without lifting a finger.',
+   svg:()=>{ const m=mirror(5,3,30,170,90); return G(m.dots,'fi','')+D(m.d,'gd thick',.6,5.2); } },
+ { place:'Points and paths', sub:'That is the maths Europe calls graph theory, and credits to Euler in 1736.', note:'The age of the sona tradition is uncertain. It is older than its 20th-century records.',
+   svg:()=>{ const pts=[[170,110],[320,80],[470,110],[220,250],[420,250],[320,190]]; const E=[[0,1],[1,2],[0,5],[2,5],[3,5],[4,5],[0,3],[2,4],[3,4],[1,5]];
+    let e=''; E.forEach(([a,b],i)=>{ e+=D(`M${pts[a].join(' ')} L${pts[b].join(' ')}`,'',.3+i*.22,.6); });
+    return e+pts.map((p,i)=>C(p[0],p[1],9,'f fi',`--d:${i*.1}s`)).join('')+D('M170 110 L320 80 L470 110 L320 190 L220 250 L420 250','gd thick',3,1.6); } },
+ { place:'Six dots', sub:'Sim is pure graph theory: six dots, two colours, and someone must close a triangle. Make sure it isn’t you.', note:'Gustavus Simmons invented Sim in 1969. It does not come from sona: the link is points and lines.',
+   svg:()=>{ const P6=[...Array(6)].map((_,k)=>[320+Math.cos(-Math.PI/2+k*Math.PI/3)*120,186+Math.sin(-Math.PI/2+k*Math.PI/3)*120].map(f1));
+    const A=[[0,2],[2,4],[1,3],[0,3],[1,4]], B=[[1,2],[3,4],[4,5],[0,5],[1,5]]; let s=''; let n=0;
+    for(let k=0;k<5;k++){ if(A[k]) s+=D(`M${P6[A[k][0]].join(' ')} L${P6[A[k][1]].join(' ')}`,'thick',.3+n++*.45,.4); if(B[k]) s+=D(`M${P6[B[k][0]].join(' ')} L${P6[B[k][1]].join(' ')}`,'s thick',.3+n++*.45,.4); }
+    s+=D(`M${P6[4].join(' ')} L${P6[0].join(' ')}`,'gd thick',.3+n*.45+.3,.5);
+    return s+P6.map(p=>C(p[0],p[1],8,'f')).join(''); } }
+]},
+'gold-coin':{ score:'coast', scenes:[
+ { place:'Across Africa', sub:'For many centuries, people across Africa have played mancala: seeds moving along rows of pits.',
+   svg:()=>{ let pits=''; for(let r=0;r<2;r++) for(let c=0;c<6;c++) pits+=C(268+c*21,262+r*14,6,'f');
+    const tree=P('M120 290 L118 150 M118 200 L92 170 M118 180 L144 150')+P('M44 150 C36 100 90 80 120 96 C150 74 210 96 196 140 C186 166 60 172 44 150 Z','g2f');
+    return D('M0 290 L640 290','',0,1.2)+G(tree,'up','--d:.2s')+C(520,84,16,'gd rise')
+     +fig({x:220,y:300,pose:'sit',kind:'dhoti',hair:'short',arm:'reach',c:'up',st:'--d:.5s'})+fig({x:420,y:300,pose:'sit',kind:'dhoti',hair:'short',flip:1,c:'up',st:'--d:.7s'})
+     +G(P('M256 256 L396 256 L396 282 L256 282 Z','f')+pits+P('M266 290 L262 300 M386 290 L390 300','thin'),'fi','--d:.9s')
+     +G(C(275,262,1.6,'fc')+C(296,262,1.6,'fc')+C(338,276,1.6,'fc')+C(359,262,1.6,'fc'),'fi','--d:1.5s'); } },
+ { place:'The Swahili coast', sub:'On the Swahili coast, where the game is called bao, top players are treated like local legends.',
+   svg:()=>{ const dhow=G(P('M0 0 L90 0 L80 12 L10 12 Z','f')+P('M44 0 L44 -70 M14 -6 L76 -78 L44 -70','')+P('M20 -10 L74 -74 L44 -66 Z','g2f'),'wk','--x:-80px;--t:10s');
+    let crowd=''; for(let i=0;i<6;i++){ const x=360+i*40; crowd+=C(x,190,8,'f s4')+P(`M${x-14} 214 C${x-12} 198 ${x+12} 198 ${x+14} 214`,'s4'); }
+    return D('M0 220 C60 216 120 224 180 220','s',0,1.4)+D('M0 244 C70 240 140 248 210 244','s thin',.2,1.4)+G(dhow,'','','translate(120 212)')
+     +P('M250 214 L250 130 L330 130 L330 214 M270 214 L270 180 C270 168 290 168 290 180 L290 214','f')+P('M248 130 L332 130','')
+     +crowd+D('M240 290 L640 290','',.2,1)
+     +fig({x:410,y:290,kind:'kanzu',hair:'kofia',pose:'chair',arm:'reach',s:.95,c:'up',st:'--d:.6s'})+fig({x:530,y:290,kind:'kanzu',hair:'kofia',pose:'chair',flip:1,s:.95,c:'up',st:'--d:.8s'})
+     +G(P('M436 238 L504 238 L504 290 M440 238 L440 290','thin')+P('M430 230 L510 230 L510 240 L430 240 Z','f')+C(446,235,2.4,'gf')+C(458,235,2.4,'thin')+C(470,235,2.4,'gf')+C(482,235,2.4,'thin')+C(494,235,2.4,'gf'),'fi','--d:1.2s')+C(80,70,14,'gd rise'); } },
+ { place:'Counting at speed', sub:'Rows of pits trained lightning-fast mental arithmetic and planning many moves ahead.',
+   svg:()=>{ let s=P('M110 110 L530 110 L530 250 L110 250 Z','g2f'); for(let r=0;r<2;r++) for(let c=0;c<8;c++) s+=C(150+c*49,150+r*62,20,'f');
+    let seeds=''; for(let c=0;c<5;c++) seeds+=C(150+(c+2)*49+(c%2?4:-4),212,5,(c===4?'gf':'fc')+' fi',`--d:${1+c*.55}s`);
+    for(let k=0;k<5;k++) seeds+=C(150+(k%3)*8-8,212+(k>2?8:0)-4,4.5,'fc');
+    return s+seeds+D('M150 260 C200 290 300 290 346 262','s',.6,1.2)+TX(320,320,'ONE SEED IN EACH PIT, THEN COUNT AHEAD','fi','--d:3.4s'); } },
+ { place:'Today', sub:'The Gold Coin runs on the same row logic. Don’t chase the gold: pair the coins from the right.', note:'It comes from the Silver Dollar Game in Winning Ways (1982). It is not a mancala game.',
+   svg:()=>{ let s=''; for(let i=0;i<9;i++) s+=P(`M${104+i*48} 160 L${148+i*48} 160 L${148+i*48} 204 L${104+i*48} 204 Z`,'f');
+    const coins=[1,3,4,6,8]; coins.forEach((c,k)=>{ s+=C(126+c*48,182,15,(c===4?'gf':'fc')+' up',`--d:${.3+k*.15}s`); });
+    s+=D('M414 228 L414 238 L510 238 L510 228','gd',2,.6)+D('M270 228 L270 238 L318 238 L318 228','',2.5,.6);
+    return s+TX(320,130,'TAKE FROM THE LEFT, OR SLIDE A COIN LEFT','fi','--d:.8s'); } }
+]},
+pentago:{ score:'lake', scenes:[
+ { place:'Mexico and Guatemala', sub:'The Maya watched the sky and ran the clock on turning wheels.',
+   svg:()=>{ let st=''; [[220,28],[180,26],[144,24],[110,22]].forEach(([w,h],i)=>{ const y=290-[0,28,54,78][i]; st+=G(P(`M${320-w/2} ${y} L${320-w/2+8} ${y-h} L${320+w/2-8} ${y-h} L${320+w/2} ${y} Z`,'f'),'up',`--d:${.2+i*.3}s`); });
+    st+=G(P('M296 190 L296 160 L344 160 L344 190 M290 160 L350 160 L344 152 L296 152 Z','f')+P('M304 152 L304 126 L336 126 L336 152 M312 126 L312 140 M328 126 L328 140','f')+P('M316 190 L316 174 L324 174 L324 190','thin'),'up','--d:1.4s');
+    st+=P('M310 290 L314 212 M330 290 L326 212','thin');
+    let stars=''; [[90,70],[140,110],[200,60],[460,80],[520,120],[580,64],[400,50]].forEach(([x,y],i)=>{ stars+=G(P(`M${x-4} ${y} L${x+4} ${y} M${x} ${y-4} L${x} ${y+4}`,'thin'),'fi',`--d:${1+i*.2}s`); });
+    const tree=(x,h)=>P(`M${x} 290 L${x} ${290-h}`)+P(`M${x-26} ${296-h} C${x-34} ${276-h} ${x-12} ${262-h} ${x} ${270-h} C${x+14} ${258-h} ${x+36} ${278-h} ${x+26} ${296-h} Z`,'g2f');
+    return D('M0 290 L640 290','',0,1.2)+st+tree(80,90)+tree(140,70)+tree(520,84)+tree(590,100)+stars+C(470,110,12,'gd rise'); } },
+ { place:'Two counts at once', sub:'A 260-day count and a 365-day year turned together, and lined up only once every 52 years.', note:'Daykeepers still keep the 260-day count today.',
+   svg:()=>G(P(gear(72,10),'f'),'spin','--t:16s','translate(246 182)')+G(P(gear(98,14),'f')+C(0,-82,5,'gf'),'spin','--t:22.4s;--dir:reverse','translate(436 182)')
+     +G(C(0,0,10,'fc'),'','','translate(246 182)')+G(C(0,0,10,'fc'),'','','translate(436 182)')+TX(250,320,'260 DAYS','fi')+TX(436,320,'365 DAYS','fi') },
+ { place:'A true zero', sub:'To handle numbers that big, the Maya used a true zero, centuries before Europe had one.',
+   svg:()=>{ const num=(x,v,dl)=>{ let s=''; const bars=Math.floor(v/5), dots=v%5; for(let b=0;b<bars;b++) s+=P(`M${x-26} ${250-b*16} L${x+26} ${250-b*16}`,'thick'); for(let d=0;d<dots;d++) s+=C(x-(dots-1)*8+d*16,250-bars*16-4,4.5,'fc'); return G(s,'up',`--d:${dl}s`); };
+    const shell=G(P('M-30 0 C-30 -22 30 -22 30 0 C30 14 -30 14 -30 0Z','g2f')+P('M-20 -8 C-8 -2 8 -2 20 -8 M-24 2 C-8 8 8 8 24 2','thin')+P('M-30 0 C-16 -6 -6 -12 0 -16','gd'),'up','--d:1.8s','translate(470 240)');
+    return num(150,7,.3)+num(250,13,.7)+num(350,19,1.1)+shell+TX(150,300,'7')+TX(250,300,'13')+TX(350,300,'19')+TX(470,300,'0','fi tg','--d:2s'); } },
+ { place:'Sweden · 2005', sub:'In Pentago every move turns a quarter of the board. Don’t play the board you see: play the board after the turn.', note:'Tomas Flodén designed Pentago in 2005. It has no Maya origin: the link is turning cycles.',
+   svg:()=>{ const q=(x,y,c,dl)=>{ let s=P(`M${x} ${y} h108 v108 h-108 Z`,'g2f'); const M=[[0,1,0],[2,1,0],[0,0,2]]; for(let i=0;i<3;i++) for(let j=0;j<3;j++){ const v=(M[(i+c)%3][(j+c)%3]); s+=C(x+18+j*36,y+18+i*36,12,v===1?'fc':v===2?'f':'s thin'); } return s; };
+    return q(204,62,0)+G(q(324,62,1),'turn','--d:2.2s')+q(204,182,2)+q(324,182,0)+D('M444 70 C470 90 470 130 452 156 M452 156 L452 140 M452 156 L438 150','gd thick',1.6,.6); } }
+]},
+notakto:{ score:'dawn', scenes:[
+ { place:'Tamil Nadu, South India', sub:'Every dawn in Tamil Nadu, millions of women draw a kolam on the doorstep.',
+   svg:()=>{ const house=P('M380 290 L380 120 L600 120 L600 290','f')+P('M360 124 L620 124 L590 92 L390 92 Z','f')+P('M450 290 L450 170 L530 170 L530 290','f')+P('M440 290 L540 290 L546 300 L434 300 Z','g2f');
+    let dots=''; for(let i=0;i<5;i++) for(let j=0;j<2;j++) dots+=C(170+i*22,312+j*12,2,'fc fi',`--d:${1.2+i*.12}s`);
+    return D('M0 290 L640 290','',0,1.2)+G(house,'up','--d:.2s')+C(150,110,22,'gd rise')+D('M178 312 C192 300 206 324 222 312 C236 300 250 324 262 312','thin',2.2,1.6)
+     +fig({x:280,y:300,pose:'sit',kind:'saree',hair:'bun',arm:'reach',flip:1,c:'up',st:'--d:.6s'})+dots+birds(60,70,.4); } },
+ { place:'A kolam', sub:'A grid of rice-flour dots, wrapped in one looping line.',
+   svg:()=>{ const m=mirror(4,5,25,220,55); return G(m.dots,'fi','')+D(m.d,'thick',.6,5.2)+C(345,180,4.5,'gf fi','--d:4.6s'); } },
+ { place:'Mother to daughter', sub:'Gone by nightfall and drawn again the next day: geometry passed from mother to daughter.', note:'Computer scientists in Chennai have used kolam to study how rules make patterns.',
+   svg:()=>{ const m=mirror(3,2,14,276,270); return D('M0 250 L640 250','',0,1)+G(m.dots,'fi','--d:.4s')+D(m.d,'',.8,3)
+     +fig({x:240,y:262,pose:'sit',kind:'saree',hair:'bun',arm:'reach',c:'up',st:'--d:.3s'})+fig({x:420,y:262,pose:'sit',kind:'saree',hair:'bun',flip:1,s:.75,arm:'reach',c:'up',st:'--d:.5s'})
+     +P('M528 66 C514 72 514 96 528 102 C508 104 498 84 506 72 C510 66 520 62 528 66Z','s'); } },
+ { place:'The 2010s', sub:'Notakto is played on grids too. You both draw X, and whoever makes the last line of three loses.', note:'Thane Plambeck and Greg Whitehead named and solved it. It does not come from kolam.',
+   svg:()=>{ let s=''; [[90,0],[250,1],[410,2]].forEach(([x,k])=>{ s+=ttt(x,110,140,'',.2+k*.3);
+      const X=[[[0,0],[1,1],[2,2]],[[0,2],[1,0]],[[2,0],[0,1],[1,2]]][k]; X.forEach(([i,j],n)=>{ s+=G(xo(x+23+j*47,133+i*47,12,0,'thick'),'fi',`--d:${1.2+k*.3+n*.3}s`); });
+      if(k===0) s+=D(`M${x+10} 120 L${x+130} 240`,'gd thick',3,.6); });
+    return s+TX(160,286,'DEAD','fi','--d:3.4s'); } }
+]},
+'toot-otto':{ score:'chant', scenes:[
+ { place:'India', sub:'For 3,000 years, Vedic reciters kept their texts perfect without writing them down.', note:'UNESCO lists Vedic chanting as world heritage.',
+   svg:()=>{ const tree=P('M540 290 L540 140 M540 200 L516 170 M540 180 L566 150')+P('M478 146 C466 106 514 76 544 94 C570 70 630 96 616 138 C606 160 494 168 478 146 Z','g2f');
+    let waves=''; for(let i=0;i<3;i++) waves+=D(`M${200+i*12} ${190-i*14} C${220+i*12} ${176-i*14} ${220+i*12} ${204+i*14} ${200+i*12} ${190+i*14}`,'s',.8+i*.3,.8);
+    return D('M0 290 L640 290','',0,1.2)+G(tree,'up','--d:.2s')+fig({x:150,y:296,pose:'sit',kind:'dhoti',hair:'bun',arm:'reach',c:'up',st:'--d:.4s'})+waves
+     +fig({x:300,y:300,pose:'sit',kind:'dhoti',hair:'short',flip:1,s:.8,c:'up',st:'--d:.6s'})+fig({x:370,y:300,pose:'sit',kind:'dhoti',hair:'short',flip:1,s:.8,c:'up',st:'--d:.7s'})+fig({x:440,y:300,pose:'sit',kind:'dhoti',hair:'bun',flip:1,s:.8,c:'up',st:'--d:.8s'})
+     +G(G(P('M80 300 C72 286 76 274 84 264 C90 276 94 288 86 300Z','gf'),'fl','')+P('M64 300 L104 300','thin'),'fi','--d:.4s'); } },
+ { place:'Forwards and backwards', sub:'They chanted forwards, then backwards, then in pairs and loops, so one wrong syllable stuck out at once.',
+   svg:()=>{ const W=['A','B','C','D']; let s=''; W.forEach((w,i)=>{ s+=G(C(170+i*100,110,24,'f')+TX(170+i*100,118,w,'tbig'),'up',`--d:${.2+i*.15}s`); });
+    const row=(y,seq,dl)=>seq.map((w,i)=>G(TX(200+i*48,y,w,'tmid'+(i>=2&&i<=3?' tg':'')),'fi',`--d:${dl+i*.12}s`)).join('');
+    return s+row(196,['A','B','B','A','A','B'],1.2)+row(236,['B','C','C','B','B','C'],2.2)+row(276,['C','D','D','C','C','D'],3.2)
+     +D('M140 150 L460 150 M450 144 L460 150 L450 156','s',1,.6)+TX(320,330,'EACH PAIR SAID FORWARDS, BACKWARDS, FORWARDS','fi','--d:4s'); } },
+ { place:'Rāghavayādavīyam · c. 1650', sub:'One Sanskrit poem tells one epic read forwards, and another read backwards.',
+   svg:()=>{ let script=''; for(let r=0;r<3;r++){ let d=`M120 ${170+r*16}`; for(let x=0;x<400;x+=12) d+=` q3 -6 6 0 q3 5 6 0`; script+=D(d,'thin',.4+r*.4,1.4); }
+    return P('M100 150 L540 150 C556 150 556 222 540 222 L100 222 C84 222 84 150 100 150Z','g2f')+script
+     +D('M120 112 L500 112 M490 104 L500 112 L490 120','thick',2,.8)+TX(310,98,'READ THIS WAY: RĀMA’S STORY','fi','--d:2.2s')
+     +D('M520 262 L140 262 M150 254 L140 262 L150 270','gd thick',3.2,.8)+TX(330,292,'READ BACK: KṚṢṆA’S STORY','fi tg','--d:3.4s'); } },
+ { place:'Today', sub:'TOOT and OTTO read both ways too, so read every gap from both sides.', note:'Toot and Otto is a modern letter game. It has no Indian origin: the link is reading both ways.',
+   svg:()=>{ const G6=[['','','','','',''],['','O','','','',''],['T','T','O','','',''],['O','T','O','O','','']]; let s='';
+    for(let r=0;r<4;r++) for(let c=0;c<6;c++){ const x=200+c*48, y=118+r*48; s+=P(`M${x} ${y} h44 v44 h-44 Z`,'f'); if(G6[r][c]) s+=G(TX(x+22,y+31,G6[r][c],'tbig'),'fi',`--d:${.3+(r*6+c)*.04}s`); }
+    s+=G(TX(414,293,'T','tbig tg'),'up','--d:2s')+D('M252 303 L436 303','gd thick',2.6,.8)+TX(320,346,'T O O T READS THE SAME BOTH WAYS','fi','--d:3.2s');
+    return s; } }
+]},
+chomp:{ score:'lake', scenes:[
+ { place:'Mesoamerica', sub:'People in Mesoamerica were brewing cacao more than 3,500 years ago.',
+   svg:()=>{ const pod=(x,y,r)=>G(P(`M0 -16 C10 -14 12 10 0 18 C-12 10 -10 -14 0 -16Z`,'f')+P('M0 -14 L0 16 M-5 -10 C-7 0 -6 10 -3 14 M5 -10 C7 0 6 10 3 14','thin'),'','',`translate(${x} ${y}) rotate(${r})`);
+    const tree=P('M140 290 L138 110 M138 170 L104 130 M138 150 L176 116')+P('M70 120 C56 70 120 40 150 62 C186 40 240 70 222 114 C210 140 84 146 70 120Z','g2f')+pod(150,210,-8)+pod(126,240,10)+pod(152,256,-4);
+    return D('M0 290 L640 290','',0,1.2)+G(tree,'up','--d:.2s')
+     +fig({x:380,y:290,kind:'cloak',hair:'fringe',c:'up',st:'--d:.6s'})+G(P('M394 210 L414 210 L412 226 L396 226 Z','f'),'up','--d:.8s')
+     +D('M405 228 C406 252 404 270 406 284','gd',1.6,1.2)+G(P('M390 284 L422 284 L418 300 L394 300 Z','f'),'up','--d:1s')+C(540,90,16,'gd rise'); } },
+ { place:'An Aztec market', sub:'In Aztec markets, cacao beans worked as small change.',
+   svg:()=>{ let beans=''; for(let i=0;i<14;i++) beans+=P(`M${290+(i%7)*10-4} ${262-Math.floor(i/7)*7} a4 2.6 0 1 0 8 0 a4 2.6 0 1 0 -8 0`,'fc');
+    let pots=''; [[420,272],[450,276],[480,270]].forEach(([x,y])=>{ pots+=P(`M${x-12} ${y-20} C${x-18} ${y-6} ${x-12} ${y+6} ${x} ${y+6} C${x+12} ${y+6} ${x+18} ${y-6} ${x+12} ${y-20} Z`,'f'); });
+    return D('M0 290 L640 290','',0,1.2)+P('M260 290 L520 290 L536 300 L244 300 Z','g2f')+G(beans+pots,'fi','--d:.6s')
+     +fig({x:200,y:296,kind:'cloak',hair:'fringe',c:'up',st:'--d:.3s'})+fig({x:580,y:296,kind:'cloak',hair:'fringe',flip:1,c:'up',st:'--d:.5s'})
+     +G(P('M222 216 a4 2.6 0 1 0 8 0 a4 2.6 0 1 0 -8 0','gf'),'wk','--x:320px;--t:2.4s;--d:1.4s')+P('M0 120 L120 120 L120 290 M520 290 L520 140 L640 140','s'); } },
+ { place:'A price list · 1545', sub:'A turkey cost 100 beans, and forgers hollowed out beans and filled them with clay.',
+   svg:()=>{ const turkey=G(P('M-40 0 C-50 -40 -10 -60 10 -40 C24 -26 20 0 0 4 Z','f')+P('M-34 -12 C-70 -40 -60 -80 -30 -70 C-40 -50 -36 -30 -30 -20','f')+P('M10 -40 L18 -64 C20 -72 30 -70 28 -62 L22 -46','f')+P('M28 -62 L36 -60 L28 -56 M24 -54 C26 -48 24 -44 22 -42','thin')+P('M-12 4 L-14 22 M2 4 L4 22','thin'),'up','--d:.2s','translate(150 230)');
+    let b=''; for(let i=0;i<100;i++) b+=P(`M${340+(i%10)*20-5} ${90+Math.floor(i/10)*20} a5 3.4 0 1 0 10 0 a5 3.4 0 1 0 -10 0`,(i===99?'gf':'fc')+' fi',`--d:${.8+i*.025}s`);
+    return turkey+b+TX(245,190,'=','tbig fi','--d:.6s')+TX(150,286,'1 TURKEY','fi')+TX(430,312,'100 CACAO BEANS','fi'); } },
+ { place:'Today', sub:'In Chomp every bite costs you, and one square is poisoned. The first player can always win.', note:'Schuh (1952) and Gale (1974) made Chomp. It has no Mesoamerican origin: the link is chocolate.',
+   svg:()=>{ let s=''; for(let r=0;r<4;r++) for(let c=0;c<7;c++){ const x=166+c*44, y=80+r*44, gone=(r>=2&&c>=4); s+=P(`M${x} ${y} h40 v40 h-40 Z`,(r===0&&c===0?'gf':'g2f')+(gone?' gone':''),gone?`--d:0s`:''); }
+    return s+G(P('M166 80 l40 40 M206 80 l-40 40','thick'),'','')+D('M342 166 C360 150 400 150 470 166','gd',3.4,.6); } }
+]},
+'recursive-tic-tac-toe':{ score:'modern', scenes:[
+ { place:'Honest truth', sub:'This one is modern, not ancient. It spread online in the 2010s.',
+   svg:()=>{ let s=P('M200 60 L560 60 L560 240 L200 240 Z','f')+P('M190 240 L570 240','thick'); for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=ttt(330+j*34,92+i*34,28,'thin',.6+(i*3+j)*.1);
+    s+=D('M330 92 L330 194 L432 194 L432 92 Z','',.4,.6)+D('M364 92 L364 194 M398 92 L398 194 M330 126 L432 126 M330 160 L432 160','thick',.5,.6);
+    return D('M0 300 L640 300','',0,1)+s+fig({x:150,y:300,kind:'shirt',hair:'short',c:'up',st:'--d:.3s'}); } },
+ { place:'Recursion', sub:'It runs on recursion: things built from smaller copies of themselves.',
+   svg:()=>{ const lv=(x,y,w,d,dl)=>{ let s=ttt(x,y,w,d===0?'thick':'thin',dl); if(d<2) for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=lv(x+j*w/3+w/30,y+i*w/3+w/30,w/3-w/15,d+1,dl+.8+(d?0:(i*3+j)*.08)); return s; };
+    return G(lv(185,45,270,0,.2),'kbz','transform-origin:50% 50%'); } },
+ { place:'Every move is two moves', sub:'Every move wins a square in a small board, and sends your opponent to play somewhere else.',
+   svg:()=>{ const X0=185, Y0=45, W=270; let s=ttt(X0,Y0,W,'thick',0); for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=ttt(X0+j*90+10,Y0+i*90+10,70,'thin',.1);
+    s+=G(xo(X0+10+70*5/6,Y0+90+10+70/6,7,0,'thick'),'up','--d:1.2s');
+    s+=D(`M${X0+184} ${Y0+8} h78 v78 h-78 Z`,'gd thick',2.2,.6)+D(`M${X0+76} ${Y0+110} C${X0+130} ${Y0+60} ${X0+170} ${Y0+50} ${X0+186} ${Y0+48}`,'gd',2,.8);
+    return s; } },
+ { place:'Why it works', sub:'Plain tic-tac-toe always ends in a draw. Nest it once and it becomes a real battle.', note:'The inventor is unknown. Maths teacher Ben Orlin made it popular in 2013.',
+   svg:()=>{ const draw=[[0,1,0],[0,1,1],[1,0,0]]; let s=ttt(90,90,150,'thick',.1); draw.forEach((r,i)=>r.forEach((v,j)=>{ s+=G(xo(115+j*50,115+i*50,13,v,'thick'),'fi',`--d:${.3+(i*3+j)*.1}s`); }));
+    s+=TX(165,280,'DRAW','fi','--d:1.4s')+ttt(400,90,150,'thick',.1); for(let i=0;i<3;i++) for(let j=0;j<3;j++) s+=ttt(405+j*50,95+i*50,40,'thin s',.2);
+    [[0,0,0],[1,1,1],[0,2,0],[2,2,1]].forEach(([i,j,v],n)=>{ s+=G(xo(425+j*50,115+i*50,16,v,'thick'+(n===3?' gd':'')),'up',`--d:${1.6+n*.4}s`); });
+    return s+TX(475,280,'A REAL FIGHT','fi','--d:3.4s'); } }
 ]}
 };
 
@@ -274,6 +465,9 @@ const V={
   drum(t,f,v){ const o=ac.createOscillator(), g=ac.createGain(); o.type='sine'; o.frequency.setValueAtTime(f*2,t); o.frequency.exponentialRampToValueAtTime(f,t+.08); env(t,.003,v,.5,g); o.connect(g); out(g,.25); o.start(t); o.stop(t+.6); },
   tabla(t,v){ const o=ac.createOscillator(), g=ac.createGain(); o.type='sine'; o.frequency.setValueAtTime(520,t); o.frequency.exponentialRampToValueAtTime(480,t+.2); env(t,.002,v,.28,g); o.connect(g); out(g,.3); o.start(t); o.stop(t+.35); noise(t,.02,v*.5,'highpass',3000); },
   shake(t,v){ noise(t,.06,v,'highpass',5000); },
+  voice(t,f,v,dur,to){ const o=ac.createOscillator(), f1=ac.createBiquadFilter(), f2=ac.createBiquadFilter(), g=ac.createGain(), m=ac.createGain(); o.type='sawtooth'; o.frequency.setValueAtTime(f,t); if(to) o.frequency.linearRampToValueAtTime(to,t+dur*.8);
+    f1.type='bandpass'; f1.frequency.value=650; f1.Q.value=5; f2.type='bandpass'; f2.frequency.value=1080; f2.Q.value=6; g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(v,t+.15); g.gain.setValueAtTime(v,t+dur-.2); g.gain.linearRampToValueAtTime(0,t+dur);
+    o.connect(f1); o.connect(f2); f1.connect(g); f2.connect(m); m.gain.value=.6; m.connect(g); out(g,.6); o.start(t); o.stop(t+dur+.05); },
   bell(t,f,v){ for(const [m,a,d] of [[1,1,4],[2.4,.4,2.4],[4.1,.22,1.4],[5.9,.1,.8]]){ const o=ac.createOscillator(), g=ac.createGain(); o.frequency.value=f*m; env(t,.004,a*v,d,g); o.connect(g); out(g,.6); o.start(t); o.stop(t+d+.1); } }
 };
 function noise(t,dur,v,type,fq){ if(!nbuf){ nbuf=ac.createBuffer(1,ac.sampleRate,ac.sampleRate); const d=nbuf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1; }
@@ -290,6 +484,17 @@ const SCORES={
   grove:{ dt:.3, play(t,i){ const SA=130.81, mel=[0,null,2,null,4,null,null,null,7,null,9,null,7,null,4,null, 2,null,4,null,2,null,0,null,null,null,null,null,null,null,null,null];
     if(i%32===0) V.drone(t,SA,32*.3+.3,.065); if(i%4===0) V.pluck(t,hz(SA,[7,12,12,0][(i/4)%4]),.07,2.6);
     const m=mel[i%32]; if(m!==null&&i>=16) V.flute(t,hz(SA*4,m),.11,.55,1); if(i%64===48) V.bell(t,hz(SA*4,0),.08); } },
+  coast:{ dt:.2, play(t,i){ const D=146.83, mel=[0,null,1,4,5,null,4,1,0,null,null,null,7,8,7,5, 4,null,5,7,8,null,10,8,7,null,5,4,1,null,0,null];
+    if(i%2===0) V.pluck(t,hz(D/2,[0,7][(i/2)%2]),.05,.9); const m=mel[i%32]; if(m!==null&&i>=16) V.pluck(t,hz(D*2,m),.11,1.1);
+    if([0,6,10].includes(i%16)) V.drum(t,78,.32); if([4,12].includes(i%16)) V.tabla(t,.1); if(i%2) V.shake(t,.018); } },
+  dawn:{ dt:.26, play(t,i){ const E=164.81, mel=[0,null,1,null,4,null,5,null,7,null,null,null,8,null,7,null, 5,null,4,null,1,null,0,null,null,null,null,null,null,null,null,null];
+    if(i%32===0) V.drone(t,E/2,32*.26+.2,.05); if(i%4===0) V.pluck(t,hz(E/2,[7,12,12,0][(i/4)%4]),.06,2.4);
+    const m=mel[i%32]; if(m!==null&&i>=16) V.pluck(t,hz(E*2,m),.1,1.8); if([0,7,10].includes(i%16)&&i>=32) V.tabla(t,.07); } },
+  chant:{ dt:.34, play(t,i){ const SA=130.81, line=[[0,0],[2,0],[0,0],[-2,0],[0,0],[0,0],[2,-.5],[0,0]];
+    if(i%32===0) V.drone(t,SA/2,32*.34+.2,.08); if(i%4===0){ const [n,sl]=line[(i/4)%8]; V.voice(t,hz(SA,n),.2,4*.34-.05,sl?hz(SA,n-1):0); }
+    if(i%16===0) V.bell(t,hz(SA*4,0),.03); } },
+  modern:{ dt:.16, play(t,i){ const C=261.63, arp=[0,4,7,11,12,11,7,4, -3,0,4,7,9,7,4,0, -7,-3,0,4,5,4,0,-3, -5,-1,2,5,7,5,2,-1];
+    V.mbira(t,hz(C,arp[i%32]),.07); if(i%8===0) V.drum(t,55,.4); if(i%8===4) V.tabla(t,.05); if(i%2) V.shake(t,.02); } },
   lake:{ dt:.21, play(t,i){ const A3=220, slit=[1,0,0,1,0,0,1,0,1,0,0,1,0,1,0,0], hi=[0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1], fl=[null,null,null,null,12,null,15,null,17,null,null,null,15,null,12,null, 10,null,12,null,null,null,7,null,null,null,null,null,null,null,null,null];
     if(slit[i%16]) V.wood(t,A3*.75,.22); if(hi[i%16]) V.wood(t,A3,.16); if(i%8===0) V.drum(t,62,.4); if(i%2) V.shake(t,.03);
     const m=fl[i%32]; if(m!==null&&i>=32) V.flute(t,hz(A3*2,m),.08,.4,1); } }
@@ -338,6 +543,10 @@ const CSS=`
 #zfCine .zc-sc .gf{fill:${GOLD};stroke:${GOLD}}#zfCine .zc-sc .gf2{fill:${GOLD}}#zfCine .zc-sc .gd{stroke:${GOLD}}
 #zfCine .zc-sc .s{stroke:var(--g5)}#zfCine .zc-sc .s4{stroke:var(--g4)}#zfCine .zc-sc .s4 :is(path,circle){stroke:var(--g4)}
 #zfCine .zc-sc text{fill:var(--g6);font:600 11px var(--font-mono);letter-spacing:.08em;text-anchor:middle}
+#zfCine .zc-sc .tbig{fill:var(--fg);font:600 24px var(--font-mono);letter-spacing:0}#zfCine .zc-sc .tg{fill:${GOLD}}#zfCine .zc-sc .tmid{fill:var(--fg);font:600 16px var(--font-sans);letter-spacing:.02em}
+#zfCine .zc-sc.on .spin{transform-box:fill-box;transform-origin:center;animation:zcSpin var(--t,12s) linear infinite var(--dir,normal)}
+#zfCine .zc-sc.on .turn{transform-box:fill-box;transform-origin:center;animation:zcTurn 1.4s cubic-bezier(.6,0,.2,1) var(--d,0s) both}
+@keyframes zcSpin{to{transform:rotate(360deg)}}@keyframes zcTurn{to{transform:rotate(90deg)}}
 #zfCine .zc-sc .dr{stroke-dasharray:1 1;stroke-dashoffset:1}
 #zfCine .zc-sc.on .dr{animation:zcDraw var(--t,1.6s) cubic-bezier(.45,0,.2,1) var(--d,0s) forwards}
 #zfCine .zc-sc :is(.fi,.up,.rise){opacity:0}
@@ -464,7 +673,7 @@ function go(k,auto){
 function play(s,trigger){
   const f=FILMS[s]; if(!f) return false;
   build(); slug=s; film=f; i=0; open=true; opener=trigger||document.activeElement;
-  box.querySelector('.zc-t').textContent=`Where ${gameName(s)} comes from`;
+  box.querySelector('.zc-t').textContent=`The story behind ${gameName(s)}`;
   box.querySelector('.zc-bars').innerHTML=f.scenes.map((sc,n)=>`<button type="button" aria-label="Scene ${n+1} of ${f.scenes.length}"><i><b></b></i></button>`).join('');
   box.querySelectorAll('.zc-bars button').forEach((b,n)=>b.addEventListener('click',()=>go(n)));
   box.querySelector('.zc-reel').innerHTML='';

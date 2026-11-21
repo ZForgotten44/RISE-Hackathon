@@ -4,7 +4,7 @@
    - It comes back on each visit until the player closes it (×) or reads the story; then it stays away for that game
      (localStorage zf-story-done). The Origins & stories button beside How to play still opens the story any time.
    - When a game starts, it finishes the line it is on and slides away, so it never sits on the board while you play.
-   - On a heritage game the first visit opens the short film (cinema.js) instead; it hands over to this card when it
+   - On a game's first visit the short film (cinema.js) opens instead; it hands over to this card when it
      closes, and the card's Watch the film button plays it again.
    - Hover or focus pauses it. Reduced motion: no slide, the lines just swap. */
 (function(){
@@ -51,7 +51,7 @@ let box=null, slug='', lines=[], i=0, timer=null, leaving=false;
 function build(){
   if(box) return;
   const st=document.createElement('style'); st.id='zf-story-css'; st.textContent=CSS; document.head.appendChild(st);
-  box=document.createElement('aside'); box.id='zfStory'; box.setAttribute('aria-label','Where this game comes from');
+  box=document.createElement('aside'); box.id='zfStory'; box.setAttribute('aria-label','The story behind this game');
   box.innerHTML=`<div class="zs-top">${BOOK}<span class="zs-t"></span><span class="zs-n"></span></div>
 <button type="button" class="zs-x" aria-label="Close the story">${X_}</button>
 <p class="zs-win"></p><div class="zs-acts"><button type="button" class="zs-read">Read the story</button><button type="button" class="zs-watch" hidden>${PLAY}Watch the film</button></div><div class="zs-bar"><i></i></div>`;
@@ -73,7 +73,7 @@ function next(){ if(!box||!box.classList.contains('on')) return; if(leaving){ hi
 function show(s){
   const d=(window.ZF_ORIGINS||{})[s]; lines=d&&Array.isArray(d.snippets)?d.snippets.filter(Boolean):[];
   if(!lines.length) return; build(); slug=s; i=0; leaving=false;
-  const g=((window.ZF&&ZF.GAMES)||[]).find(x=>x.slug===s); box.querySelector('.zs-t').textContent=g?`Where ${g.name} comes from`:'Where it comes from';
+  const g=((window.ZF&&ZF.GAMES)||[]).find(x=>x.slug===s); box.querySelector('.zs-t').textContent=g?`The story behind ${g.name}`:'The story behind this game';
   box.querySelector('.zs-watch').hidden=!(window.ZFCinema&&ZFCinema.has(s));
   box.querySelector('.zs-win').innerHTML=''; paint(0);
   requestAnimationFrame(()=>box.classList.add('on'));
