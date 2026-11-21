@@ -170,7 +170,12 @@ function loadPack(c){ return new Promise(res=>{ if(c==='en'||PACKS[c]) return re
 function usePack(c){ pack=c==='en'?null:PACKS[c]||null; htmlKeys=pack&&pack.h?new Set(Object.keys(pack.h)):null; }
 let hold=null;
 async function setLang(c,user){
-  if(!byCode(c)) c='en'; lang=c; if(user) ls.set('zf-lang',c==='en'?null:c);
+  if(!byCode(c)) c='en';
+  /* switching between left-to-right and right-to-left reloads the page: some browsers (Safari) keep the old
+     layout's click areas after a live direction change, so buttons would answer for their neighbours */
+  const rtlNow=root.getAttribute('dir')==='rtl', rtlNext=!!byCode(c).rtl;
+  if(user&&document.body&&rtlNow!==rtlNext){ ls.set('zf-lang',c==='en'?null:c); location.reload(); return; }
+  lang=c; if(user) ls.set('zf-lang',c==='en'?null:c);
   setDir(); if(c!=='en') await loadPack(c); if(lang!==c) return; usePack(c);
   if(c!=='en'&&!pack){ root.setAttribute('lang','en'); root.removeAttribute('dir'); }   // phrase book did not load: the page stays honestly English
   const go=()=>{ if(started||c!=='en') translateAll(); paintMenu(); if(hold){ root.classList.remove('zl-wait'); hold=null; }
@@ -252,5 +257,5 @@ addEventListener('resize',place); addEventListener('scroll',()=>close(false),{pa
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&menu&&!menu.hidden) close(true); });
 if(sysReduce&&sysReduce.addEventListener) sysReduce.addEventListener('change',paintMenu);
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',buildButtons); else buildButtons();
-addEventListener('storage',e=>{ if(e.key==='zf-lang'){ setLang(e.newValue||'en',false); } else if(e.key&&/^zf-(motion|text|contrast|films)$/.test(e.key)){ applyPrefs(); paintMenu(); } });
+addEventListener('storage',e=>{ if(e.key==='zf-lang'){ const L=byCode(e.newValue||'en')||LANGS[0]; if(!!L.rtl!==(root.getAttribute('dir')==='rtl')) location.reload(); else setLang(L.c,false); } else if(e.key&&/^zf-(motion|text|contrast|films)$/.test(e.key)){ applyPrefs(); paintMenu(); } });
 })();
