@@ -8,4 +8,8 @@ module.exports=[['recursive-tic-tac-toe','Recursive Tic-Tac-Toe','Nine small boa
  ['pentago','Pentago','Place a marble, then turn a quadrant. Five in a row wins.'],
  ['notakto','Notakto','Both play X. Close the last board and you lose.'],
  ['toot-otto','TOOT & OTTO','Drop T or O. Spell your word, not theirs.'],
- ['sim','Sim','Claim edges between six dots and never finish your own triangle.']];
+ ['sim','Sim','Claim edges between six dots and never finish your own triangle.'],
+ ['morabaraba','Morabaraba','Make mills of three cows and shoot the enemy herd.'],
+ ['chaupar','Chaupar','Race partner colours round the cross and home.'],
+ ['dasapada','Dasapada','The ten-row game the Buddha banned, rebuilt from its own dice.'],
+ ['patolli','Patolli','Throw the numbered beans and race round the X-shaped mat.']];

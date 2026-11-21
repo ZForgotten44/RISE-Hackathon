@@ -24,7 +24,7 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const lsGet=(k,d)=>{ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } };
 const lsSet=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} };
 const LS_PROFILE='zf-party-profile', LS_LOCAL='zf-match-players';
-const GX_TWO={quarto:1,sim:1,pentago:1,toot:1,domineering:1,notakto:1,gold:1};
+const GX_TWO={quarto:1,sim:1,pentago:1,toot:1,domineering:1,notakto:1,gold:1,morabaraba:1,chaupar:1,dasapada:1,patolli:1};
 const CPU_DUCK={mansy:1}, P2_DUCK={head:'beanie',hc:'black'};
 const clean=d=>window.ZPDuck?ZPDuck.clean(d||{}):(d||{});
 /* each player's piece, word or direction where the game has one; otherwise who moves first */
