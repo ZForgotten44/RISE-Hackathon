@@ -1,5 +1,5 @@
 {
- "version": "65765965bd73",
+ "version": "ac1fd3092dbe",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -36,11 +36,14 @@
   "/games4.js?v=1af6c875",
   "/gold-engine.js",
   "/gold-engine.js?v=a7e20373",
+  "/heritage-art.js?v=b6553412",
+  "/heritage-core.js?v=cf397801",
+  "/heritage.js?v=8b5580b6",
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
   "/lessons.js?v=55580e61",
-  "/match.js?v=5a79b7a7",
+  "/match.js?v=3a4cf064",
   "/music.js?v=a5570acd",
   "/offline.html",
   "/offline.js?v=c3feb060",
@@ -52,18 +55,18 @@
   "/online-rooms.js?v=fc808795",
   "/online-sim.js?v=33a408c6",
   "/online-toot.js?v=fe7e9309",
-  "/origins-data.js?v=9e2a97bc",
+  "/origins-data.js?v=4bdd99d7",
   "/origins.js?v=0048b475",
   "/party-duck.js?v=aefb47b3",
   "/react.js?v=0cfa1a13",
-  "/rules-summary.js?v=72153968",
-  "/shared.js?v=fb6926ed",
+  "/rules-summary.js?v=f48836b4",
+  "/shared.js?v=97ff5283",
   "/shell.js?v=e2bccffe",
   "/side-duck.js?v=851c58a9",
   "/site.css?v=76e3772a",
   "/site.webmanifest",
   "/sound.js?v=90368e02",
-  "/story-ticker.js?v=141272a7",
+  "/story-ticker.js?v=311dcbb6",
   "/theme.js?v=2d54ba4d",
   "/traces.js?v=cb511b6d",
   "/turn-timer.js?v=16c5eb30",
@@ -93,7 +96,19 @@
   ],
   "sim": [
    "/sim"
+  ],
+  "morabaraba": [
+   "/morabaraba"
+  ],
+  "chaupar": [
+   "/chaupar"
+  ],
+  "dasapada": [
+   "/dasapada"
+  ],
+  "patolli": [
+   "/patolli"
   ]
  },
- "bytes": 23678257
+ "bytes": 23755085
 }

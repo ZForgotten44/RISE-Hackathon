@@ -156,6 +156,88 @@ root.ZF_ORIGINS={
     sources:{ published:true, links:[
       {title:'Ultimate tic-tac-toe', url:'https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe', publisher:'Wikipedia'}
     ]}
+  },
+  'morabaraba':{
+    snippets:["In Southern Africa, cattle were wealth.","Herd boys scratched these boards into rock near the grazing grounds.","Every piece is a cow, and every capture is a raid.","In 1996 South Africa made it an official mind sport.","Build a mill you can open and close, and fire every other turn."],
+    names:[{text:'Morabaraba',language:'Sesotho'},{text:'Umlabalaba',language:'isiZulu'},{text:'Mlabalaba',language:'isiXhosa'},{text:'Mmela',language:'Setswana'}],
+    where:{ published:true,
+      places:[{label:'South Africa, Lesotho, Botswana, Zimbabwe', community:'Herders and mind-sport players'}],
+      intro:[
+        'Guard the herd. In Southern Africa, cattle were wealth: they paid lobola, sealed alliances and ranked families. So when herd boys scratched Morabaraba boards into rock near the grazing grounds, every piece was a cow and every capture was a raid.',
+        'Line up three cows into a mill and you shoot an enemy cow off the board. In 1996, post-apartheid South Africa recognised Morabaraba as an official mind sport, and it now has world championships.'
+      ],
+      uncertain:'Claims that the game comes from ancient Egypt, or is “older than the pyramids”, are not supported.'
+    },
+    play:{ published:true,
+      siteRules:{ version:'Mind Sports South Africa generalised rules', summary:'12 cows each; place, then move along the lines, then fly with three. Diagonal lines count. Each new mill shoots one enemy cow (cows in a mill are protected unless all are). Two cows, or no move, loses.', reconstructed:false }
+    },
+    sources:{ published:true, links:[
+      {title:'Morabaraba', url:'https://en.wikipedia.org/wiki/Morabaraba', publisher:'Wikipedia'},
+      {title:'Morabaraba: board and rules', url:'https://scoutwiki.scouts.org.za/wiki/Morabaraba', publisher:'Scout Wiki South Africa'},
+      {title:'Morabaraba', url:'https://www.southafrica.info/about/sport/features/morabaraba', publisher:'SouthAfrica.info'}
+    ]}
+  },
+  'chaupar':{
+    snippets:["Emperor Akbar laid a giant Chaupar board into his courtyard.","Legend says people in coloured robes were the pieces.","It is the grandparent of Pachisi, Ludo and Parcheesi.","Chaupar is a team game: sometimes you slow down to protect your partner.","Luck lets you in, and teamwork brings you home."],
+    names:[{text:'चौपड़',language:'Hindi',translit:'chaupaṛ'},{text:'Chausar',note:'another common name'}],
+    where:{ published:true,
+      places:[{label:'India', community:'Played at Mughal and Rajput courts and in homes'},{label:'Fatehpur Sikri', community:'Akbar’s courtyard board'}],
+      intro:[
+        'The emperor’s courtyard game. Emperor Akbar (r. 1556–1605) loved Chaupar so much that he had a giant board laid into the courtyard at Fatehpur Sikri. Played across India for centuries, it is the grandparent of Pachisi, Ludo and Parcheesi, so billions have played its descendants without knowing it.',
+        'But Chaupar is smarter: it is a team game. Race out from the centre, round the cross and home again, and sometimes slow down to protect your partner.'
+      ],
+      uncertain:'The story that people in coloured robes served as the pieces at Fatehpur Sikri is legend.'
+    },
+    play:{ published:true,
+      siteRules:{ version:'Living tradition, two players with two colours each', summary:'Three long dice (1, 2, 5, 6), each die moving one piece; a 1 or a 6 brings a piece in; crossed safe squares; a single enemy piece is sent back to the centre; exact count to go home.', reconstructed:false, note:'Scoring and entry throws vary by region. The choices made here are marked in the rules.' }
+    },
+    sources:{ published:true, links:[
+      {title:'Chaupar game board', url:'https://www.horniman.ac.uk/object/nn16214', publisher:'Horniman Museum'},
+      {title:'Pachisi Court, Fatehpur Sikri', url:'https://next.archnet.org/sites/6438', publisher:'Archnet'},
+      {title:'Games of Chance: Chaupar', url:'https://sites.asiasociety.org/arts/asiangames/chance03.html', publisher:'Asia Society'}
+    ]}
+  },
+  'dasapada':{
+    snippets:["About 2,500 years ago, the Buddha banned this game for monks.","His reason sounds modern: games grab attention and feed the craving to win.","The ban saved the game’s name, and lost its rules.","Our rules are rebuilt from period evidence: nuts counted by fours.","Can you play without craving the win?"],
+    names:[{text:'दसपद',language:'Pali and Sanskrit',translit:'dasapada',note:'“ten steps”'}],
+    where:{ published:true,
+      places:[{label:'North India', community:'The Buddha’s time, about the 5th century BCE'}],
+      intro:[
+        'The game the Buddha banned. About 2,500 years ago, the Buddha gave his monks a list of distractions to give up. At the top: games on boards of eight or ten rows. His reason sounds very modern: games grab attention and feed the craving to win.',
+        'The irony is that the ban saved the game’s name and lost its rules. Our version is rebuilt from period evidence: nuts counted by fours, and throws named after the ancient dice.'
+      ]
+    },
+    play:{ published:true,
+      siteRules:{ version:'“Kṛta Walks”', summary:'Grab nuts from a pile of 53 and count by fours: Kṛta walks, Tretā stands, Dvāpara rises, Kali lies down. Pieces change posture and only a standing piece walks. Three pieces across the ten rows wins.', reconstructed:true, note:'Every rule is tagged in How to play: attested by a text, a scholar’s reading, our reconstruction, or invented for play. 240,000 bot games found it fair (51% for the first player), with no draws.' }
+    },
+    sources:{ published:true, links:[
+      {title:'Brahmajāla Sutta (DN 1)', url:'https://accesstoinsight.org/tipitaka/dn/dn.01.0.bodh.html', publisher:'Access to Insight', note:'The list of games monks should give up.'},
+      {title:'Rigveda 10.34, the Gambler’s Hymn', url:'https://en.wikisource.org/wiki/The_Rig_Veda/Mandala_10/Hymn_34', publisher:'Wikisource (Griffith translation)'},
+      {title:'Terminalia bellirica (vibhīdaka), the dice nut', url:'https://en.wikipedia.org/wiki/Terminalia_bellirica', publisher:'Wikipedia'}
+    ],
+    uncertainty:['The count-by-fours reading of the throws follows Lüders (1907); other Indologists dispute details.','Rigveda 10.34’s “fifty-three” is sometimes read as “fifteen threes” (45).','No playable rule set survives. Everything beyond the board size and the throws is our reconstruction.'] }
+  },
+  'patolli':{
+    snippets:["Aztec players bet jewels, cloaks, even their own freedom on Patolli.","Five Flower, Macuilxochitl, was the god of games.","Spanish friars burned the mats, so only fragments of the rules survive.","A board found in 2025 at Naachtun is about 1,500 years old.","Throw the numbered beans and race the cross."],
+    names:[{text:'Patolli',language:'Nahuatl'}],
+    where:{ published:true,
+      places:[{label:'Mexico and Guatemala', community:'Classic Maya to the Aztec empire'}],
+      intro:[
+        'Bet everything on the beans. Aztec nobles and commoners bet jewels, feathers, cloaks, even their own freedom on Patolli. It was sacred too: Macuilxochitl, “Five Flower”, was the god of games, and boards were scratched right beside ballcourts.',
+        'Then Spanish friars called it idolatry, burned the mats and stamped it out, so only fragments of the rules survive. A board found in 2025 at Naachtun shows the game is about 1,500 years old.'
+      ],
+      uncertain:'Reading the 52 squares as the Aztec 52-year calendar is a modern interpretation; the chroniclers do not say so.'
+    },
+    play:{ published:true,
+      siteRules:{ version:'“Durán’s Mat”', summary:'Six pebbles each on a 52-square loop round the X. Numbered beans (six by default, five for a slower game): each bean face up is its own move. Landing on an enemy pebble sends it off. All six round wins.', reconstructed:true, note:'The mat, the pebbles and the numbered beans follow Durán. Bean values, capture and the win are our reconstruction, tagged in How to play.' }
+    },
+    sources:{ published:true, links:[
+      {title:'Patolli', url:'https://en.wikipedia.org/wiki/Patolli', publisher:'Wikipedia'},
+      {title:'The pre-Columbian board game of gambling, glyphs and poison beans', url:'https://mexiconewsdaily.com/culture/the-pre-columbian-board-game-of-gambling-glyphs-and-poison-beans', publisher:'Mexico News Daily', note:'Quotes Durán on the mat, pebbles and beans.'},
+      {title:'Mosaic game board found at the Maya site of Naachtun', url:'https://archaeology.org/news/2025/11/26/mosaic-game-board-found-at-maya-site-of-naachtun/', publisher:'Archaeology'},
+      {title:'Patolli in the Codex Mendoza', url:'https://aztecglyphs.wired-humanities.org/content/patolli-mdz70r', publisher:'Aztec Glyphs'}
+    ],
+    uncertainty:['Durán’s words are quoted here through a secondary source; check against his Book of the Gods and Rites before quoting verbatim.','The values painted on the beans are not recorded; 1 to 6 is our choice.'] }
   }
 };
 })();

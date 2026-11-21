@@ -68,4 +68,32 @@ module.exports={
   tip:'Sim can never end in a draw: with six dots, someone always finishes a triangle. With perfect play the second player wins, so the first player has to wait for a slip.',
   ways:'Against the computer, which plays the endgame exactly, with two players on one device, or online with a friend.',
   rel:['notakto'],genre:'Strategy game',play:['SinglePlayer','MultiPlayer']},
+ 'morabaraba':{
+  t:'Morabaraba — Play the South African Cattle Game Free | ZF Games',
+  d:'Play Morabaraba free on ZF Games: the Southern African game of cows and mills, now a recognised mind sport. Play the computer or a friend on one device.',
+  intro:'Morabaraba is a two-player strategy game from Southern Africa, played on three nested squares with diagonals. Each side places twelve cows, then moves them; three in a line make a mill, and every new mill shoots an enemy cow.',
+  tip:'Build a mill you can open and close: step one cow out and back in, and you shoot again every other turn.',
+  ways:'Against the computer, at three levels, or with two players on one device.',
+  rel:['chaupar','sim'],genre:'Strategy board game',play:['SinglePlayer','MultiPlayer']},
+ 'chaupar':{
+  t:'Chaupar — Play the Indian Cross-and-Circle Game Free | ZF Games',
+  d:'Play Chaupar free on ZF Games: the Indian race game behind Pachisi and Ludo, with long dice and partner colours. Play the computer or a friend on one device.',
+  intro:'Chaupar is a race game from India, played on a cross-shaped board for centuries and the parent of Pachisi and Ludo. Each player runs two partner colours out from the centre, round the cross and home again, throwing three long dice.',
+  tip:'Use the crossed safe squares: a piece standing there cannot be captured, so park there when an enemy is close behind.',
+  ways:'Against the computer, at three levels, or with two players on one device. Quick or full length.',
+  rel:['patolli','dasapada'],genre:'Board game',play:['SinglePlayer','MultiPlayer']},
+ 'dasapada':{
+  t:'Dasapada — Play the Board Game the Buddha Banned | ZF Games',
+  d:'Play Dasapada free on ZF Games: an ancient Indian ten-row game, rebuilt from period sources with nuts counted by fours. Play the computer or a friend.',
+  intro:'Dasapada is the ten-row board game the Buddha listed among distractions for monks. Its rules were lost; this version is rebuilt from period evidence, and every rule is labelled: throws are grabs of nuts counted by fours, and each throw makes a piece lie down, rise, stand or walk.',
+  tip:'When fewer than twelve nuts remain, count the pile: take it all if it leaves no remainder or two, never if it leaves one or three.',
+  ways:'Against the computer, at three levels, or with two players on one device.',
+  rel:['chaupar','patolli'],genre:'Board game',play:['SinglePlayer','MultiPlayer']},
+ 'patolli':{
+  t:'Patolli — Play the Aztec Bean Game Free | ZF Games',
+  d:'Play Patolli free on ZF Games: the Aztec and Maya race game on an X-shaped mat, rebuilt from the chroniclers with numbered beans. Play the computer or a friend.',
+  intro:'Patolli was played across Mesoamerica, from the Classic Maya to the Aztec empire, until it was suppressed after the Spanish conquest. This version follows the chronicler Durán: numbered beans, six pebbles each, and every bean a separate move. Reconstructed rules are labelled.',
+  tip:'Hit the enemy pebble that has gone farthest, and bring your own pebbles onto the mat early, even if it costs your biggest bean.',
+  ways:'Against the computer, at three levels, or with two players on one device. Five or six beans.',
+  rel:['chaupar','dasapada'],genre:'Board game',play:['SinglePlayer','MultiPlayer']},
 };
