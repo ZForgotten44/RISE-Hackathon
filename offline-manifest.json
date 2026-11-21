@@ -1,5 +1,5 @@
 {
- "version": "ac1fd3092dbe",
+ "version": "05681904777c",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -36,8 +36,9 @@
   "/games4.js?v=1af6c875",
   "/gold-engine.js",
   "/gold-engine.js?v=a7e20373",
-  "/heritage-art.js?v=b6553412",
+  "/heritage-art.js?v=b1203eac",
   "/heritage-core.js?v=cf397801",
+  "/heritage-lessons.js?v=3840dfa2",
   "/heritage.js?v=8b5580b6",
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
@@ -66,7 +67,7 @@
   "/site.css?v=76e3772a",
   "/site.webmanifest",
   "/sound.js?v=90368e02",
-  "/story-ticker.js?v=311dcbb6",
+  "/story-ticker.js?v=1dd552d2",
   "/theme.js?v=2d54ba4d",
   "/traces.js?v=cb511b6d",
   "/turn-timer.js?v=16c5eb30",
@@ -110,5 +111,5 @@
    "/patolli"
   ]
  },
- "bytes": 23755085
+ "bytes": 23781287
 }
