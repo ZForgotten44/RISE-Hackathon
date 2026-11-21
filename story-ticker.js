@@ -22,6 +22,7 @@ function stop(){ run++; clearTimeout(timer); }
 function tell(slug){
   const d=(window.ZF_ORIGINS||{})[slug], lines=d&&Array.isArray(d.snippets)?d.snippets.filter(Boolean):[];
   if(!lines.length||!window.ZFHintDuck) return;
+  if(ZFHintDuck.visible){ timer=setTimeout(()=>tell(slug),2500); return; }   // a hint or coaching note is up: wait for it
   const my=++run; markSeen(slug);
   const openStory=()=>{ stop(); ZFHintDuck.hide(); const b=document.querySelector('.zo-trigger'); window.ZFOrigins&&ZFOrigins.open(slug,b||undefined); };
   const say=i=>{ if(my!==run) return; if(i>0&&!stillOurs()){ stop(); return; }

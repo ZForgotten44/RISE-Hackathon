@@ -55,11 +55,11 @@ root.ZF_ORIGINS={
     ]}
   },
   'sim':{
-    snippets:["Chokwe storytellers sweep one unbroken line around dots in the sand.", "They were solving graph theory long before Europe credited Euler.", "Sim is pure graph theory: six dots and two colours.", "Someone must close a triangle. Make sure it isn’t you."],
+    snippets:["Chokwe storytellers sweep one unbroken line around dots in the sand.", "It is the same maths of points and paths that Europe credits to Euler.", "Sim is pure graph theory: six dots and two colours.", "Someone must close a triangle. Make sure it isn’t you."],
     where:{ published:true,
       places:[{label:'Angola, Zambia, DR Congo', community:'Chokwe sona drawers (akwa kuta sona)'}],
       intro:[
-        'The sand drawers who beat Euler to it. Chokwe storytellers press dots into the sand and, mid-story, sweep one unbroken line around them without lifting a finger. To pull that off they were solving puzzles about points and paths, the maths Europe calls graph theory and credits to Euler in 1736.',
+        'The sand drawers who do Euler’s maths by hand. Chokwe storytellers press dots into the sand and, mid-story, sweep one unbroken line around them without lifting a finger. To pull that off they were solving puzzles about points and paths, the maths Europe calls graph theory and credits to Euler in 1736.',
         'Sim is pure graph theory: six dots, two colours, and a guarantee that someone closes a triangle. Make sure it is not you. Gustavus Simmons invented Sim in 1969. The guarantee is Ramsey’s theorem, R(3,3) = 6.'
       ],
       uncertain:'Sim was not derived from sona. The link is the shared mathematics of points and lines. The age of the sona tradition is uncertain; it was documented in the 20th century and is older than that.'
@@ -136,7 +136,7 @@ root.ZF_ORIGINS={
       places:[{label:'Mexico and Central America', community:'Mesoamerican cacao growers and traders'}],
       intro:[
         'When chocolate was money. People in Mesoamerica were brewing cacao more than 3,500 years ago, and in Aztec markets cacao beans worked as small change. A Spanish price list from 1545 puts a turkey at 100 beans, and forgers hollowed out beans and filled them with clay.',
-        'In Chomp every bite costs you, and one square is poisoned. Maths proves the first player can always win. On a square bar, bite next to the poison corner, then mirror every move. Frederik Schuh described it as a number game (1952), and David Gale turned it into a chocolate bar (1974).'
+        'In Chomp every bite costs you, and one square is poisoned. Maths proves the first player can always win. On a square bar, bite diagonally next to the poison corner, then mirror every move. Frederik Schuh described it as a number game (1952), and David Gale turned it into a chocolate bar (1974).'
       ],
       uncertain:'Chomp has no Mesoamerican origin. The link is chocolate itself.'
     },

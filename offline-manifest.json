@@ -1,5 +1,5 @@
 {
- "version": "87a0f9758dbc",
+ "version": "65765965bd73",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -95,5 +95,5 @@
    "/sim"
   ]
  },
- "bytes": 23678072
+ "bytes": 23678257
 }
