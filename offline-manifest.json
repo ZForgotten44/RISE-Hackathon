@@ -1,5 +1,5 @@
 {
- "version": "05681904777c",
+ "version": "b705013d259a",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -9,9 +9,9 @@
   "/arcade-duck-side.svg",
   "/arcade-duck-top.svg",
   "/arcade-games.js?v=43febad6",
-  "/arcade-main.js?v=c904ccf3",
+  "/arcade-main.js?v=c301f86a",
   "/arcade-wire.js?v=fb0c3c87",
-  "/arcade.css?v=85db43c4",
+  "/arcade.css?v=2716c656",
   "/audio/duck-squeak.mp3",
   "/audio/zfgames-3.mp3",
   "/author-duck.png",
@@ -31,9 +31,9 @@
   "/favicon.ico",
   "/feel.js?v=794aa1a5",
   "/fonts/fast-blaze.woff2",
-  "/games2.js?v=e19ef0c0",
-  "/games3.js?v=afee35cd",
-  "/games4.js?v=1af6c875",
+  "/games2.js?v=7fa38874",
+  "/games3.js?v=600bcdfe",
+  "/games4.js?v=48bcaba5",
   "/gold-engine.js",
   "/gold-engine.js?v=a7e20373",
   "/heritage-art.js?v=b1203eac",
@@ -61,7 +61,7 @@
   "/party-duck.js?v=aefb47b3",
   "/react.js?v=0cfa1a13",
   "/rules-summary.js?v=f48836b4",
-  "/shared.js?v=97ff5283",
+  "/shared.js?v=d76231c1",
   "/shell.js?v=e2bccffe",
   "/side-duck.js?v=851c58a9",
   "/site.css?v=76e3772a",
@@ -111,5 +111,5 @@
    "/patolli"
   ]
  },
- "bytes": 23781287
+ "bytes": 23782280
 }
