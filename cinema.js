@@ -638,9 +638,9 @@ function paint(k){
   el.innerHTML=`<svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice"><g class="kb" style="transform-origin:50% 60%">${sc.svg()}</g></svg>`;
   reel.appendChild(el); void el.offsetWidth; el.classList.add('on');
   const pl=box.querySelector('.zc-place'); pl.classList.remove('in'); pl.textContent=sc.place; void pl.offsetWidth; pl.classList.add('in');
-  const words=sc.sub.split(' ');
+  const sub=window.ZFLang?ZFLang.t(sc.sub):sc.sub, words=sub.split(' ');   /* lang.js: the subtitle in the visitor's language */
   const say=box.querySelector('.zc-say'); say.innerHTML=words.map((w,n)=>`<span style="--i:${n}">${esc(w)}</span>`).join(' ');
-  say.setAttribute('aria-label',sc.sub);
+  say.setAttribute('aria-label',sub);
   box.querySelector('.zc-note').textContent=sc.note||'';
   clearTimeout(adv); adv=setTimeout(()=>go(i+1,true),STEP);   /* a timer, not the bar's animationend: the site shortens animations under reduced motion */
   box.querySelectorAll('.zc-bars button').forEach((b,n)=>{ b.classList.toggle('done',n<k); b.classList.remove('run'); if(n===k){ void b.offsetWidth; b.classList.add('run'); } b.setAttribute('aria-current',n===k?'step':'false'); });
@@ -676,7 +676,8 @@ function close(noCard){
   if(opener&&opener.focus&&document.contains(opener)) try{ opener.focus({preventScroll:true}); }catch(e){}
 }
 /* opens by itself once per heritage game, a moment after the page settles */
-const pending=s=>!!FILMS[s]&&!seen().includes(s)&&!/[?&]nofilm\b/.test(location.search);
+const filmsOff=()=>{ try{ return localStorage.getItem('zf-films')==='0'; }catch(e){ return false; } };   // Language & accessibility menu (lang.js): films can be set not to open by themselves
+const pending=s=>!!FILMS[s]&&!seen().includes(s)&&!filmsOff()&&!/[?&]nofilm\b/.test(location.search);
 function boot(){ const s=slugNow(); if(!pending(s)) return; let n=0; const t=()=>{ if(document.querySelector('#gdrawer.open')){ if(++n<120) setTimeout(t,500); return; } play(s); }; setTimeout(t,700); }   /* waits for How to play to close */
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
 window.ZFCinema={ play, close, has:s=>!!FILMS[s], pending, films:FILMS, renderScore };
