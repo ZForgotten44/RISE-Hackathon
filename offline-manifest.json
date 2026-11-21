@@ -1,5 +1,5 @@
 {
- "version": "e312345f848b",
+ "version": "2df9c9343cbc",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -62,7 +62,7 @@
   "/party-duck.js?v=aefb47b3",
   "/react.js?v=0cfa1a13",
   "/rules-summary.js?v=f48836b4",
-  "/shared.js?v=d76231c1",
+  "/shared.js?v=ff181ab2",
   "/shell.js?v=e2bccffe",
   "/side-duck.js?v=851c58a9",
   "/site.css?v=76e3772a",
@@ -112,5 +112,5 @@
    "/patolli"
   ]
  },
- "bytes": 23863253
+ "bytes": 23861710
 }

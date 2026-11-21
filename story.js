@@ -22,8 +22,8 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const NS='http://www.w3.org/2000/svg';
 const qs=new URLSearchParams(location.search);
 
-/* the featured set (mansy's order); the full list stays one click away (See all games) */
-const FEATURED=['ult','gold','chomp','nim','pentago','notakto','toot','sim'];
+/* the featured set (mansy's order, with Chaupar added first so a heritage game leads); the full list stays one click away (See all games) */
+const FEATURED=['chaupar','ult','gold','chomp','nim','pentago','notakto','toot','sim'];
 const GAMES=ZF.GAMES, picks=FEATURED.map(id=>GAMES.findIndex(g=>g.id===id)).filter(i=>i>=0);
 const N=picks.length;
 

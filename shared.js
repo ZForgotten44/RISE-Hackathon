@@ -282,7 +282,6 @@ const CREDIT={
  'nim':{url:'https://www.infinitelymore.xyz/p/game-of-nim',title:'The Game of Nim'},
  'chomp':{url:'https://www.infinitelymore.xyz/p/chomp',title:'Chomp'},
  'gold-coin':{url:'https://www.infinitelymore.xyz/p/gold-coin-game',title:'The Gold Coin'}};
-const NEW_SLUGS=new Set([...Object.keys(CREDIT),'take-two','quack-me-up','duck-trap','tail-thief','connect-four','can-you-force-it']);
 /* games with a real, working "online friend" room (see each game's own online-*.js adapter). Their card's label
    row says Online, with a green dot. Keep this in sync with each register()'s own online() hook. */
 const ONLINE_IDS=new Set(['c4','nim','gold','sim','pentago','toot','domineering','notakto','ult','pond','trap','tail']);
@@ -292,11 +291,6 @@ function creditHTML(slug,full){ const c=CREDIT[slug]; if(!c) return ''; const a=
   return full?`<p>Based on the game presentation and strategy by ${a} in ${im}. The rules text, lessons, computer opponents and artwork on this site are our own.</p>`
     :`<span class="cr-l">Credits</span> Based on the game presentation and strategy by ${a} in ${im}.`; }
 const EXTRA=`
-.gcard .newpill{position:absolute;top:16px;right:18px;z-index:3;padding:6px 11px 5px;border-radius:999px;background:var(--card-ink);color:var(--card-bg);font:800 11px/1 var(--font-mono);letter-spacing:.14em;box-shadow:none;pointer-events:none;transform-origin:50% 60%}
-.gcard.on .newpill{background:var(--card-ink-on);color:var(--card-bg-on);box-shadow:none}
-.gcard .newpill.wig{animation:zfwig 1s ease-in-out}
-@keyframes zfwig{0%,100%{transform:rotate(0) scale(1)}10%{transform:rotate(-10deg) scale(1.22)}26%{transform:rotate(9deg) scale(1.16)}42%{transform:rotate(-6deg) scale(1.1)}60%{transform:rotate(4deg) scale(1.05)}80%{transform:rotate(-2deg) scale(1.02)}}
-@media (prefers-reduced-motion:reduce){.gcard .newpill.wig{animation:none}}
 /* the label row under the premise: at most one mode label (Party or Online, each with its dot) and a quiet player count */
 .gcard .glabels{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font:500 14px/1.35 var(--font-sans);letter-spacing:0}
 .gcard .glabels .mode{display:inline-flex;align-items:center;gap:7px;font-weight:600;color:var(--card-ink)}
@@ -327,7 +321,6 @@ GAMES.forEach(g=>{ g.tags=TAGS[g.id]||['strategy'];
   g.keywords=(KEYWORDS[g.id]||'')+(online?' online friends remote':'')+(g.modes.local?' two players same device':''); });
 function injectCSS(){ if(document.getElementById('zf-cards')) return; const st=document.createElement('style'); st.id='zf-cards'; st.textContent=CSS+EXTRA; document.head.appendChild(st); }
 /* NEW pills wiggle once when their card scrolls into view, at a staggered random moment, and occasionally again; never together or continuously */
-const wigIO=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{ const p=e.target; if(!e.isIntersecting){ clearTimeout(p._t); p._seen=false; return; } if(p._seen) return; p._seen=true; const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches; if(reduce) return; const go=()=>{ p.classList.remove('wig'); void p.offsetWidth; p.classList.add('wig'); p._t=setTimeout(go,9000+Math.random()*9000); }; p._t=setTimeout(go,300+Math.random()*1800); }),{threshold:.6}):null;
 /* Phones have no hover, so pages call these instead: liveCard(c,true) plays a card's illustration (the same
    animation hover plays, via .live, without the hover colours), and liveCard(c,false) freezes it where it is (.held).
    Playing a frozen card resumes it; one whose run already finished starts again from the top. Loops that never end
@@ -359,13 +352,11 @@ function makeCard(g,i,opts){
      which never creates a room by itself) and the count is what an online room holds, not the game's solo range */
   const room=!!opts.room, pick=room&&!!g.modeScreen, href=room&&!pick?`/${g.slug}?create`:g.link, count=room&&g.mode!=='party'?(g.roomCount||'2 players'):g.players;
   const c=document.createElement('article'); c.className='gcard'; c.dataset.id=g.id; if(opts.drag) c.setAttribute('data-cursor-drag','');
-  const badge=!g.mode&&NEW_SLUGS.has(g.slug)?'<span class="newpill">NEW</span>':'';
   const labels=`<div class="gmeta glabels">${g.mode?`<span class="mode ${g.mode}"><span class="dot" aria-hidden="true"></span>${g.mode==='party'?'Party':'Online'}</span><span class="sep" aria-hidden="true">·</span>`:''}<span class="count">${count}</span></div>`;
   /* the number is a position in the homepage carousel; the All Games grid passes num:false (filtered results would read
      01, 04, 05 like gaps or a ranking) and keeps the empty row so the NEW pill and the art sit exactly where they did */
   const num=opts.num===false?'':String(i+1).padStart(2,'0');
-  c.innerHTML=`${badge}<div class="gi"${num?'':' aria-hidden="true"'}>${num}</div><div class="art">${g.art}</div><h3><a class="cardlink" href="${href}" draggable="false"${room&&!pick?` aria-label="${g.name}: set up room"`:''}>${g.name}</a>${g.aka?`<small class="aka">${g.aka}</small>`:''}</h3><div class="rule">${g.rule}</div>${labels}<div class="acts"><span class="playbtn" aria-hidden="true">${pick?'Play →':room?'Set up room →':'Play ↗'}</span><a class="rules-link" href="${g.link}#rules" draggable="false" data-cursor="RULES" aria-label="${g.name} rules">Rules</a></div>`;
-  const np=c.querySelector('.newpill'); if(np&&wigIO) wigIO.observe(np);
+  c.innerHTML=`<div class="gi"${num?'':' aria-hidden="true"'}>${num}</div><div class="art">${g.art}</div><h3><a class="cardlink" href="${href}" draggable="false"${room&&!pick?` aria-label="${g.name}: set up room"`:''}>${g.name}</a>${g.aka?`<small class="aka">${g.aka}</small>`:''}</h3><div class="rule">${g.rule}</div>${labels}<div class="acts"><span class="playbtn" aria-hidden="true">${pick?'Play →':room?'Set up room →':'Play ↗'}</span><a class="rules-link" href="${g.link}#rules" draggable="false" data-cursor="RULES" aria-label="${g.name} rules">Rules</a></div>`;
   const go=(kind,e)=>{ if(opts.shouldSuppress&&opts.shouldSuppress()){ e.preventDefault(); return; } if(opts.onOpen&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey){ e.preventDefault(); opts.onOpen(g,kind,e); } };
   c.querySelector('.cardlink').addEventListener('click',e=>go('play',e));
   c.querySelector('.rules-link').addEventListener('click',e=>{ e.stopPropagation(); go('rules',e); });
