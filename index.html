@@ -483,156 +483,178 @@ const PYRAMIDS={ w:150, h:50, rects:(function(){
   r.push([0,B,150,2,0]);
   return r; })() };
 
-const EIFFEL={ w:32, h:58, rects:(function(){
-  const r=[]; const CX=16;
-  for(let y=57;y>=43;y--){ const t=(57-y)/14, e=Math.pow(t,1.35);                    // four legs sweeping in, concave
-    const outer=Math.round(14-e*7), th=t<.5?3:2;
-    rc(r,CX-outer,y,th,1,2); rc(r,CX+outer-th,y,th,1,2);
-    const inner=Math.round(outer-th-1); if(y<52&&y>=44){ rc(r,CX-inner,y,1,1,1); rc(r,CX+inner-1,y,1,1,1); } }
-  for(let x=-9;x<=9;x++){ const y=Math.round(50-Math.sqrt(Math.max(0,1-(x/9)*(x/9)))*5); rc(r,CX+x,y,1,2,2); }   // the open arch under the first platform
-  for(let y=44;y<=48;y++){ const d=(y-44); rc(r,CX-5+d,y,1,1,0); rc(r,CX+4-d,y,1,1,0); }                       // restrained cross-bracing
-  rc(r,CX-12,41,24,2,3); rc(r,CX-11,43,22,1,1);                                                                 // first platform
-  for(let y=40;y>=24;y--){ const t=(40-y)/16, w=Math.round(8-t*4);
-    rc(r,CX-w,y,1,1,2); rc(r,CX+w-1,y,1,1,2); if(w>1) for(let x=-w+1;x<w-1;x++) if((x+y)%4===0) rc(r,CX+x,y,1,1,0); }   // lattice
-  rc(r,CX-6,22,12,2,3); rc(r,CX-5,24,10,1,1);                                                                   // second platform
-  for(let y=21;y>=8;y--){ const t=(21-y)/13, w=Math.max(1,Math.round(4-t*2.6)); rc(r,CX-w,y,w*2,1,(y%5===0)?0:1); }
-  rc(r,CX-3,6,6,2,3); rc(r,CX-1,2,2,4,2); rc(r,CX,0,1,2,3);
+/* ---------- the places along the route (beside the unchanged pyramids). Each is drawn from reference photographs and
+   simplified in detail, never in its defining outline. They are scenery to pass, never obstacles or props. ---------- */
+const blob=(r,cx,cy,rx,ry,s)=>{ for(let y=Math.floor(cy-ry);y<=Math.ceil(cy+ry);y++){ const dy=(y+.5-cy)/ry; if(Math.abs(dy)>1) continue; const hw=Math.round(rx*Math.sqrt(1-dy*dy)); if(hw>0) rc(r,Math.round(cx-hw),y,hw*2,1,s); } };
+const seg=(r,x0,y0,x1,y1,s)=>{ const n=Math.max(Math.abs(x1-x0),Math.abs(y1-y0),1); for(let i=0;i<=n;i++) rc(r,Math.round(x0+(x1-x0)*i/n),Math.round(y0+(y1-y0)*i/n),1,1,s); };
+
+/* Mali · the Great Mosque of Djenné: a long earthen wall bristling with rounded buttress pinnacles, three tapered towers,
+   and the toron, palm-wood beams that stick out of the walls in rows */
+const DJENNE={ w:100, h:46, rects:(function(){
+  const r=[]; const B=45;
+  rc(r,0,B-2,100,3,0); rc(r,3,B-5,94,3,1); rc(r,3,B-5,94,1,2);                                  // the raised earthen platform
+  rc(r,8,26,84,B-31,1); rc(r,8,26,1,B-31,2);                                                     // prayer-hall wall
+  for(let x=10;x<90;x+=6){ rc(r,x,22,3,B-27,2); rc(r,x+2,22,1,B-27,1); rc(r,x,20,3,2,2); rc(r,x+1,18,1,2,3); }   // buttresses rising into rounded pinnacles
+  for(const yy of [30,36]) for(let x=13;x<90;x+=6) rc(r,x+1,yy,1,1,0);                          // toron set into the wall
+  const tower=(cx,top,wb,wt)=>{ const bot=B-5;
+    for(let y=top;y<bot;y++){ const t=(bot-y)/(bot-top), w=Math.round(wb-(wb-wt)*t), x=cx-Math.floor(w/2);
+      rc(r,x,y,w,1,1); rc(r,x,y,1,1,2); rc(r,x+w-1,y,1,1,0);
+      if((bot-y)%5===3){ rc(r,x-1,y,1,1,3); rc(r,x+w,y,1,1,3); for(let k=x+3;k<x+w-2;k+=3) rc(r,k,y,1,1,0); } }   // beams through both sides and across the face
+    const x=cx-Math.floor(wt/2); rc(r,x-1,top-1,wt+2,1,2);
+    rc(r,x,top-4,2,3,2); rc(r,x+wt-2,top-4,2,3,2); rc(r,cx-1,top-6,2,5,2);                       // three pinnacles on the crown
+    rc(r,x,top-5,2,1,3); rc(r,x+wt-2,top-5,2,1,3); rc(r,cx-1,top-7,2,1,3); };                   // each topped with an ostrich egg
+  tower(30,14,14,9); tower(70,14,14,9); tower(50,9,16,10);
   return r; })() };
 
-/* the Statue of Liberty, drawn to read at a glance: a fan of seven crown rays, the torch arm raised high with a cup and
-   flame, the tablet held against the body, a robe that widens to the feet, on its tall stepped pedestal */
-const LIBERTY={ w:30, h:64, rects:(function(){
-  const r=[]; const CX=14;
-  const line=(x0,y0,x1,y1,s,w)=>{ const n=Math.max(Math.abs(x1-x0),Math.abs(y1-y0)); for(let i=0;i<=n;i++){ const x=Math.round(x0+(x1-x0)*i/n), y=Math.round(y0+(y1-y0)*i/n); rc(r,x,y,w||1,1,s); } };
-  rc(r,0,61,30,3,0); rc(r,2,58,26,3,1); rc(r,2,58,26,1,2);                                                              // stepped base
-  rc(r,6,43,18,15,1); rc(r,6,43,1,15,2); rc(r,23,43,1,15,0);                                                            // pedestal
-  rc(r,5,41,20,2,2); rc(r,7,39,16,2,1); rc(r,8,38,14,1,2);                                                              // cornice and cap
-  for(const x of [9,12,15,18,21]) rc(r,x,46,1,9,0);                                                                     // pedestal columns
-  for(let y=37;y>=23;y--){ const t=(37-y)/14, w=Math.round(11-t*5), x=CX-Math.floor(w/2)+(y<30?1:0);                  // the robe, widening to the feet
-    rc(r,x,y,w,1,1); rc(r,x,y,1,1,2); if(y>26&&(37-y)%3===1) rc(r,x+2+((37-y)%2),y,1,2,0); }
-  rc(r,CX-3,20,8,3,1); rc(r,CX-3,20,1,3,2);                                                                             // shoulders
-  rc(r,CX-1,18,3,2,2);                                                                                                  // neck
-  rc(r,CX-2,13,5,5,2); rc(r,CX-2,13,1,5,3); rc(r,CX,16,1,1,0);                                                          // head
-  rc(r,CX-3,12,7,1,3);                                                                                                  // crown band
-  for(const [dx,ex,ey] of [[-3,-6,9],[-2,-4,8],[-1,-2,7],[0,0,7],[1,2,7],[2,4,8],[3,6,9]]) line(CX+dx,11,CX+ex,ey,3);   // seven rays, fanned
-  line(CX+4,21,CX+6,7,1,2);                                                                                             // raised torch arm
-  rc(r,CX+5,5,4,2,2); rc(r,CX+4,4,6,1,3);                                                                              // torch cup
-  rc(r,CX+5,1,4,3,3); rc(r,CX+6,0,2,1,3);                                                                               // flame
-  rc(r,CX-6,22,4,8,2); rc(r,CX-6,22,4,1,3); rc(r,CX-2,24,2,3,1);                                                         // tablet held against the body
+/* Zimbabwe · Great Zimbabwe: the curved, mortarless granite wall of the Great Enclosure with its chevron band, the
+   conical tower rising behind it, and a granite kopje of stacked boulders */
+const ZIMBABWE={ w:104, h:36, rects:(function(){
+  const r=[]; const B=35;
+  for(const [x,y,w,h,s] of [[0,27,13,8,1],[12,29,11,6,1],[3,21,10,6,2],[12,22,7,7,1],[6,16,8,5,1],[9,12,4,4,2]]){ rc(r,x+1,y,w-2,1,s); rc(r,x,y+1,w,h-1,s); rc(r,x,y+h-1,w,1,0); rc(r,x+w-1,y+1,1,h-1,0); }   // the kopje: granite boulders balanced on one another
+  const TX=70, TT=3;                                                                                           // conical tower
+  for(let y=TT;y<B;y++){ const t=(y-TT)/(B-TT), w=Math.max(3,Math.round(3+t*11)), x=TX-Math.floor(w/2);
+    rc(r,x,y,w,1,1); rc(r,x,y,1,1,2); if(y%3===0) for(let k=x+1;k<x+w-1;k+=2) rc(r,k,y,1,1,0); }
+  rc(r,TX-2,TT-1,4,1,2);
+  const X0=24, X1=103, hgt=x=>{ let h=12+3*Math.sin(Math.PI*(x-X0)/(X1-X0)); const d=Math.min(x-X0,X1-x); if(d<7) h*=Math.sqrt(1-Math.pow((7-d)/7,2)); return Math.round(h); };
+  for(let x=X0;x<=X1;x++){ const h=hgt(x), top=B-h; if(h<=0) continue;
+    rc(r,x,top,1,h,1); rc(r,x,top,1,1,2);
+    for(let y=top+3;y<B;y+=3) if((x*3+y)%7===0) rc(r,x,y,1,1,0);                                               // courses of dressed stone
+    if(x>=52&&x<=92&&h>8) rc(r,x,top+2+[0,1,2,1][x%4],1,1,0); }                                                  // the chevron band near the top
+  rc(r,44,B-9,3,9,0);                                                                                           // a narrow passage through the wall
   return r; })() };
 
-const BRIDGE={ w:190, h:52, rects:(function(){
-  const r=[]; const H=52, DECK=22, WATER=H-7, T1=68, T2=122, TOP=2, VL=52, VR=138, FL=34, FR=156;
-  const top=x=>x<FL?Math.min(H-1,DECK+(FL-x)):(x>FR?Math.min(H-1,DECK+(x-FR)):DECK);
-  for(let x=0;x<190;x++){
-    if(x>=VL&&x<VR){ const d=Math.min(x-VL,VR-1-x), wall=d<10?(10-d)*3:0, wt=Math.min(H-8,DECK+2+(30-wall)>H-8?H-8:DECK+2+(30-wall));
-      if(wall) r.push([x,wt,1,H-wt,1]);
-      r.push([x,WATER,1,H-WATER,0]); if((x*7)%11<3) r.push([x,WATER+2,2,1,1]);
-    } else { const t=top(x); r.push([x,t,1,H-t,1]); if(H-t>3) r.push([x,t+2,1,1,2]); }
-  }
-  for(let x=0;x<190;x++){ if(x>=VL&&x<VR){ r.push([x,DECK,1,2,3]); r.push([x,DECK+2,1,1,0]); } else { const t=top(x); r.push([x,t,1,2,3]); } }   // one continuous deck, with an edge line
-  for(let x=FL+4;x<FR;x+=10) r.push([x,DECK-2,1,2,1]);
-  for(const T of [T1,T2]){ r.push([T,TOP,4,WATER-TOP,2]); r.push([T-1,TOP+5,6,1,1]); r.push([T-1,TOP+12,6,1,1]); r.push([T-1,TOP,6,1,3]); r.push([T-2,WATER-4,8,4,0]); }
-  const A1=FL+4, A2=FR-4;
-  r.push([A1-3,DECK-6,7,6,0]); r.push([A2-3,DECK-6,7,6,0]);
-  const cy=x=>{ if(x<=T1+2) return Math.round(DECK-6-((x-A1)/(T1+2-A1))*(DECK-6-TOP));
-    if(x>=T2+2) return Math.round(TOP+((x-(T2+2))/(A2-(T2+2)))*(DECK-6-TOP));
-    const t=(x-(T1+2))/((T2+2)-(T1+2)); return Math.round(TOP+Math.sin(Math.PI*t)*13); };
-  for(let x=A1;x<=A2;x++) r.push([x,cy(x),1,1,3]);
-  for(let x=A1+3;x<T1;x+=4){ const y=cy(x); r.push([x,y,1,DECK-y,1]); }                              // hangers on the side spans too
-  for(let x=T1+6;x<T2;x+=4){ const y=cy(x); r.push([x,y,1,DECK-y,1]); }
-  for(let x=T2+6;x<A2;x+=4){ const y=cy(x); r.push([x,y,1,DECK-y,1]); }
+/* Ethiopia · the stelae of Aksum: tall, slender monoliths carved as storeys, with beam ends, false windows, a false door
+   at the foot and a rounded crown */
+const AKSUM={ w:34, h:66, rects:(function(){
+  const r=[]; const B=66;
+  rc(r,0,B-3,34,3,0); rc(r,2,B-5,30,2,1); rc(r,2,B-5,30,1,2);
+  const stele=(x0,w,top,storeys)=>{ const bot=B-5, cap=Math.ceil(w/2);
+    for(let k=0;k<cap;k++){ const dy=cap-k-.5, ww=Math.max(1,Math.round(2*Math.sqrt(Math.max(0,(w/2)*(w/2)-dy*dy)))); rc(r,x0+Math.floor((w-ww)/2),top+k,ww,1,k<1?2:1); }
+    for(let y=top+cap;y<bot;y++){ rc(r,x0,y,w,1,1); rc(r,x0,y,1,1,2); rc(r,x0+w-1,y,1,1,0); }
+    const door=bot-7; rc(r,x0+Math.floor(w/2)-1,door,2,6,0);
+    const sh=Math.max(3,Math.floor((door-2-(top+cap+2))/storeys));
+    for(let i=0;i<storeys;i++){ const y=door-2-i*sh; rc(r,x0+1,y,w-2,1,0); rc(r,x0-1,y,1,1,1); rc(r,x0+w,y,1,1,1);   // a ledge with its beam ends
+      if(sh>=4){ rc(r,x0+1,y-2,1,1,0); rc(r,x0+w-2,y-2,1,1,0); } } };                                                 // false windows
+  stele(8,8,1,9); stele(22,6,26,4); stele(30,3,44,2);
   return r; })() };
 
-const COLOSSEUM={ w:96, h:40, rects:(function(){
-  const r=[]; const B=40, top=x=>x<62?4:(x<72?9:(x<82?15:(x<90?21:27)));                 // the far end is broken away in steps
-  for(let x=2;x<94;x++){ const t=top(x); rc(r,x,t,1,B-t,(Math.floor((x-2)/7)%2)?1:2); }
-  rc(r,2,4,1,B-4,0); rc(r,93,27,1,B-27,0);
-  for(const y of [14,26]) for(let x=2;x<94;x++) if(top(x)<=y) rc(r,x,y,1,1,3);              // ledges between the three storeys
-  rc(r,2,3,60,1,3);
-  for(let x=5;x<90;x+=7){ if(top(x)<=27) archCut(r,x+1,39,5,10,0);                        // ground arches
-    if(top(x)<=15) archCut(r,x+1,25,5,9,0);                                                // middle arches
-    if(top(x)<=6) rc(r,x,6,3,5,0); }                                                       // attic windows
-  for(const [x,y,w,h] of [[84,36,5,3],[89,34,4,5],[78,37,3,2]]) rc(r,x,y,w,h,1);           // fallen stone
-  rc(r,0,B-1,96,1,0);
+/* South Africa · Soweto's Orlando Towers: two cooling towers with flared bases and tops, the walkway slung between them,
+   and their painted surfaces suggested with a few restrained blocks */
+const ORLANDO={ w:56, h:50, rects:(function(){
+  const r=[]; const B=50;
+  const tower=(cx,top,mural)=>{ const h=B-1-top, wy=top+Math.round(h*.3), b=h*.3, hw=y=>Math.round(5*Math.sqrt(1+Math.pow((y-wy)/b,2)));
+    for(let y=top;y<B-1;y++){ const w=hw(y); rc(r,cx-w,y,w,1,2); rc(r,cx,y,w,1,1); rc(r,cx-w,y,1,1,3); }
+    rc(r,cx-hw(top),top,hw(top)*2,1,3);
+    for(let x=cx-hw(B-2)+1;x<cx+hw(B-2)-1;x+=3) rc(r,x,B-3,1,2,0);                              // the open legs at the foot
+    for(const [dx,dy,w,h,s] of mural) rc(r,cx+dx,wy+dy,w,h,s); };
+  tower(15,4,[[-4,4,3,5,3],[-1,4,3,5,0],[2,4,2,5,3],[-4,9,8,1,0]]);
+  tower(41,8,[[-4,3,3,5,0],[-1,3,4,5,3],[3,3,1,2,0]]);
+  rc(r,21,11,14,1,0); rc(r,21,13,14,1,0); for(let x=22;x<35;x+=3) rc(r,x,12,1,1,0);
+  rc(r,0,B-1,56,1,0);
   return r; })() };
 
-const BIGBEN={ w:56, h:60, rects:(function(){
-  const r=[]; const B=60;
-  rc(r,22,44,34,16,1); rc(r,22,44,34,1,3); rc(r,22,43,34,1,2);                            // the palace wing
-  for(let x=24;x<54;x+=4){ rc(r,x,48,2,4,0); rc(r,x,54,2,4,0); } for(const x of [26,36,46]) rc(r,x,40,2,3,1);
-  rc(r,6,24,12,36,1); rc(r,6,24,2,36,2); rc(r,16,24,2,36,0);                               // tower shaft
-  for(let y=28;y<58;y+=6) rc(r,10,y,4,3,0);
-  rc(r,4,12,16,12,1); rc(r,4,12,16,1,3); rc(r,4,23,16,1,0);                                // clock stage
-  rc(r,7,14,10,9,3); rc(r,8,15,8,7,0); rc(r,11,16,2,4,3); rc(r,11,19,4,1,3);               // clock face and hands
-  for(const [x,y] of [[11,14],[11,22],[7,18],[16,18]]) rc(r,x,y,1,1,4);
-  rc(r,5,7,14,5,1); for(let x=6;x<18;x+=3) rc(r,x,8,1,3,0);                                  // belfry
-  for(const x of [4,18]){ rc(r,x,4,2,8,2); rc(r,x,3,2,1,3); }                                // corner turrets
-  for(let i=0;i<7;i++){ const w=2+i*2; rc(r,12-Math.floor(w/2),i,w,1,i%2?1:2); }
-  rc(r,11,0,2,1,3);
+/* South Africa · Table Mountain, for the distant layer: the long flat summit with rocky, gullied cliffs, Devil's Peak
+   to one side and Lion's Head to the other */
+const TABLEMT={ w:220, h:34, rects:(function(){
+  const r=[]; const H=34;
+  const hgt=x=>{ let h=4+8*Math.sin(Math.PI*x/220);
+    h=Math.max(h,26-Math.abs(x-40)*.8);                                                           // Devil's Peak
+    if(x>=60&&x<68) h=Math.max(h,30-(68-x)*1.2); if(x>=68&&x<=172) h=Math.max(h,30-((x>92&&x<100)||(x>134&&x<138)?1:0)+(x>150&&x<160?1:0)); if(x>172&&x<=180) h=Math.max(h,30-(x-172)*1.6);
+    if(x>=188&&x<=216) h=Math.max(h,19-Math.pow((x-202)/8,2)*5+(x>=198&&x<=201?1:0));             // Lion's Head
+    return Math.max(2,Math.round(h)); };
+  for(let x=0;x<220;x+=2){ const h=hgt(x); r.push([x,H-h,2,h,0]); if(h>=29) r.push([x,H-h,2,1,3]); if(x>=70&&x<=170&&[72,80,88,96,104,112,118,126,134,146,154,162,168].includes(x)) r.push([x,H-h+2,1,6+(x%7),2]); }   // the level summit edge, and gullies down the cliff face   // gullies down the cliff face
   return r; })() };
 
-const TORII={ w:44, h:38, rects:(function(){
-  const r=[]; const B=38;
-  for(let i=0;i<4;i++) rc(r,8-i*0,B-1-i,28+i*0,1,0); rc(r,4,B-3,36,2,0); rc(r,6,B-4,32,1,1);   // stone base and steps
-  for(const x of [10,31]){ rc(r,x,10,4,B-14,2); rc(r,x,10,1,B-14,3); rc(r,x+3,10,1,B-14,0); rc(r,x-1,B-8,6,4,1); }   // two pillars on plinths
-  for(let x=0;x<44;x++){ const lift=x<7?Math.round((7-x)*.5):(x>36?Math.round((x-36)*.5):0); rc(r,x,3-lift,1,4,x%2?1:2); } rc(r,0,2,44,1,3);   // the upswept top beam
-  rc(r,4,14,36,3,1); rc(r,4,14,36,1,2);                                                     // second beam
-  rc(r,20,7,4,7,3); rc(r,21,8,2,5,0);                                                       // name plaque
+/* Brazil · Sugarloaf Mountain, for the distant layer: the steep, rounded granite dome rising from the bay beside the
+   lower Morro da Urca, with the thin cable-car line between them */
+const SUGARLOAF={ w:120, h:42, rects:(function(){
+  const r=[]; const H=42;
+  const hgt=x=>{ const a=1-Math.pow(Math.abs(x-86)/(x<86?16:23),2.6), b=1-Math.pow(Math.abs(x-34)/22,2);
+    return Math.max(1,Math.round(Math.max(40*Math.pow(Math.max(0,a),.55),17*Math.pow(Math.max(0,b),.75),2))); };
+  for(let x=0;x<120;x+=2){ const h=hgt(x); r.push([x,H-h,2,h,0]); if(x===78||x===94) r.push([x,H-h+6,1,Math.max(2,h-16),2]); }   // two bare rock streaks
+  for(let x=36;x<=82;x++){ const t=(x-36)/46, y=Math.round((H-18)+(H-39-(H-18))*t+Math.sin(Math.PI*t)*3); r.push([x,y,1,1,3]); }   // cable line, sagging
+  r.push([57,H-27,2,2,3]); for(let x=8;x<=34;x++){ const t=(x-8)/26; r.push([x,Math.round((H-3)+((H-18)-(H-3))*t+Math.sin(Math.PI*t)*2),1,1,3]); }
+  r.push([0,H-2,120,2,0]);
   return r; })() };
 
-const WINDMILLS={ w:96, h:44, rects:(function(){
-  const r=[]; const B=44;
-  for(let x=0;x<96;x++){ rc(r,x,B-8-Math.round(Math.sin(x/9)*1.2),1,8,1); }                // dike
-  rc(r,0,B-3,96,3,0); for(let x=2;x<94;x+=7) rc(r,x,B-2,3,1,1);                              // canal with ripples
-  const mill=(cx,base,h,bw,rot)=>{ for(let i=0;i<h;i++){ const w=Math.round(bw-(i/h)*(bw*.45)); rc(r,cx-Math.floor(w/2),base-i,w,1,i%6===0?0:(i%2?1:2)); }
-    for(let i=0;i<5;i++){ const w=2+i*2; rc(r,cx-Math.floor(w/2),base-h-5+i,w,1,i%2?0:1); }   // cap
-    rc(r,cx-1,base-h-7,2,2,1);
-    const hy=base-h+3; for(let k=0;k<4;k++){ const a=rot+k*Math.PI/2; for(let d=2;d<=13;d++){ rc(r,Math.round(cx+Math.cos(a)*d),Math.round(hy+Math.sin(a)*d),1,1,d>6?3:1); } }
-    rc(r,cx-1,base-5,3,5,0); };
-  mill(26,B-8,24,12,Math.PI/4); mill(70,B-8,20,10,Math.PI/7);
+/* Mexico · El Castillo at Chichén Itzá: nine stepped terraces, the central staircase with serpent heads at its foot,
+   and the small temple on top. Stepped, not smooth, so it never reads as the Egyptian pyramids */
+const CASTILLO={ w:74, h:42, rects:(function(){
+  const r=[]; const B=41, CX=37, L=9, LH=3;
+  for(let i=0;i<L;i++){ const y0=B-LH*(i+1), half=Math.round(33-i*2.6);
+    rc(r,CX-half,y0,half*2,LH,1); rc(r,CX-half,y0,half*2,1,2); rc(r,CX-half,y0+LH-1,half*2,1,0); rc(r,CX-half,y0,1,LH,2); }
+  const PT=B-LH*L;
+  for(let y=PT;y<B;y++){ rc(r,CX-4,y,8,1,(y%2)?2:3); rc(r,CX-5,y,1,1,0); rc(r,CX+4,y,1,1,0); }   // the staircase and its balustrades
+  rc(r,CX-8,B-2,3,2,0); rc(r,CX+5,B-2,3,2,0);                                                       // serpent heads
+  rc(r,CX-8,PT-7,16,7,1); rc(r,CX-8,PT-7,1,7,2); rc(r,CX-9,PT-8,18,1,2); rc(r,CX-7,PT-10,14,2,1);  // temple, cornice, roof crest
+  rc(r,CX-6,PT-4,2,4,0); rc(r,CX-1,PT-5,2,5,0); rc(r,CX+4,PT-4,2,4,0);                            // its doorways
+  rc(r,0,B,74,1,0);
   return r; })() };
 
-const AQUEDUCT={ w:150, h:44, rects:(function(){
-  const r=[]; const B=44;
-  const ground=x=>x<26?Math.round(26*(1-x/26)*1.0)+0:(x>124?Math.round((x-124)):0);      // hillsides rise at both ends
-  for(let x=0;x<150;x++){ const g=ground(x); if(g>0) rc(r,x,B-g-2,1,g+2,1); }
-  rc(r,0,B-2,150,2,0);
-  rc(r,0,5,150,4,2); rc(r,0,5,150,1,3); rc(r,0,9,150,1,0);                                // the water channel on top
-  for(let x=2;x<148;x+=4) rc(r,x,6,2,2,1);
-  for(let i=0;i<10;i++){ const cx=13+i*13, w=9; rc(r,cx-8,9,4,B-11,1); rc(r,cx-8,9,1,B-11,2); rc(r,cx-5,9,1,B-11,0); archCut(r,cx,B-2,w,B-14-ground(cx)*0,0); }   // tall lower arches
-  for(let i=0;i<20;i++){ const cx=6+i*6.5; archCut(r,Math.round(cx),20,3,7,0); }           // upper row of small arches
+/* Mexico · Palacio de Bellas Artes: a low, broad marble building with columns and arched entrances, under its large
+   ribbed dome and lantern, with smaller cupolas at the corners */
+const BELLAS={ w:84, h:44, rects:(function(){
+  const r=[]; const B=43;
+  rc(r,4,26,76,B-26,1); rc(r,4,26,1,B-26,2); rc(r,79,26,1,B-26,0); rc(r,2,25,80,1,3); rc(r,3,24,78,1,2);
+  for(let x=7;x<26;x+=3) rc(r,x,28,1,B-30,0); for(let x=60;x<78;x+=3) rc(r,x,28,1,B-30,0);
+  rc(r,28,21,28,B-21,1); rc(r,28,21,1,B-21,2); rc(r,27,20,30,1,3);
+  archCut(r,34,B,5,10,0); archCut(r,42,B,6,12,0); archCut(r,50,B,5,10,0);
+  rc(r,31,16,22,5,1); rc(r,31,16,22,1,2); for(let x=33;x<52;x+=3) rc(r,x,17,1,3,0);                 // drum
+  const DX=42, DR=11; for(let k=0;k<DR;k++){ const y=16-DR+k, dy=DR-k-.5, hw=Math.round(Math.sqrt(DR*DR-dy*dy));
+    rc(r,DX-hw,y,hw,1,2); rc(r,DX,y,hw,1,1); if(k>2) for(const f of [-.55,-.18,.18,.55]) rc(r,Math.round(DX+f*hw*1.6),y,1,1,0); }   // the dome and its ribs
+  rc(r,40,2,5,3,1); rc(r,41,1,3,1,2); rc(r,42,0,1,1,3);                                             // lantern
+  for(const cx of [10,74]){ for(let k=0;k<4;k++){ const hw=[2,3,4,4][k]; rc(r,cx-hw,20+k,hw*2,1,k<2?2:1); } rc(r,cx,18,1,2,3); }   // corner cupolas
+  rc(r,0,B,84,1,0);
   return r; })() };
 
-const DOMES={ w:84, h:46, rects:(function(){
-  const r=[]; const B=46;
-  rc(r,14,30,56,16,1); rc(r,14,30,56,1,3); rc(r,14,45,56,1,0);                              // prayer hall walls
-  for(let x=18;x<68;x+=6) archCut(r,x+2,45,3,8,0);
-  const dome=(cx,base,rad)=>{ for(let i=0;i<rad;i++){ const w=Math.round(Math.sqrt(rad*rad-(rad-i-.5)*(rad-i-.5))*2), x=cx-Math.floor(w/2); rc(r,x,base-rad+i,Math.floor(w/2),1,2); rc(r,x+Math.floor(w/2),base-rad+i,w-Math.floor(w/2),1,1); }
-    rc(r,cx,base-rad-3,1,3,3); rc(r,cx-1,base-rad-2,3,1,3); };
-  rc(r,29,22,26,8,1); for(let x=31;x<53;x+=4) rc(r,x,24,2,4,0);                              // drum with windows
-  dome(42,22,13); dome(21,30,7); dome(63,30,7);
-  for(const x of [3,76]){ rc(r,x,8,3,38,1); rc(r,x,8,1,38,2); rc(r,x-1,20,5,2,2); rc(r,x-1,19,5,1,3); for(let i=0;i<8;i++) rc(r,x+1-Math.floor(i/4),i,1+Math.floor(i/4)*0+(i>3?1:0),1,i%2?1:2); rc(r,x+1,0,1,2,3); }   // minarets with balconies and pointed caps
-  rc(r,0,B-1,84,1,0);
+/* India · the Great Stupa at Sanchi: the hemispherical dome on its terrace and railing, the square harmika with the
+   triple umbrella on top, and one of its carved gateways (torana) beside it */
+const SANCHI={ w:86, h:34, rects:(function(){
+  const r=[]; const B=33;
+  const CX=39, base=26, rx=22, ry=16;
+  for(let y=base-ry;y<base;y++){ const dy=(base-y-.5)/ry, hw=Math.round(rx*Math.sqrt(Math.max(0,1-dy*dy))); rc(r,CX-hw,y,hw,1,2); rc(r,CX,y,hw,1,1); }
+  rc(r,14,base,50,B-base,1); rc(r,14,base,50,1,2); rc(r,14,base,1,B-base,2);                         // terrace
+  rc(r,12,23,54,1,3); for(let x=12;x<66;x+=2) rc(r,x,24,1,2,2);                                      // railing (vedika)
+  rc(r,34,6,10,4,1); rc(r,33,5,12,1,2); for(let x=35;x<43;x+=2) rc(r,x,7,1,2,0);                     // harmika
+  rc(r,CX,0,1,5,3); rc(r,CX-3,3,7,1,2); rc(r,CX-2,1,5,1,2);                                            // umbrellas
+  for(const px of [71,81]){ rc(r,px,12,2,B-12,1); rc(r,px,12,1,B-12,2); rc(r,px-1,12,4,2,2); }       // gateway pillars and capitals
+  for(const ay of [4,8]){ rc(r,67,ay,19,2,1); rc(r,67,ay,19,1,2); rc(r,66,ay-1,2,1,1); rc(r,84,ay-1,2,1,1); }   // architraves with curled ends
+  rc(r,67,11,19,1,1); for(const ux of [75,78]){ rc(r,ux,6,1,2,1); rc(r,ux,10,1,1,1); }
+  rc(r,76,1,3,3,2); rc(r,77,2,1,1,0);                                                                  // the wheel on top
+  rc(r,0,B,86,1,0);
   return r; })() };
 
-const COLUMNS={ w:26, h:20, rects:(function(){ const r=[]; for(const [x,h] of [[1,20],[7,12],[13,18],[19,8]]){ rc(r,x,20-h,4,h,1); rc(r,x,20-h,1,h,2); rc(r,x-1,20-h,6,1,3); rc(r,x-1,19,6,1,0);} rc(r,0,17,26,3,0); return r; })() };
-const MINARET={ w:8, h:34, rects:(function(){ const r=[]; rc(r,3,4,3,30,1); rc(r,3,4,1,30,2); rc(r,1,17,7,2,2); rc(r,1,16,7,1,3); rc(r,2,0,1,1,3); rc(r,3,1,2,3,2); rc(r,2,31,5,3,0); return r; })() };
-const LANTERN={ w:8, h:14, rects:[[3,0,2,1,3],[1,1,6,2,1],[2,3,4,4,3],[3,4,2,2,0],[1,7,6,1,1],[3,8,2,4,1],[1,12,6,2,0]] };
-const PAGODA={ w:18, h:30, rects:(function(){ const r=[]; for(let i=0;i<3;i++){ const y=4+i*8, w=16-i*3; rc(r,9-Math.floor(w/2),y+3,w,5,1); rc(r,9-Math.floor(w/2)+1,y+5,w-2,2,0); rc(r,9-Math.floor(w/2)-1,y+2,w+2,1,3); rc(r,9-Math.floor(w/2)-1,y+3,w+2,1,2);} rc(r,9,0,1,4,2); rc(r,2,28,14,2,0); return r; })() };
-
-const ARCH={ w:26, h:26, rects:[[0,8,26,18,1],[8,14,10,12,4],[7,12,12,2,4],[0,6,26,2,2],[2,10,3,2,0],[21,10,3,2,0]] };
-
-const CITY={ w:80, h:34, rects:(function(){
-  const r=[]; const b=[[0,14,10],[11,20,8],[20,10,12],[33,24,7],[41,16,10],[52,28,6],[59,18,9],[69,11,11]];
-  for(const [x,h,w] of b){ r.push([x,34-h,w,h,0]); r.push([x,34-h,w,1,1]);
-    for(let wy=34-h+2; wy<33; wy+=3) for(let wx=x+1; wx<x+w-1; wx+=3) r.push([wx,wy,1,1,1]); }
+/* Argentina · the Obelisco de Buenos Aires: slim and pointed, with its single small window near the top, in a plaza
+   framed by low city blocks */
+const BAOBELISK={ w:56, h:62, rects:(function(){
+  const r=[]; const B=61, CX=28;
+  for(const [x,w,h] of [[0,9,12],[10,8,16],[40,10,14],[51,5,10]]){ rc(r,x,B-h,w,h,1); rc(r,x,B-h,w,1,2); for(let yy=B-h+3;yy<B-1;yy+=3) rc(r,x+1,yy,w-2,1,0); }
+  rc(r,12,B-19,4,3,2); rc(r,13,B-20,2,1,2);                                                           // a small corner cupola
+  rc(r,18,B-2,20,2,1); rc(r,20,B-3,16,1,2);                                                            // the plaza
+  for(let y=8;y<B-3;y++){ const t=(y-8)/(B-11), w=Math.round(4+t*2), x=CX-Math.floor(w/2); rc(r,x,y,w,1,1); rc(r,x,y,1,1,2); rc(r,x+w-1,y,1,1,0); }
+  for(let k=0;k<6;k++){ const w=Math.max(1,Math.round(k*.75)); rc(r,CX-Math.floor(w/2),2+k,w,1,k<2?3:2); }   // pyramidion
+  rc(r,CX-1,11,1,2,0);
+  rc(r,0,B,56,1,0);
   return r; })() };
 
-const DUNE={ w:60, h:12, rects:(function(){ const r=[];
-  for(let i=0;i<30;i++){ const h=Math.round(Math.sin(i/30*Math.PI)*10); if(h>0) r.push([i*2,12-h,2,h,0]); } return r; })() };
+/* Brazil · the Cathedral of Brasília: sixteen curved concrete ribs rising from a ring, drawn in toward a waist and
+   opening upward into a crown, glass between them, and the slim bell tower beside it */
+const BRASILIA={ w:56, h:38, rects:(function(){
+  const r=[]; const B=37, CX=28, top=2, base=B-3, yw=top+11.5, rad=y=>6*Math.sqrt(1+Math.pow((y-yw)/6.45,2));
+  for(let y=top+3;y<base;y++){ const hw=Math.round(rad(y)); rc(r,CX-hw,y,hw*2,1,0); }                 // glass
+  for(let i=0;i<=8;i++){ const c=Math.cos(Math.PI*i/8); for(let y=top;y<base;y++){ const x=Math.round(CX+rad(y)*c); rc(r,x,y,y>base-8&&(i===0||i===8)?2:1,1,i%2?2:3); } }   // the ribs
+  rc(r,CX-22,base,44,2,1); rc(r,CX-22,base,44,1,2);
+  rc(r,51,14,2,B-17,1); rc(r,49,16,6,1,2); rc(r,49,21,6,1,2); rc(r,51,12,2,2,3);                     // bell tower
+  rc(r,0,B,56,1,0);
+  return r; })() };
 
-
+/* plants and rocks for the land between places: small, quiet, never taller than the buildings */
+const ACACIA={ w:24, h:16, rects:(function(){ const r=[]; rc(r,11,9,2,7,1); rc(r,9,6,2,3,1); rc(r,13,6,2,3,1); rc(r,7,5,3,1,1); rc(r,14,5,3,1,1); rc(r,1,3,22,2,1); rc(r,3,2,18,1,2); rc(r,0,5,24,1,0); return r; })() };
+const PALM={ w:16, h:22, rects:(function(){ const r=[]; for(let y=6;y<22;y++) rc(r,7+Math.round(Math.sin(y/5)),y,2,1,1);
+  for(const [mx,my,ex,ey] of [[4,3,0,7],[5,2,2,1],[11,2,14,1],[12,3,16,7]]){ seg(r,8,5,mx,my,2); seg(r,mx,my,ex,ey,2); seg(r,8,6,mx,my+1,1); seg(r,mx,my+1,ex,ey+1,1); } rc(r,7,4,3,2,1); return r; })() };
+const TREE={ w:12, h:14, rects:(function(){ const r=[]; rc(r,5,8,2,6,1); blob(r,6,5,5,4.5,1); blob(r,5,4,3,2.5,2); return r; })() };
+const SHRUB={ w:12, h:5, rects:(function(){ const r=[]; blob(r,6,3,6,2.5,1); blob(r,5,2,3,1.5,2); return r; })() };
+const BOULDERS={ w:20, h:10, rects:(function(){ const r=[]; blob(r,7,7,7,3,0); blob(r,14,6,5,4,1); blob(r,9,3,4,2.5,1); rc(r,0,9,20,1,0); return r; })() };
 
 /* ---------- procedural scenery: small seed pools keep the sprite cache bounded ---------- */
 function srand(seed){ let s=(seed*9301+49297)%233280; return ()=>{ s=(s*9301+49297)%233280; return s/233280; }; }
@@ -680,6 +702,9 @@ function building(w,h,seed,type){ const R=srand(seed+11), r=[];
   if(type==='stepped'){ let x0=0,x1=w,y=h; const steps=3+Math.floor(R()*2), sh=Math.floor(h/(steps+.5));
     for(let i=0;i<steps;i++){ r.push([x0,y-sh,x1-x0,sh,1]); r.push([x0,y-sh,x1-x0,1,2]); const ins=Math.max(1,Math.round((x1-x0)*.16)); x0+=ins; x1-=ins; y-=sh; }
     r.push([Math.floor(w/2),y-Math.round(h*.12),1,Math.round(h*.12),1]); return r; }
+  if(type==='adobe'){ const bh=Math.round(h*(.55+R()*.2)); r.push([1,h-bh,w-2,bh,1]); r.push([0,h-bh+1,w,bh-1,1]); r.push([1,h-bh,w-2,1,2]);   // earthen house: soft corners, beam ends, a small door
+    for(let x=2;x<w-2;x+=4) r.push([x,h-bh+2,1,1,0]); r.push([Math.floor(w/2)-1,h-4,2,4,0]); if(w>12){ r.push([2,h-bh-2,2,2,2]); r.push([w-4,h-bh-2,2,2,2]); } return r; }
+  if(type==='house'){ const bh=Math.round(h*(.5+R()*.25)); r.push([0,h-bh,w,bh,1]); r.push([0,h-bh,w,1,2]); r.push([2,h-5,2,5,0]); if(w>9) r.push([w-5,h-bh+3,3,2,0]); return r; }   // a low single-storey house
   /* 'flat': a plain block, sometimes with a setback and a water tank */
   const bh=h-(R()<.5?0:Math.round(h*.18)); r.push([0,h-bh,w,bh,1]); r.push([0,h-bh,w,1,2]);
   if(bh<h){ const sw=Math.round(w*.5), sx=Math.round(R()*(w-sw)); r.push([sx,0,sw,h-bh,1]); }
@@ -687,7 +712,6 @@ function building(w,h,seed,type){ const R=srand(seed+11), r=[];
   for(let yy=h-bh+3;yy<h-3;yy+=4) r.push([2,yy,w-4,1,0]);
   return r; }
 const OBELISK={ w:8, h:34, rects:[[3,0,2,3,2],[2,3,4,26,1],[1,29,6,2,0],[0,31,8,3,0]] };
-const LIGHTHOUSE={ w:12, h:36, rects:[[4,0,4,3,2],[3,3,6,2,0],[3,5,6,16,1],[4,9,4,2,0],[4,15,4,2,0],[2,21,8,2,0],[1,23,10,13,1],[0,34,12,2,0]] };
 
 /* DUCK: the rubber-duck mascot in pixels, 34 x 30 units, facing right, feet on the last row.
    Shades: 0 outline · 1 wing/bill/feet · 2 body · 3 highlight · 5 eye */
@@ -739,7 +763,7 @@ function duckRects(pose,tick){
 
 const DUCK={ w:DUCK_W, h:DUCK_H, frame:duckRects };
 const GEN={ ridge, skyline, townBlock, building };
-const LANDMARKS={ colosseum:COLOSSEUM, bigben:BIGBEN, torii:TORII, windmills:WINDMILLS, aqueduct:AQUEDUCT, domes:DOMES, columns:COLUMNS, minaret:MINARET, lantern:LANTERN, pagoda:PAGODA, pyramids:PYRAMIDS, eiffel:EIFFEL, liberty:LIBERTY, bridge:BRIDGE, arch:ARCH, city:CITY, dune:DUNE, obelisk:OBELISK, lighthouse:LIGHTHOUSE };
+const LANDMARKS={ pyramids:PYRAMIDS, obelisk:OBELISK, djenne:DJENNE, zimbabwe:ZIMBABWE, aksum:AKSUM, orlando:ORLANDO, tablemountain:TABLEMT, sugarloaf:SUGARLOAF, castillo:CASTILLO, bellas:BELLAS, sanchi:SANCHI, baobelisk:BAOBELISK, brasilia:BRASILIA, acacia:ACACIA, palm:PALM, tree:TREE, shrub:SHRUB, boulders:BOULDERS };
 window.ZF_ART={ DUCK, LANDMARKS, GEN };
 return { DUCK, LANDMARKS, GEN };
 })();
@@ -751,15 +775,15 @@ let handed=false;
 const wrap=$('runner'),cv=$('runCanvas'),cx=cv.getContext('2d'),dockEl=$('dock');
 /* scenery palettes per theme: dark = pale duck and spikes on a black world; light = dark spikes, gray silhouettes on paper */
 const SCENES={
-  dark:{ FAR:['#0e0e0e','#141414','#1a1a1a','#212121'], MID:['#1f1f1f','#2b2b2b','#383838','#4a4a4a'], DPAL:['#0b0b0b','#9b9992','#ece9df','#ffffff','#000000','#0b0b0b'], OPAL:['#0b0b0b','#b8b8b8','#f4f4f4','#ffffff'],
+  dark:{ BACK:['#191919','#202020','#2a2a2a','#383838'], FAR:['#0e0e0e','#141414','#1a1a1a','#212121'], MID:['#222222','#303030','#3f3f3f','#545454'], DPAL:['#0b0b0b','#9b9992','#ece9df','#ffffff','#000000','#0b0b0b'], OPAL:['#0b0b0b','#b8b8b8','#f4f4f4','#ffffff'],
          horizon:'#0a0a0a', terrain:'#151515', ground:'#1c1c1c', edge:'#262626', edgeHi:'#3a3a3a', dash:'#2f2f2f', hatBrim:'#0b0b0b', hatBand:'#ece9df' },
-  light:{ FAR:['#d6d3c8','#cdcabe','#c3c0b3','#b8b5a8'], MID:['#aeab9e','#9f9c90','#8f8c81','#7e7b71'], DPAL:['#0f0f0e','#8a887f','#fffdf6','#ffffff','#000000','#0f0f0e'], OPAL:['#0f0f0e','#5b594f','#1d1d1b','#000000'],
+  light:{ BACK:['#c9c6ba','#bfbcb0','#b0ada1','#9f9c90'], FAR:['#d6d3c8','#cdcabe','#c3c0b3','#b8b5a8'], MID:['#aeab9e','#9f9c90','#8f8c81','#7e7b71'], DPAL:['#0f0f0e','#8a887f','#fffdf6','#ffffff','#000000','#0f0f0e'], OPAL:['#0f0f0e','#5b594f','#1d1d1b','#000000'],
          horizon:'#e2dfd4', terrain:'#c9c6ba', ground:'#3d3c37', edge:'#1f1f1d', edgeHi:'#000000', dash:'#5b5a53', hatBrim:'#0f0f0e', hatBand:'#fffdf6' } };
-let SC=SCENES[ZFTheme.tone('light')], FAR=SC.FAR, MID=SC.MID, DPAL=SC.DPAL, OPAL=SC.OPAL;
+let SC=SCENES[ZFTheme.tone('light')], BACK=SC.BACK, FAR=SC.FAR, MID=SC.MID, DPAL=SC.DPAL, OPAL=SC.OPAL;
 const F_FAR=0.2, F_MID=0.45;
 let W=0,H=0,dpr=1,GY=0,P=3,K=1,vis=true,hidden=false,resX=1e9,resY=1e9;
 /* one seeded sequence for the scenery, so the world is generated once and never reshuffled by a resize or a theme change */
-const SEED=(Math.random()*2147483647)|0; let rs=SEED;
+const SEED=20261121;   // fixed: the same world every visit, in either theme let rs=SEED;
 function srnd(){ rs=rs+0x6D2B79F5|0; let t=Math.imul(rs^rs>>>15,1|rs); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }
 function rnd(a,b){ return a+srnd()*(b-a); }
 function pick(a){ return a[Math.floor(srnd()*a.length)]; }
@@ -788,13 +812,33 @@ function gen(kind,w,h,seed,pal,scale,rough){ const G=ART.GEN;
 
 /* ---- the route: each destination owns one stretch, separated by quiet terrain ---- */
 let SEGS=[],TOTAL=1;
-const MAINLM={desert:'pyramids',bridge:'bridge',paris:'eiffel',liberty:'liberty',rome:'colosseum',london:'bigben',kyoto:'torii',holland:'windmills',aqueduct:'aqueduct',istanbul:'domes'};
-const DETAIL={desert:['obelisk'],bridge:['lighthouse'],paris:['block'],liberty:['lighthouse'],rome:['arch','columns'],london:['block'],kyoto:['lantern','pagoda'],holland:['block'],aqueduct:['columns'],istanbul:['minaret','block']};
+/* the places, in one fixed order so the world is the same every visit and in both themes. Africa leads and is spread
+   through the whole loop (every other stop), never gathered in one corner:
+     main     the landmark in the mid distance (once per visit to the place)
+     farMain  a distant mountain (Table Mountain, Sugarloaf): drawn in its own soft colours behind the mid distance, but
+              moving with it, so it stays with its own place instead of drifting across its neighbours
+     far      the distant layer around it: open ridges, or a low city line
+     town     the ordinary buildings of the place, built in small clusters with open land between
+     detail   plants, rocks and small structures that belong there
+     amp      how hilly the ground behind the route is */
+const PLACES={
+  desert:     {main:'pyramids', far:'ridge', town:null, detail:['obelisk'], amp:1},
+  chichen:    {main:'castillo', far:'ridge', town:null, detail:['palm','tree','shrub'], amp:.35},
+  soweto:     {main:'orlando', far:'sky', town:['house','house','flat'], detail:['acacia','shrub'], amp:.25},
+  sanchi:     {main:'sanchi', far:'ridge', town:null, detail:['tree','shrub'], amp:.55},
+  djenne:     {main:'djenne', far:'ridge', town:['adobe','adobe','house'], detail:['palm','shrub'], amp:.15},
+  buenosaires:{main:'baobelisk', far:'sky', town:['flat','stepped','flat','dome'], detail:['tree'], amp:.05},
+  capetown:   {main:null, farMain:'tablemountain', far:'ridge', town:['house','flat','house'], detail:['shrub','tree'], amp:.3},
+  mexicocity: {main:'bellas', far:'sky', town:['flat','dome','stepped','spire'], detail:['tree'], amp:.1},
+  zimbabwe:   {main:'zimbabwe', far:'ridge', town:null, detail:['boulders','acacia','shrub'], amp:.55},
+  brasilia:   {main:'brasilia', far:'sky', town:['flat','flat','stepped'], detail:['tree','palm'], amp:.1},
+  rio:        {main:null, farMain:'sugarloaf', far:'ridge', town:['house','flat','house'], detail:['palm','palm','shrub'], amp:.3},
+  aksum:      {main:'aksum', far:'ridge', town:['house'], detail:['shrub','tree'], amp:.6},
+  quiet:      {amp:.5} };
+const ORDER=['desert','chichen','soweto','rio','djenne','sanchi','capetown','buenosaires','zimbabwe','mexicocity','aksum','brasilia','quiet'];
 function buildRoute(){
-  const main=Math.max(900,W*1.6), quiet=Math.max(320,W*.55); let x=0; SEGS=[];
-  const kinds=Object.keys(MAINLM); for(let i=kinds.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [kinds[i],kinds[j]]=[kinds[j],kinds[i]]; }   // a fresh order each time, so no place repeats back-to-back
-  const seq=[]; kinds.forEach((k,i)=>{ seq.push(k); if(i%3===2) seq.push('quiet'); });
-  for(const k of seq){ const len=k==='quiet'?quiet:main; SEGS.push({k,start:x,len}); x+=len; }
+  const main=Math.max(640,W*.85), quiet=Math.max(240,W*.3); let x=0; SEGS=[];
+  for(const k of ORDER){ const len=k==='quiet'?quiet:main; SEGS.push({k,start:x,len}); x+=len; }
   TOTAL=x;
 }
 function segAt(ws){ const cyc=Math.floor(ws/TOTAL), m=ws-cyc*TOTAL;
@@ -802,8 +846,7 @@ function segAt(ws){ const cyc=Math.floor(ws/TOTAL), m=ws-cyc*TOTAL;
   return {k:'quiet',u:0,len:1,key:cyc*32}; }
 
 /* continuous terrain: one profile behind the whole route, its character blending from place to place */
-const AMP={desert:1,quiet:.5,bridge:.3,paris:.12,liberty:.22,rome:.35,london:.15,kyoto:.5,holland:.1,aqueduct:.7,istanbul:.3};
-function ampAt(ws){ let a=0; for(const o of [-600,-300,0,300,600]) a+=AMP[segAt(ws+o).k]||.4; return a/5; }
+function ampAt(ws){ let a=0; for(const o of [-600,-300,0,300,600]) a+=(PLACES[segAt(ws+o).k]||{}).amp||.4; return a/5; }
 function terrainH(u,r){ const a=ampAt(r);
   const prof=(Math.sin(u/150)*.5+.5)*(.62+.38*Math.sin(u/47+2))+.15*Math.sin(u/23);
   return Math.max(0,a*prof)*6; }                                                     // in mid-scale pixels
@@ -818,7 +861,7 @@ function obstacleArt(t){ const d=OB[t];
   if(t==='wide'){ return [...spikeRects(0,6,8),...spikeRects(7,6,8),...spikeRects(14,6,8)]; }
   return spikeRects(0,d.w,d.h); }
 
-let far=[],mid=[],near=[],curFar=0,curMid=0,curNear=0,usedLM=new Set();
+let far=[],mid=[],near=[],curFar=0,curMid=0,curNear=0,usedLM=new Set(),usedFar=new Set(),back=[];
 let worldX=0,boost=0,last=0,hoverPlay=false;
 let live=false,pendingLive=false,dead=false,y=0,vy=0,runT=0,score=0,parts=[],landT=0,jumpBuf=0,uiT=0;
 let best=+(localStorage.getItem('mansy-run-best')||0), hat=best>=500;
@@ -834,34 +877,36 @@ const lx0=()=>RX()+DW()*0.22, lx1=()=>RX()+DW()*0.80;      // a player's collisi
 
 function spawnFar(){
   const s=segAt(curFar+W/(2*F_FAR)), sc=()=>Math.max(2,Math.round(P*0.7)); let it,gap;
+  const PL=PLACES[s.k]||{};
   if(s.k==='desert'){ const w=pick([70,90,120]), h=pick([7,10,14]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('ridge',w,h,sd,FAR,sc(),.2)); gap=rnd(40,260); }
   else if(s.k==='quiet'){ const w=pick([60,100,150]), h=pick([5,8,12]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('ridge',w,h,sd,FAR,sc(),.5)); gap=rnd(120,420); }
-  else { const w=pick([44,60,84]), h=pick([14,20,28]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('sky',w,h,sd,FAR,sc())); gap=rnd(10,120); }
+  else if(PL.far==='sky'){ const w=pick([44,60,84]), h=pick([10,14,20]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('sky',w,h,sd,FAR,sc())); gap=rnd(30,160); }
+  else { const w=pick([60,90,130]), h=pick([6,9,13]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('ridge',w,h,sd,FAR,sc(),.35)); gap=rnd(40,220); }
   it.x=curFar*F_FAR+W; far.push(it); curFar+=(it.img.w+gap)/F_FAR;
 }
 let lastDetail='', town=0;
 /* between monuments the mid distance has rhythm: a small town of two to four varied buildings close together, then an
    open stretch of low ground, then a detail that belongs to the place. Never dense everywhere, never taller than the
    landmarks, so the runner and its route stay the clearest thing in the picture */
-const TOWN_TYPES=['flat','gables','spire','dome','stepped','flat','gables'];
 function spawnMid(){
   const s=segAt(curMid+W/(2*F_MID)), sc=()=>Math.max(2,P), maxH=()=>sceneryMax(); let it,gap;
   const fit=(name,m)=>Math.max(1,Math.min(Math.round(sc()*m),Math.floor(maxH()/ART.LANDMARKS[name].h)));
-  const main=MAINLM[s.k], ridge=(ws,hs,rough)=>{ const w=pick(ws), h=pick(hs), sd=Math.floor(rnd(0,6)); return art(()=>gen('ridge',w,h,sd,MID,sc(),rough)); };
+  const PL=PLACES[s.k]||{}, main=PL.main, ridge=(ws,hs,rough)=>{ const w=pick(ws), h=pick(hs), sd=Math.floor(rnd(0,6)); return art(()=>gen('ridge',w,h,sd,MID,sc(),rough)); };
+  if(PL.farMain&&!usedFar.has(s.key)&&s.u>s.len*0.08){ usedFar.add(s.key); const n=PL.farMain, o=art(()=>lm(n,BACK,Math.max(2,Math.round(P*0.8)))); o.x=curMid*F_MID+W; back.push(o); }
   if(s.k==='quiet'){ town=0; it=ridge([50,80,120],[6,9,13],.55); gap=rnd(120,300); }
-  else if(!usedLM.has(s.key) && s.u>s.len*0.15){ town=0;
-    usedLM.add(s.key); const m=main==='eiffel'?1.15:main==='liberty'?1.1:1; it=art(()=>lm(main,MID,fit(main,m))); gap=rnd(110,240); }
-  else if(town>0||(s.k!=='desert'&&srnd()<.42)){                              // a town: the first building starts it, the rest follow close by
+  else if(main && !usedLM.has(s.key) && s.u>s.len*0.04){ town=0;
+    usedLM.add(s.key); const m=1; it=art(()=>lm(main,MID,fit(main,m))); gap=rnd(50,110); }
+  else if(PL.town&&(town>0||srnd()<.42)){                              // a town: the first building starts it, the rest follow close by
     if(town<=0) town=2+Math.floor(srnd()*3);
-    town--; const type=pick(TOWN_TYPES), w=type==='gables'?pick([16,24,32]):pick([10,13,16,20]), h=pick(type==='stepped'||type==='spire'?[24,30,36]:[14,18,22,26]), sd=Math.floor(rnd(0,9));
+    town--; const type=pick(PL.town), w=type==='gables'?pick([16,24,32]):pick([10,13,16,20]), h=pick(type==='house'||type==='adobe'?[8,10,12,14]:type==='stepped'||type==='spire'?[18,22,26]:[10,13,16,20]), sd=Math.floor(rnd(0,9));
     it=art(()=>gen(type,w,h,sd,MID,Math.max(1,Math.min(sc(),Math.floor(maxH()*.62/h)))));
-    gap=town>0?rnd(3,14):rnd(160,320); }                                       // after the last one, an open stretch
+    gap=town>0?rnd(3,14):rnd(50,120); }                                       // after the last one, an open stretch
   else {                                                                   // small architecture that belongs to the place, never the same twice in a row
-    const pool=(DETAIL[s.k]||[]).filter(n=>n!==lastDetail);
+    const pool=(PL.detail||[]).filter(n=>n!==lastDetail);
     if(pool.length&&srnd()<.6){ const n=pick(pool); lastDetail=n;
       if(n==='block'){ const w=pick([14,18,22]), h=pick([15,20,26]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('block',w,h,sd,MID,sc())); } else it=art(()=>lm(n,MID,sc()));
-      gap=rnd(50,170); }
-    else { lastDetail=''; it=ridge(s.k==='desert'?[50,70,100]:[30,50,70],s.k==='desert'?[6,9,12]:[4,7],s.k==='desert'?.25:.4); gap=rnd(70,200); } }
+      gap=rnd(30,100); }
+    else { lastDetail=''; it=ridge(s.k==='desert'?[50,70,100]:[30,50,70],s.k==='desert'?[6,9,12]:[4,7],s.k==='desert'?.25:.4); gap=rnd(40,110); } }
   it.x=curMid*F_MID+W; mid.push(it); curMid+=(it.img.w+gap)/F_MID;
 }
 /* difficulty comes from patterns as well as pace. Survived time (liveT) drives it:
@@ -883,7 +928,7 @@ function spawnNear(gapC){
   near.push(Object.assign(art(()=>sprite('ob'+t,obstacleArt(t),d.w,d.h,P,OPAL)),{t,x:c-d.w*P/2,w:d.w*P,h:d.h*P,e:0,sink:0,seen:false}));
 }
 function build(){
-  rs=SEED; far=[];mid=[];near=[];usedLM=new Set(); town=0; lastDetail=''; buildRoute();
+  rs=SEED; far=[];mid=[];near=[];back=[];usedLM=new Set();usedFar=new Set(); town=0; lastDetail=''; buildRoute();
   curFar=worldX-1.4*W/F_FAR; curMid=worldX-1.6*W/F_MID; curNear=worldX+W*0.9;
   while(curFar-worldX<W*2.4)spawnFar();
   while(curMid-worldX<W*2.4)spawnMid();
@@ -925,7 +970,7 @@ function size(){
   if(!built){ built=true; cache.clear(); duckCache={}; y=0; vy=0; build(); }
   else if(P!==oldP||dpr!==oldDpr){ cache.clear(); duckCache={}; const k=P/oldP;
     if(k!==1){ worldX*=k; curFar*=k; curMid*=k; curNear*=k; y*=k; vy*=k; SEGS.forEach(sg=>{ sg.start*=k; sg.len*=k; }); TOTAL*=k;
-      for(const o of far) o.x*=k; for(const o of mid) o.x*=k; for(const o of near){ o.x*=k; o.w*=k; o.h*=k; } } }
+      for(const o of far) o.x*=k; for(const o of mid) o.x*=k; for(const o of back) o.x*=k; for(const o of near){ o.x*=k; o.w*=k; o.h*=k; } } }
   oldP=P; oldDpr=dpr; measureReserve(); layoutHit();
 }
 let built=false, oldP=0, oldDpr=0;
@@ -962,6 +1007,7 @@ function frame(now){
   if(!dead&&moving){ worldX+=spd*dt; runT+=dt*Math.min(18,spd/(5*P)); if(live)score+=dt*11; if(boost>0)boost=Math.max(0,boost-dt*0.8); }
   while(far.length&&far[0].x-worldX*F_FAR+far[0].img.w<-240)far.shift();
   while(mid.length&&mid[0].x-worldX*F_MID+mid[0].img.w<-240)mid.shift();
+  while(back.length&&back[0].x-worldX*F_MID+back[0].img.w<-240)back.shift();
   while(near.length&&near[0].x-worldX+near[0].w<-90)near.shift();
   while(curFar-worldX<W*2.4)spawnFar();
   while(curMid-worldX<W*2.4)spawnMid();
@@ -990,6 +1036,7 @@ function draw(){
   cx.clearRect(0,0,W,H);
   const fb=GY-P*3, mb=GY-P;                                // horizon steps: far sits behind mid, mid behind the route
   for(const o of far){ const sx=Math.round(o.x-worldX*F_FAR); if(sx>W+40||sx+o.img.w<-40)continue; const im=imgOf(o); cx.drawImage(im,sx,Math.round(fb-im.h),im.w,im.h); }
+  for(const o of back){ const sx=Math.round(o.x-worldX*F_MID); if(sx>W+40||sx+o.img.w<-40)continue; const im=imgOf(o); cx.drawImage(im,sx,Math.round(fb-im.h),im.w,im.h); }
   cx.fillStyle=SC.horizon; cx.fillRect(0,fb,W,GY-fb);
   { const step=Math.max(2,P)*2; cx.fillStyle=SC.terrain;
     for(let x=0;x<W+step;x+=step){ const xs=x-Math.round((worldX*F_MID)%step); const h=Math.round(terrainH(xs+worldX*F_MID,worldX+(xs-W/2)/F_MID)*Math.max(2,P)/2)*2; if(h>0) cx.fillRect(xs,mb-h,step,h+P); } }
@@ -1046,7 +1093,7 @@ wrap.addEventListener('blur',e=>{ if((live||pendingLive)&&!(e.relatedTarget&&wra
 
 /* a theme change recolours the same world: every piece is redrawn in place from its own recipe (imgOf), the route,
    positions, the duck's jump and the obstacles ahead all stay as they were */
-document.addEventListener('zf-theme',()=>{ SC=SCENES[ZFTheme.tone('light')]; FAR=SC.FAR; MID=SC.MID; DPAL=SC.DPAL; OPAL=SC.OPAL; cache.clear(); duckCache={}; if(handed||!vis) draw(); });
+document.addEventListener('zf-theme',()=>{ SC=SCENES[ZFTheme.tone('light')]; BACK=SC.BACK; FAR=SC.FAR; MID=SC.MID; DPAL=SC.DPAL; OPAL=SC.OPAL; cache.clear(); duckCache={}; if(handed||!vis) draw(); });
 size(); touchTip();
 addEventListener('resize',()=>{ size(); touchTip(); });
 /* only while Home is on or near the screen: measuring on every scroll further down the page forced a layout per frame
