@@ -1,0 +1,14 @@
+{
+  "name": "zfgames-org",
+  "private": true,
+  "scripts": {
+    "start": "node serve.js 8080",
+    "server": "node server/room-server.js",
+    "build:routes": "node tools/build-routes.js",
+    "build:sitemap": "node tools/build-sitemap.js",
+    "build": "node tools/build-routes.js && node tools/version-assets.js && node tools/build-offline.js && node tools/build-sitemap.js && node tools/build-dist.js"
+  },
+  "dependencies": {
+    "ws": "^8.21.3"
+  }
+}

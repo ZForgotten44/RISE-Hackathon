@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "zfgames-org",
+  "compatibility_date": "2026-09-23",
+  // Static site only: `npm run build` writes the public files to dist/ (see tools/build-dist.js).
+  "assets": {
+    "directory": "./dist",
+    // Serve /nim, /create, /arcade ... with a 200 at the exact address every canonical link and the sitemap use.
+    // (The default, auto-trailing-slash, answers /nim with a 307 to /nim/, so Google would see every listed page redirect.)
+    // /nim/ and /nim/index.html now 307 to /nim instead.
+    "html_handling": "drop-trailing-slash"
+  },
+  // Enables `wrangler preview` for Workers Builds on non-production branches (PR previews).
+  "previews": {}
+}

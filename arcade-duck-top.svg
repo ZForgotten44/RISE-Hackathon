@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300" fill="none" role="img" aria-label="ZF rubber duck top view"><g id="duck" stroke="#24231F" stroke-linecap="round" stroke-linejoin="round">
+<path id="body" fill="#F5F2E8" stroke-width="5.5" d="M143 110 C116 121 103 148 103 181 C103 219 119 242 151 250 C164 254 171 261 180 269 C189 261 196 254 209 250 C241 242 257 219 257 181 C257 148 244 121 217 110 Z"/>
+<path id="belly-shade" fill="#E2DDCF" stroke="none" d="M106 196 C113 228 133 242 158 245 C167 246 175 252 180 257 C185 252 193 246 202 245 C227 242 247 228 254 196 C250 227 236 241 209 248 C196 252 188 259 180 266 C172 259 164 252 151 248 C125 241 110 226 106 196 Z"/>
+<g id="wing-left"><path fill="#EAE5D8" stroke="none" d="M127 148 C111 171 115 207 144 225 C151 195 140 172 127 148 Z"/><path stroke="#B5AE9D" stroke-width="3.2" d="M124 161 C116 184 123 208 141 220"/></g>
+<g id="wing-right"><path fill="#EAE5D8" stroke="none" d="M233 148 C249 171 245 207 216 225 C209 195 220 172 233 148 Z"/><path stroke="#B5AE9D" stroke-width="3.2" d="M236 161 C244 184 237 208 219 220"/></g>
+<path id="neck-shadow" fill="#E2DDCF" stroke="none" d="M144 120 C151 147 209 147 216 120 Z"/>
+<g id="bill" stroke-width="4"><path fill="#C5A23C" d="M160 57 C158 48 150 39 153 32 C156 24 204 24 207 32 C210 39 202 48 200 57 Z"/><path stroke="#AC882A" stroke-width="2.3" d="M159 36 Q180 31 201 36"/></g>
+<path id="head" fill="#F5F2E8" stroke-width="5.5" d="M137 86 C137 62 155 46 180 46 C205 46 223 62 223 86 C224 111 207 133 180 136 C153 133 136 111 137 86 Z"/>
+<path id="crown" stroke="#FFFCF3" stroke-width="5" d="M157 65 C168 57 183 55 194 60"/>
+<g id="eyes" fill="#24231F" stroke="none"><ellipse cx="142" cy="79" rx="3.2" ry="6" transform="rotate(15 142 79)"/><ellipse cx="218" cy="79" rx="3.2" ry="6" transform="rotate(-15 218 79)"/></g>
+</g></svg>

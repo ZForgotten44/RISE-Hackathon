@@ -1,0 +1,117 @@
+/* site.css: the shared design system for index.html, arcade.html and 404.html.
+   One type pairing (Space Grotesk + IBM Plex Mono), one set of radii, surfaces and text colours. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{
+  /* type */
+  --font-sans:'Space Grotesk',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --fs-section:clamp(44px,4.2vw,56px);      /* section headings */
+  --fs-entry:clamp(44px,5vw,68px);          /* game-entry titles */
+  --fs-card-title:clamp(24px,2vw,28px);     /* arcade-card titles */
+  --fs-body:clamp(16px,1.25vw,18px);        /* descriptions */
+  --fs-btn:16px;                            /* buttons */
+  --fs-meta:13px;                           /* metadata (mono) */
+  /* shape */
+  --r-card:12px; --r-panel:22px; --r-ctl:12px; --r-pill:999px;
+  /* charcoal card surface family (dark) and off-white counterpart */
+  --card-bg:#181817; --card-edge:#3a3a37; --card-ink:#f4f2ec; --card-sub:#b9b7af; --card-meta:#aeaca4;
+  --card-bg-on:#f3f2ee; --card-edge-on:#141412; --card-ink-on:#141412; --card-sub-on:#4a4840; --card-meta-on:#4f4d46;
+}
+body{font-family:var(--font-sans)}
+.t-mono{font-family:var(--font-mono)}
+
+/* ---------- tones: every colour in the site comes from these tokens ----------
+   Each area has a base tone (data-tone="light" | "dark"). One saved switch, html[data-inv], flips all of them together:
+   Home light, Games dark, About light, Terminal dark, arcade dark. Inverted, each becomes the other. */
+:root{
+  color-scheme:dark;
+  --bg:#0b0b0a; --fg:#f4f2ec;
+  --g1:#141413; --g2:#1c1c1a; --g3:#2b2b28; --g4:#45443f; --g5:#8b8a83; --g6:#b3b1a9; --g7:#dcdad2;   /* g1 quietest ... g7 strongest */
+  --surf:#1a1a18; --surf2:#1e1e1c; --surf3:#2a2a27;
+  --ctl-bg:#1f1f1d; --ctl-bg-hi:#2c2c29;
+  --nav-bg:rgba(10,10,10,.88); --nav-line:rgba(255,255,255,.09);
+  --wm:#F3F1EB; --wm-sub:#A8A8A3; --wm-sub-hi:#c4c4be;
+  --card-bg:#181817; --card-edge:#3a3a37; --card-ink:#f4f2ec; --card-sub:#b9b7af; --card-meta:#aeaca4;
+  --card-bg-on:#f3f2ee; --card-edge-on:#141412; --card-ink-on:#141412; --card-sub-on:#4a4840; --card-meta-on:#4f4d46;
+  --cur-fill:#fff; --cur-line:#111;
+  --tile:#dcdad2; --stripe:#45443f; --piece-a:#f4f2ec; --piece-b:#8b8a83;
+  --bgop:.07;
+}
+html[data-inv="0"] [data-tone="light"],html[data-inv="1"] [data-tone="dark"]{
+  color-scheme:light;
+  --bg:#f3f2ee; --fg:#141412;
+  --g1:#e9e7df; --g2:#dedbd1; --g3:#c8c5ba; --g4:#a09d91; --g5:#66645c; --g6:#46443d; --g7:#2c2b27;
+  --surf:#ebe9e1; --surf2:#e9e7df; --surf3:#dcd9ce;
+  --ctl-bg:#e4e1d7; --ctl-bg-hi:#d8d4c8;
+  --nav-bg:rgba(243,242,238,.92); --nav-line:rgba(0,0,0,.1);
+  --wm:#141412; --wm-sub:#55534b; --wm-sub-hi:#2c2b27;
+  --card-bg:#faf9f5; --card-edge:#1d1d1b; --card-ink:#141412; --card-sub:#46443d; --card-meta:#4a4841;
+  --card-bg-on:#171716; --card-edge-on:#171716; --card-ink-on:#f4f2ec; --card-sub-on:#cfcdc5; --card-meta-on:#b8b6ae;
+  --cur-fill:#111; --cur-line:#fff;
+  --tile:#a09d91; --stripe:#2c2b27; --piece-a:#141412; --piece-b:#66645c;
+  --bgop:.05;
+}
+html[data-inv="0"] [data-tone="dark"],html[data-inv="1"] [data-tone="light"]{
+  color-scheme:dark;
+  --bg:#0b0b0a; --fg:#f4f2ec;
+  --g1:#141413; --g2:#1c1c1a; --g3:#2b2b28; --g4:#45443f; --g5:#8b8a83; --g6:#b3b1a9; --g7:#dcdad2;   /* g1 quietest ... g7 strongest */
+  --surf:#1a1a18; --surf2:#1e1e1c; --surf3:#2a2a27;
+  --ctl-bg:#1f1f1d; --ctl-bg-hi:#2c2c29;
+  --nav-bg:rgba(10,10,10,.88); --nav-line:rgba(255,255,255,.09);
+  --wm:#F3F1EB; --wm-sub:#A8A8A3; --wm-sub-hi:#c4c4be;
+  --card-bg:#181817; --card-edge:#3a3a37; --card-ink:#f4f2ec; --card-sub:#b9b7af; --card-meta:#aeaca4;
+  --card-bg-on:#f3f2ee; --card-edge-on:#141412; --card-ink-on:#141412; --card-sub-on:#4a4840; --card-meta-on:#4f4d46;
+  --cur-fill:#fff; --cur-line:#111;
+  --tile:#dcdad2; --stripe:#45443f; --piece-a:#f4f2ec; --piece-b:#8b8a83;
+  --bgop:.07;
+}
+body[data-tone],section[data-tone],footer[data-tone]{background:var(--bg);color:var(--fg)}
+/* the header switch (index and arcade share it): a plain filled thumb that slides when colours are inverted.
+   Kept to a single thin track border and a plain thumb icon (no stroked ring inside the thumb) so it doesn't
+   read as a "double outline" next to the plainer sound/music buttons -- see ts-knob svg below. */
+.themesw{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;width:48px;height:26px;padding:0;border:1px solid var(--g2);border-radius:999px;background:var(--surf);color:var(--fg);cursor:pointer;transition:background .18s,border-color .18s}
+.themesw:hover{border-color:var(--fg)}
+.themesw:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.themesw::before{content:'';position:absolute;inset:-10px}
+.themesw .ts-knob{position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:var(--fg);color:var(--bg);display:flex;align-items:center;justify-content:center;transition:transform .18s cubic-bezier(.4,0,.2,1)}
+/* thumb + icon both key off data-tone-now (set in theme.js from this button's OWN nearest [data-tone]
+   ancestor, not the raw global invert flag): light = thumb left + sun, dark = thumb right + moon, so
+   position and icon always agree with each other and with the tooltip. */
+.themesw[data-tone-now="dark"] .ts-knob{transform:translateX(22px)}
+.themesw svg{width:12px;height:12px;display:block}
+.brandmark{display:inline-flex;align-items:center;gap:10px;color:inherit}
+.brandmark img{width:30px;height:30px;display:block}
+/* desktop headers: the duck face about 15% larger; the negative margin keeps every header exactly as tall as before */
+@media (min-width:861px){header .brandmark img,nav .brandmark img{width:35px;height:35px;margin:-2.5px 0}}
+
+/* sound/music buttons: same size, stroke, border and background as each other and as the theme switch's
+   own height, so none of the three controls outweighs the others. Spacing between them is left entirely to
+   the flex `gap` on whatever wraps them (header .right / .navright), not a margin here, so it stays a single
+   consistent 8-12px sitewide instead of gap+margin stacking into something wider. */
+.soundsw,.navmenu{position:relative;flex:0 0 auto;width:32px;height:32px;padding:0;border:1px solid var(--g2);border-radius:50%;background:var(--surf);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:border-color .15s}
+.soundsw::before,.navmenu::before{content:'';position:absolute;inset:-8px}
+.soundsw svg,.navmenu svg{width:15px;height:15px;display:block}
+.soundsw svg{width:19px;height:19px}
+.soundsw .mute-gap{stroke:var(--surf)}
+@media (pointer:coarse){.soundsw{width:36px;height:36px}.soundsw::before{inset:-6px}}
+.soundsw:hover,.navmenu:hover{border-color:var(--fg)}
+.soundsw:focus-visible,.navmenu:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.soundsw::after,.navmenu::after{position:absolute;top:calc(100% + 9px);right:-2px;white-space:nowrap;font:600 12px var(--font-sans);letter-spacing:.01em;padding:5px 10px;border-radius:8px;pointer-events:none;opacity:0;transition:opacity .2s;z-index:50;content:attr(data-tip);background:var(--fg);color:var(--bg)}
+.soundsw:hover::after,.soundsw:focus-visible::after,.navmenu:hover::after,.navmenu:focus-visible::after{opacity:1}
+
+/* Create room / Join room shortcuts (laptop header, phone menu, the Games heading on narrow screens). The site's rounded
+   button: Join is the filled one (ink on paper, flipping with the tone), Create the neutral outline. One pair per view.
+   Corner radius and type match the game cards' Play button. */
+.roombtn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1.5px solid var(--g4);border-radius:10px;background:transparent;color:var(--fg);font:600 var(--fs-btn)/1 var(--font-sans);letter-spacing:.01em;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,opacity .15s}
+.roombtn:hover{border-color:var(--fg);background:var(--surf2)}
+.roombtn.fill{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.roombtn.fill:hover{background:var(--fg);opacity:.86}
+.roombtn:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.roomnav{display:flex;align-items:center;gap:8px;margin-right:18px}   /* a clear gap from music, sound and theme, so the two read as a pair */
+.roompair{display:none;grid-template-columns:1fr 1fr;gap:10px}
+.roompair .roombtn{width:100%;min-height:50px;padding:0 10px}
+@media (max-width:640px){.roomnav{display:none}.roompair{display:grid}}
+/* the plain links to the public destinations (Join a room, Create a room, All games, Our story) */
+.sitelinks{display:flex;flex-wrap:wrap;gap:6px 22px;font:500 13.5px/1.4 var(--font-sans)}
+.sitelinks a{color:var(--g6);text-decoration:none;padding:6px 0;border-bottom:1px solid transparent}
+.sitelinks a:hover,.sitelinks a:focus-visible{color:var(--fg);border-bottom-color:currentColor;outline:none}

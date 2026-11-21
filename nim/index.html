@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nim — Play the Classic Math Game Free Online | ZF Games</title>
+<link rel="canonical" href="https://zfgames.org/nim">
+<meta name="description" content="Play Nim free on ZF Games: take tokens from one pile, and mind who takes the last one. Normal and misère rules, any piles you like, against the computer or a friend.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Z Forgotten Games">
+<meta property="og:url" content="https://zfgames.org/nim">
+<meta property="og:title" content="Nim — Play the Classic Math Game Free Online | ZF Games">
+<meta property="og:description" content="Play Nim free on ZF Games: take tokens from one pile, and mind who takes the last one. Normal and misère rules, any piles you like, against the computer or a friend.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nim — Play the Classic Math Game Free Online | ZF Games">
+<meta name="twitter:description" content="Play Nim free on ZF Games: take tokens from one pile, and mind who takes the last one. Normal and misère rules, any piles you like, against the computer or a friend.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Nim","url":"https://zfgames.org/nim","description":"Play Nim free on ZF Games: take tokens from one pile, and mind who takes the last one. Normal and misère rules, any piles you like, against the computer or a friend.","genre":"Strategy game","playMode":["SinglePlayer","MultiPlayer"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","isAccessibleForFree":true,"inLanguage":"en","publisher":{"@type":"Organization","name":"Z Forgotten Games","url":"https://zfgames.org/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Z Forgotten Games","item":"https://zfgames.org/"},{"@type":"ListItem","position":2,"name":"All games","item":"https://zfgames.org/arcade"},{"@type":"ListItem","position":3,"name":"Nim","item":"https://zfgames.org/nim"}]}
+</script>
+
+<script>
+/* The one place every room game (Online friend rooms and the party games) learns where the room server is.
+   Production hosts (zfgames.org, the workers.dev address, any preview) always use the Render room server. Only a
+   locally run copy (localhost, 127.0.0.1, or a private LAN address so phones on the same Wi-Fi can join) uses that
+   machine's own :8787. There is no fallback to a port on the static host. */
+(function(){ var h=location.hostname, local=h==='localhost'||h==='127.0.0.1'||/^(10|192\.168|172\.(1[6-9]|2\d|3[01]))\./.test(h);
+  window.ZF_ROOM_WS_URL = local ? 'ws://'+h+':8787' : 'wss://zfgames-room-server.onrender.com'; })();
+</script>
+<script>
+/* A game's own address (/nim, /quack-me-up ...) opens that game, never the All Games list first: the list stays
+   hidden until arcade-wire.js has routed (it removes the class). /arcade shows the list as usual. */
+(function(){ var s=location.pathname.replace(/^\/+|\/+$/g,'').split('/')[0].replace(/\.html$/,''); if(s&&s!=='arcade') document.documentElement.classList.add('zf-route'); document.documentElement.classList.add('zf-js'); })();
+</script>
+<style>html.zf-route #home{display:none!important}
+/* the plain list of games in #zfgrid is for crawlers and visitors without scripts; with scripts the cards replace it, so it never flashes first */
+html.zf-js .zf-gamelist{visibility:hidden}</style>
+<script src="/theme.js?v=2d54ba4d"></script>
+<script src="/sound.js?v=90368e02"></script>
+<script src="/music.js?v=a5570acd"></script>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/site.css?v=76e3772a">
+<script src="/cursor.js?v=cd3951a0" defer></script>
+<script src="/engines2.js?v=b2bfcb3a"></script>
+<script src="/gold-engine.js?v=a7e20373"></script>
+<script src="/ai-core.js?v=310cc1f0"></script>
+<script src="/zart.js?v=4bafc2c6"></script>
+<script src="/duck.js?v=ee1c558d"></script>
+<script src="/party-duck.js?v=aefb47b3"></script>
+<script src="/shared.js?v=fb6926ed"></script>
+<script src="/traces.js?v=cb511b6d"></script>
+<script src="/engines.js?v=5ebed5af"></script>
+<script src="/entry.js?v=0e56a0fa"></script>
+<link rel="stylesheet" href="/arcade.css?v=85db43c4">
+</head>
+<body data-tone="dark">
+
+<header>
+  <div class="hleft"><a class="brandmark" href="/" aria-label="Z Forgotten Games, home"><img src="/duck-face.png" alt="" width="26" height="26"></a><a class="back" id="backLink" href="/#games">&larr; /games</a></div>
+  <div class="right">
+    <div class="roomnav"><a class="roombtn" href="/create">Create room</a><a class="roombtn fill" href="/join">Join room</a></div>
+    <button type="button" class="themesw" data-theme-toggle aria-label="Invert colors" title="Invert colors"><span class="ts-knob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 8.94 10.06A7 7 0 0 1 12 3Z" fill="currentColor"/></svg></span></button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="home">
+    <div class="zf-top"><div class="lobbyhead"><div class="secnum">01</div><h2 class="display">Games</h2></div><div class="roompair"><a class="roombtn fill" href="/join">Join room</a><a class="roombtn" href="/create">Create room</a></div></div>
+    <div id="resumeBar" class="zf-resume" hidden></div>
+    <div id="zfgrid"><ul class="zf-gamelist"><li><a href="/recursive-tic-tac-toe">Recursive Tic-Tac-Toe</a> <span>Nine small boards, one big game.</span></li><li><a href="/gold-coin">The Gold Coin</a> <span>Slide a coin left or take the leftmost coin. Whoever takes the gold wins.</span></li><li><a href="/chomp">Chomp</a> <span>Bite a tile and everything below-left of it.</span></li><li><a href="/nim">Nim</a> <span>Take tokens from one pile. Mind who takes the last one.</span></li><li><a href="/pentago">Pentago</a> <span>Place a marble, then turn a quadrant. Five in a row wins.</span></li><li><a href="/notakto">Notakto</a> <span>Both play X. Close the last board and you lose.</span></li><li><a href="/toot-otto">TOOT &amp; OTTO</a> <span>Drop T or O. Spell your word, not theirs.</span></li><li><a href="/sim">Sim</a> <span>Claim edges between six dots and never finish your own triangle.</span></li></ul></div>
+    <div class="sitelinks zf-sitelinks" role="navigation" aria-label="Site"><a href="/join">Join a room</a><a href="/create">Create a room</a><a href="/arcade">All games</a><a href="/story">Our story</a></div>
+  </div>
+
+
+  <!-- setup -->
+  <section class="entry" id="setup" aria-live="polite">
+    <div class="e-head"><h1 class="e-title" id="entryTitle"></h1><p class="e-blurb" id="entryBlurb"></p><details class="e-rules" id="entryRulesBox"><summary>Full rules</summary><div class="e-rules-body" id="entryRulesBody"></div></details></div>
+    <div class="e-demo" id="setupDemo"><div id="entryDemo"></div></div>
+    <div class="e-ctl">
+      <div class="grp"><div class="glabel">Players</div><div class="seg" id="segOpp"><button data-v="ai">Computer</button><button data-v="2p">Two players</button><button data-v="online" id="segOppOnline" style="display:none">Online friend</button></div>
+        <p class="e-small" id="segOnlineNote" style="display:none"></p>
+        <button type="button" class="start" id="segBackToGame" style="display:none;margin-top:10px">Back to game</button>
+      </div>
+      <div class="grp" id="rowDiff"><div class="glabel">Difficulty <span class="hlp"><button type="button" class="hlp-btn" aria-describedby="setupNote">About difficulty</button><span class="hlp-tip" role="tooltip" id="setupNote"></span></span></div><div class="seg" id="segDiff"></div></div>
+      <div class="grp"><div class="glabel">Game options</div><div class="opt" id="rowFirst"><span class="olabel">Who starts?</span><div class="seg" id="segFirst"><button data-v="human">You</button><button data-v="ai">Computer</button><button data-v="random">Random</button></div></div><div class="opt"><span class="olabel">Hints <span class="hlp"><button type="button" class="hlp-btn hlp-i" aria-label="About hints" aria-describedby="tipHints">?</button><span class="hlp-tip" role="tooltip" id="tipHints">Hints let the computer suggest a move. Undo is always available; using it marks the game as assisted for challenge records.</span></span></span><button type="button" class="sw" id="segMode" role="switch" aria-checked="true" aria-label="Hints"><span class="sw-knob"></span></button></div><div class="opt" id="rowAssist" style="display:none"><span class="olabel">Assisted play <span class="hlp"><button type="button" class="hlp-btn hlp-i" aria-label="About assisted play" aria-describedby="tipAssist">?</button><span class="hlp-tip" role="tooltip" id="tipAssist">Assisted shows, on hover or focus, which board your move sends your opponent to. Unassisted removes that preview — you work it out yourself. Either way, illegal moves are still blocked.</span></span></span><button type="button" class="sw" id="segAssist" role="switch" aria-checked="true" aria-label="Assisted play"><span class="sw-knob"></span></button></div></div>
+      <button class="start" id="startBtn" type="button">Start game</button>
+    </div>
+  </section>
+
+  <!-- game -->
+  <div class="game" id="game">
+    <div class="topbar"><button id="backBtn">&larr; back</button><h2 id="gTitle"></h2><span id="gMode" class="modetag"></span><span class="grow"></span><button id="settingsBtn">settings</button></div>
+    <div class="stage"><div class="status" id="status" aria-live="polite"></div><div id="boardArea"></div>
+      <div class="toolbar"><button id="undoBtn">undo</button><button id="restartBtn">restart</button><button id="rematchBtn">new game · swap starter</button><button id="hintBtn">hint</button><button id="assistBtn" style="display:none" aria-pressed="true">assisted</button><button id="rulesBtn">rules</button></div>
+      <div class="result" id="result"></div>
+    </div>
+    <div class="panels">
+      <details class="panel2" id="rulesPanel"><summary>RULES <span>▾</span></summary><div class="body rules" id="rules"></div></details>
+      <details class="panel2"><summary>MOVE HISTORY <span style="font-weight:400;letter-spacing:0">replay <button id="rPrev" style="padding:2px 7px;font-size:10px">&lsaquo;</button> <button id="rNext" style="padding:2px 7px;font-size:10px">&rsaquo;</button></span></summary><div class="body hist" id="hist"></div></details>
+    </div>
+  </div>
+
+  <!-- NIM setup -->
+  <section class="entry" id="nimSetup">
+    <div class="e-head"><h1 class="e-title" id="nimTitle">Nim</h1><p class="e-blurb" id="nimBlurb">Take tokens from one pile. Mind who takes the last one.</p><details class="e-rules" id="nimRulesBox"><summary>Full rules</summary><div class="e-rules-body"><p>Remove one or more tokens from exactly one pile. You may take a whole pile. In normal play, whoever takes the last token wins. In misère, whoever takes the last token loses. Same board, different decisions. Undo is always available.</p></div></details></div>
+    <div class="e-demo" id="nEDemo"><div id="nDemo"></div></div>
+    <div class="e-ctl">
+      <div class="grp"><div class="glabel">Players</div><div class="seg" id="nOpp"><button data-v="ai">Computer</button><button data-v="2p">Two players</button><button data-v="online">Online friend</button></div>
+        <p class="e-small" id="nOnlineNote" style="display:none"></p>
+        <button type="button" class="start" id="nBackToGame" style="display:none;margin-top:10px">Back to game</button>
+      </div>
+      <div id="nOfflineOnly">
+      <div class="grp" id="nRowDiff"><div class="glabel">Difficulty <span class="hlp"><button type="button" class="hlp-btn" aria-describedby="nDiffTip">About difficulty</button><span class="hlp-tip" role="tooltip" id="nDiffTip">Perfect never gives up a forced win. From a position that is already lost for it, no engine can force a win — it still plays a legal move.</span></span></div><div class="seg" id="nDiff"><button data-v="easy">Easy</button><button data-v="medium">Medium</button><button data-v="hard">Hard</button><button data-v="perfect">Perfect</button></div></div>
+      <div class="grp"><div class="glabel">Game options</div>
+        <div class="opt"><span class="olabel">Rule</span><div class="seg" id="nRule"><button data-v="normal">Normal</button><button data-v="misere">Misère</button></div></div>
+        <p class="e-small" id="nRuleNote"></p>
+        <div class="opt" id="nRowFirst"><span class="olabel">Who starts?</span><div class="seg" id="nFirst"><button data-v="human">You</button><button data-v="ai">Computer</button><button data-v="random">Random</button></div></div><div class="opt"><span class="olabel">Hints <span class="hlp"><button type="button" class="hlp-btn hlp-i" aria-label="About hints" aria-describedby="tipHintsN">?</button><span class="hlp-tip" role="tooltip" id="tipHintsN">Hints let the computer suggest a move. Undo is always available; using it marks the game as assisted for challenge records.</span></span></span><button type="button" class="sw" id="nMode" role="switch" aria-checked="true" aria-label="Hints"><span class="sw-knob"></span></button></div>
+        <label class="chk" id="nRowChoose"><input type="checkbox" id="nBuildChoose"> I build, you choose: the computer inspects the board and picks its move order</label>
+      </div>
+      <button class="start" id="nStart" type="button">Start game</button>
+      <details class="workshop" id="nWorkshop"><summary>Board workshop <span class="sub">List · Build · Generate · Presets</span></summary><div class="wbody">
+          <div class="nlive" id="nLive" role="img" aria-label="Preview of your board"></div>
+          <div class="btns nl-actions"><button id="nRandomBoard" type="button">Random board</button></div>
+          <div class="tabs" id="nTabs" style="margin-top:0"><button data-v="list">list</button><button data-v="build">build</button><button data-v="generate">generate</button><button data-v="presets">presets</button></div>
+          <div id="nList"><div class="row"><textarea id="nListIn" rows="2" placeholder="1, 3, 5, 7" style="flex:1;min-width:220px;resize:vertical" aria-label="pile sizes"></textarea><button class="primary" id="nListApply">apply</button></div><div class="note">One number per pile. Commas, spaces or new lines all work — e.g. <b>1, 3, 5, 7</b>. Applying updates the board; Build then edits the same piles.</div><div class="note" id="nListMsg"></div></div>
+          <div id="nBuild">
+            <div id="nPileList" class="plist"></div>
+            <div class="btns" style="margin-top:10px"><button id="nAdd">+ pile</button><button id="nDupAll">duplicate arrangement</button><button id="nClear">clear</button></div>
+            <div class="row" style="margin-top:12px"><input type="text" id="nPasteIn" placeholder="paste a list: 1, 3, 5, 7 — or an exported position" style="flex:1;min-width:200px"><button id="nPaste">use list</button><button id="nImport">import</button><button id="nExport">export</button></div>
+            <div class="row"><input type="text" id="nPresetName" placeholder="preset name"><button id="nSavePreset">save as preset</button></div>
+            <div class="row" id="nRowChoose"><label style="font-size:11px;color:var(--g6)"><input type="checkbox" id="nBuildChoose"> I build, you choose — the computer inspects the board and picks its move order</label></div>
+          </div>
+          <div id="nGen">
+            <div class="row"><span class="lbl">PILES</span><input type="number" id="gCount" min="1" style="width:70px"><span class="lbl" style="width:auto">HEIGHT</span><input type="number" id="gMin" min="0" style="width:70px"> to <input type="number" id="gMax" min="0" style="width:70px"></div>
+            <div class="row"><span class="lbl">PATTERN</span><div class="seg" id="gPattern"><button data-v="equal">equal</button><button data-v="random">random</button><button data-v="staircase">staircase</button><button data-v="mirrored">mirrored</button><button data-v="repeat">repeated</button></div></div>
+            <div class="row"><span class="lbl">NEXT PLAYER</span><div class="seg" id="gFilter"><button data-v="any">any</button><button data-v="win">winning</button><button data-v="lose">losing</button></div></div>
+            <div class="row"><span class="lbl">SEED</span><input type="text" id="gSeed" placeholder="optional" style="width:120px"><span id="gSeedUsed" class="note" style="margin:0"></span></div>
+            <div class="btns"><button class="primary" id="gGo">generate</button><button id="gAgain">another, same settings</button><button id="gRandom">randomize everything</button></div>
+          </div>
+          <div id="nPre" class="presets"></div>
+          <div class="note" id="nMsg"></div>
+        </div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- NIM game -->
+  <div class="game" id="nimGame">
+    <div class="topbar"><button id="nBack">&larr; back</button><h2>Nim</h2><span class="modetag" id="nGameMode"></span><span class="grow"></span><button id="nSettings">settings</button></div>
+    <div class="stage">
+      <div class="status" id="nStatus" aria-live="polite"></div>
+      <div class="nboard" id="nBoard"></div>
+      <div class="nfind" id="nFind" style="display:none"><span>large board — scroll or drag to pan · go to pile #</span><input id="nFindIn" type="number" min="1" aria-label="pile number"><button class="btn" id="nFindGo" style="padding:5px 9px;font-size:11px">go</button></div>
+      <div class="hoverhint" id="nHoverHint"></div>
+      <div class="kbd">Choose a token to remove it and everything above it. Click a pile's number to type an exact amount.</div>
+      <div class="toolbar"><button id="nUndo">undo</button><button id="nRestart">restart</button><button id="nRematch">new game</button><button id="nHint">hint</button><button id="nRulesBtn">rules</button></div>
+      <div class="result" id="nResult"></div>
+    </div>
+    <div class="panels">
+      <details class="panel2" id="nRulesPanel"><summary>RULES <span>▾</span></summary><div class="body rules" id="nRules"></div></details>
+      <details class="panel2"><summary>MOVE HISTORY <span style="font-weight:400;letter-spacing:0">replay <button id="nPrev" style="padding:2px 7px;font-size:10px">&lsaquo;</button> <button id="nNext" style="padding:2px 7px;font-size:10px">&rsaquo;</button></span></summary><div class="body hist" id="nHist"></div><div class="body note" style="padding-top:0">Replay only looks at earlier positions. Use <b>undo</b> to actually take a move back.</div></details>
+    </div>
+  </div>
+
+  <!-- CHOMP setup -->
+  <section class="entry" id="chSetup">
+    <div class="e-head"><h1 class="e-title" id="chTitle"></h1><p class="e-blurb" id="chBlurb"></p><details class="e-rules" id="chRulesBox"><summary>Full rules</summary><div class="e-rules-body"><p>Select a tile: it and every remaining tile at or below it and at or to its left are removed. The poisoned tile is the upper-right corner. Whoever takes it loses immediately. There are no draws. Undo is always available.</p></div></details></div>
+    <div class="e-demo"><div id="cDemo"></div></div>
+    <div class="e-ctl">
+      <div class="grp"><div class="glabel">Players</div><div class="seg" id="cOpp"><button data-v="ai">Computer</button><button data-v="2p">Two players</button></div></div>
+      <div class="grp" id="cRowDiff"><div class="glabel">Difficulty <span class="hlp"><button type="button" class="hlp-btn" aria-describedby="cDiffNote">About difficulty</button><span class="hlp-tip" role="tooltip" id="cDiffNote"></span></span></div><div class="seg" id="cDiff"><button data-v="easy">Easy</button><button data-v="medium">Medium</button><button data-v="hard">Hard</button><button data-v="expert">Expert</button><button data-v="perfect">Perfect</button></div></div>
+      <div class="grp"><div class="glabel">Game options</div><div class="opt" id="cRowFirst"><span class="olabel">Who starts?</span><div class="seg" id="cFirst"><button data-v="human">You</button><button data-v="ai">Computer</button><button data-v="random">Random</button></div></div><div class="opt"><span class="olabel">Hints <span class="hlp"><button type="button" class="hlp-btn hlp-i" aria-label="About hints" aria-describedby="tipHintsC">?</button><span class="hlp-tip" role="tooltip" id="tipHintsC">Hints let the computer suggest a move. Undo is always available; using it marks the game as assisted for challenge records.</span></span></span><button type="button" class="sw" id="cMode" role="switch" aria-checked="true" aria-label="Hints"><span class="sw-knob"></span></button></div></div>
+      <div class="grp"><div class="glabel">Board size <span class="mono" id="cDims"></span></div>
+        <div class="dimrow"><label>Rows <input type="number" id="cRows" min="1" max="20" inputmode="numeric"></label><span class="x">×</span><label>Columns <input type="number" id="cCols" min="1" max="20" inputmode="numeric"></label></div>
+        <p class="e-small" style="margin:0 0 8px">Presets read rows × columns: 3 × 8 is three rows, eight columns.</p><div class="chips" id="cPresets"><button class="rp" data-r="5" data-c="5" aria-label="5 rows by 5 columns" title="5 rows × 5 columns">5 × 5</button><button class="rp" data-r="3" data-c="8" aria-label="3 rows by 8 columns" title="3 rows × 8 columns">3 × 8</button><button class="rp" data-r="8" data-c="3" aria-label="8 rows by 3 columns" title="8 rows × 3 columns">8 × 3</button><button class="rp" data-r="1" data-c="7" aria-label="1 rows by 7 columns" title="1 rows × 7 columns">1 × 7</button><button class="rp" data-r="3" data-c="2" aria-label="3 rows by 2 columns" title="3 rows × 2 columns">3 × 2</button><button class="rp" data-r="1" data-c="1" aria-label="1 rows by 1 columns" title="1 rows × 1 columns">1 × 1</button></div>
+      </div>
+      <button class="start" id="cStart" type="button">Start game</button>
+      <details class="workshop"><summary>Shape workshop <span class="sub">Bites · Row lengths · Random</span></summary><div class="wbody">
+          <div class="tabs" id="cTabs" style="margin-top:0"><button data-v="rect">rectangle</button><button data-v="shape">shape workshop</button><button data-v="random">random position</button></div>
+          <div id="cRect"><div class="note">A fresh rectangle. Choose a size above.</div></div>
+          <div id="cWork"><div class="note">Click tiles in the preview to take practice bites. The poison stays.</div><div class="btns"><button id="cWsUndo">undo bite</button><button id="cWsReset">reset</button></div><div class="row" style="margin-top:10px"><span class="lbl">ROW LENGTHS</span><input type="text" id="cRowLens" style="flex:1;min-width:160px"></div><div class="note">top to bottom, nonincreasing, right-aligned.</div></div>
+          <div id="cRand"><div class="row"><span class="lbl">BITES</span><input type="number" id="cBites" min="0" style="width:70px"><span class="lbl" style="width:auto">TARGET LEFT</span><input type="number" id="cTarget" min="1" placeholder="optional" style="width:90px"><span class="lbl" style="width:auto">SEED</span><input type="text" id="cSeed" style="width:100px"></div><div class="btns"><button class="primary" id="cGen">generate</button><span id="cSeedUsed" class="note" style="margin:0"></span></div></div>
+          <div class="note" id="cMsg"></div>
+        </div></details>
+    </div>
+  </section>
+
+  <!-- CHOMP game -->
+  <div class="game" id="chGame">
+    <div class="topbar"><button id="cBack">&larr; back</button><h2>Chomp</h2><span class="modetag" id="cGameMode"></span><span class="grow"></span><button id="cSettings">settings</button></div>
+    <div class="stage">
+      <div class="status" id="cStatus" aria-live="polite"></div>
+      <div id="cBoard"></div>
+      <div class="hoverhint" id="cHoverHint"></div>
+      <div class="selpanel" id="cSelPanel"></div>
+      <div class="toolbar"><button id="cUndo">undo</button><button id="cRestart">restart</button><button id="cRematch">new game · swap starter</button><button id="cHint">hint</button><button id="cRulesBtn">rules</button></div>
+      <div class="result" id="cResult"></div>
+    </div>
+    <div class="panels">
+      <details class="panel2" id="cRulesPanel"><summary>RULES <span>▾</span></summary><div class="body rules" id="cRules"></div></details>
+      <details class="panel2"><summary>MOVE HISTORY <span style="font-weight:400;letter-spacing:0">replay <button id="cPrev" style="padding:2px 7px;font-size:10px">&lsaquo;</button> <button id="cNext" style="padding:2px 7px;font-size:10px">&rsaquo;</button></span></summary><div class="body hist" id="cHist"></div></details>
+    </div>
+  </div>
+
+  <!-- generic entry + match screens for the newer games (games2.js) -->
+  <section class="entry" id="gxSetup" aria-live="polite">
+    <div class="e-head"><h1 class="e-title" id="gxTitle"></h1><p class="e-blurb" id="gxBlurb"></p><details class="e-rules" id="gxRulesBox"><summary>Full rules</summary><div class="e-rules-body" id="gxRules"></div></details></div>
+    <div class="e-demo" id="gxEDemo"><div id="gxDemo"></div></div>
+    <div class="e-ctl">
+      <div class="grp" id="gxRowMode" style="display:none"><div class="glabel">Mode</div><div class="seg" id="gxModeSeg"></div></div>
+      <div class="grp" id="gxRowSet" style="display:none"><div class="glabel">Puzzle set</div><div class="seg" id="gxSetSeg"></div><p class="e-small" id="gxSetNote" style="margin:8px 0 0"></p></div>
+      <div class="grp" id="gxRowPlayers"><div class="glabel">Players</div><div class="seg" id="gxOpp"><button data-v="ai">Computer</button><button data-v="2p">Two players</button></div>
+        <p class="e-small" id="gxOnlineNote" style="display:none"></p>
+        <button type="button" class="start" id="gxBackToGame" style="display:none;margin-top:10px">Back to game</button>
+      </div>
+      <div id="gxOfflineOnly">
+      <div class="grp" id="gxRowDiff"><div class="glabel">Difficulty <span class="hlp"><button type="button" class="hlp-btn" aria-describedby="gxDiffNote">About difficulty</button><span class="hlp-tip" role="tooltip" id="gxDiffNote"></span></span></div><div class="seg" id="gxDiff"></div></div>
+      <div class="grp" id="gxRowOpts"><div class="glabel">Game options</div>
+        <div class="opt" id="gxRowFirst"><span class="olabel">Who starts?</span><div class="seg" id="gxFirst"><button data-v="human">You</button><button data-v="ai">Computer</button><button data-v="random">Random</button></div></div>
+        <div id="gxExtra"></div>
+        <div class="opt" id="gxRowHints"><span class="olabel">Hints <span class="hlp"><button type="button" class="hlp-btn hlp-i" aria-label="About hints" aria-describedby="tipHintsX">?</button><span class="hlp-tip" role="tooltip" id="tipHintsX">Hints let the computer suggest a move. Undo is always available; using it marks the game as assisted.</span></span></span><button type="button" class="sw" id="gxHints" role="switch" aria-checked="true" aria-label="Hints"><span class="sw-knob"></span></button></div>
+      </div>
+      <button class="start" id="gxStart" type="button">Start game</button>
+      <div class="gcustomize-entry" id="gxSetupCustomizeWrap" style="display:none"><button type="button" id="gxSetupCustomize"><span id="gxSetupCustomizeLabel">Customize board</span></button></div>
+      <details class="workshop" id="gxWorkshop" style="display:none"><summary>Board workshop</summary><div class="wbody" id="gxWorkshopBody"></div></details>
+      </div>
+    </div>
+  </section>
+  <div class="game" id="gxGame">
+    <div class="topbar"><button id="gxBack">&larr; back</button><h2 id="gxGameTitle"></h2><span class="modetag" id="gxMode"></span><span class="grow"></span><button id="gxSettings">settings</button></div>
+    <div class="stage">
+      <div class="status" id="gxStatus" aria-live="polite"></div>
+      <div class="gx-board" id="gxBoard"></div>
+      <div class="gx-pz" id="gxPz"></div>
+      <div class="toolbar"><button id="gxUndo">undo</button><button id="gxRestart">restart</button><button id="gxHint">hint</button><button id="gxRetry" style="display:none">retry</button><button id="gxNext" style="display:none">next puzzle</button><button id="gxRulesBtn">rules</button></div>
+      <div class="result" id="gxResult"></div>
+    </div>
+    <div class="panels"><details class="panel2" id="gxRulesPanel"><summary>RULES <span>▾</span></summary><div class="body rules" id="gxRulesBody"></div></details></div>
+  </div>
+  <!-- a game's own page: a few lines about the game under it, in the first HTML (tools/game-pages.js) -->
+  <section class="zf-about" id="aboutGame" data-slug="nim" aria-labelledby="aboutGameH">
+  <h2 id="aboutGameH">About Nim</h2>
+  <p>Nim is the classic two-player math game. Players take any number of tokens from a single pile, and in normal play whoever takes the last token wins. In misère Nim, the last token loses.</p>
+  <h3>Strategy</h3>
+  <p>Write each pile size in binary and add the columns without carrying (the nim-sum). Leave your opponent a nim-sum of zero and you win. In misère play, do the same until only single tokens would be left, then leave an odd number of them.</p>
+  <h3>Ways to play</h3>
+  <p>Against the computer, with two players on one device, or online with a friend, with piles you list, build or generate.</p>
+  <div class="sitelinks" role="navigation" aria-label="More games"><a href="/nim#rules">How to play Nim</a><a href="/gold-coin">The Gold Coin</a><a href="/chomp">Chomp</a><a href="/notakto">Notakto</a><a href="/arcade">All games</a></div>
+</section>
+</div>
+
+<!-- ENGINES: rules + AI, loaded on main thread AND inside a worker -->
+
+
+<script src="/arcade-main.js?v=c904ccf3"></script>
+<script src="/arcade-games.js?v=43febad6"></script>
+<script src="/games2.js?v=e19ef0c0"></script>
+<script src="/games3.js?v=afee35cd"></script>
+<script src="/games4.js?v=1af6c875"></script>
+<script src="/arcade-wire.js?v=fb0c3c87"></script>
+<script src="/lessons.js?v=55580e61"></script>
+<script src="/hint-duck.js?v=2bbe4646"></script>
+<script src="/side-duck.js?v=851c58a9"></script>
+<script src="/match.js?v=5a79b7a7"></script>
+<script src="/rules-summary.js?v=72153968"></script>
+<script src="/react.js?v=0cfa1a13"></script>
+<script src="/turn-timer.js?v=16c5eb30"></script>
+<script src="/coach.js?v=6bd2206e"></script>
+<script src="/feel.js?v=794aa1a5"></script>
+<script src="/origins-data.js?v=2022c8b9"></script>
+<script src="/origins.js?v=0048b475"></script>
+<script src="/shell.js?v=e2bccffe"></script>
+<script src="/offline.js?v=c3feb060"></script>
+<script src="/online-rooms.js?v=fc808795"></script>
+<script src="/online-nim.js?v=938a3a19"></script>
+<script src="/online-pentago.js?v=75f59ba2"></script>
+<script src="/online-notakto.js?v=b00d79c8"></script>
+<script src="/online-toot.js?v=fe7e9309"></script>
+<script src="/online-sim.js?v=33a408c6"></script>
+<script src="/online-gold.js?v=835ede4d"></script>
+<script src="/online-recursive.js?v=fa23e45f"></script>
+</body>
+</html>

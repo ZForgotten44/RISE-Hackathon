@@ -1,0 +1,13 @@
+# Netlify / Cloudflare Pages: always revalidate, so a visitor never keeps a stale page or script.
+# (Local scripts and styles are also stamped ?v=<hash> by tools/version-assets.js, so a changed file always has a new URL.)
+/*
+  Cache-Control: no-cache
+
+# Only https://zfgames.org is meant for search. The workers.dev mirror and every PR preview
+# (<version>-zfgames-org.<account>.workers.dev) answer with noindex, so they never compete with it in results.
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex
+
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /

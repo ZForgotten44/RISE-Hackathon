@@ -1,0 +1,4 @@
+dist/
+node_modules/
+.DS_Store
+tools/c4solve/c4solve

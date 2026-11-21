@@ -1,0 +1,98 @@
+{
+ "version": "83404de9fb3f",
+ "fallback": "/offline.html",
+ "core": [
+  "/ai-core.js",
+  "/ai-core.js?v=310cc1f0",
+  "/ai-worker.js",
+  "/apple-touch-icon.png",
+  "/arcade-duck-side.svg",
+  "/arcade-duck-top.svg",
+  "/arcade-games.js?v=43febad6",
+  "/arcade-main.js?v=c904ccf3",
+  "/arcade-wire.js?v=fb0c3c87",
+  "/arcade.css?v=85db43c4",
+  "/audio/duck-squeak.mp3",
+  "/audio/zfgames-3.mp3",
+  "/author-duck.png",
+  "/coach.js?v=6bd2206e",
+  "/cursor.js?v=cd3951a0",
+  "/duck-face.png",
+  "/duck.js?v=ee1c558d",
+  "/engine-worker.js",
+  "/engines.js",
+  "/engines.js?v=5ebed5af",
+  "/engines2.js",
+  "/engines2.js?v=b2bfcb3a",
+  "/entry.js?v=0e56a0fa",
+  "/favicon-16.png",
+  "/favicon-32.png",
+  "/favicon-48.png",
+  "/favicon.ico",
+  "/feel.js?v=794aa1a5",
+  "/fonts/fast-blaze.woff2",
+  "/games2.js?v=e19ef0c0",
+  "/games3.js?v=afee35cd",
+  "/games4.js?v=1af6c875",
+  "/gold-engine.js",
+  "/gold-engine.js?v=a7e20373",
+  "/hint-duck.js?v=2bbe4646",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/lessons.js?v=55580e61",
+  "/match.js?v=5a79b7a7",
+  "/music.js?v=a5570acd",
+  "/offline.html",
+  "/offline.js?v=c3feb060",
+  "/online-gold.js?v=835ede4d",
+  "/online-nim.js?v=938a3a19",
+  "/online-notakto.js?v=b00d79c8",
+  "/online-pentago.js?v=75f59ba2",
+  "/online-recursive.js?v=fa23e45f",
+  "/online-rooms.js?v=fc808795",
+  "/online-sim.js?v=33a408c6",
+  "/online-toot.js?v=fe7e9309",
+  "/origins-data.js?v=2022c8b9",
+  "/origins.js?v=0048b475",
+  "/party-duck.js?v=aefb47b3",
+  "/react.js?v=0cfa1a13",
+  "/rules-summary.js?v=72153968",
+  "/shared.js?v=fb6926ed",
+  "/shell.js?v=e2bccffe",
+  "/side-duck.js?v=851c58a9",
+  "/site.css?v=76e3772a",
+  "/site.webmanifest",
+  "/sound.js?v=90368e02",
+  "/theme.js?v=2d54ba4d",
+  "/traces.js?v=cb511b6d",
+  "/turn-timer.js?v=16c5eb30",
+  "/zart.js?v=4bafc2c6"
+ ],
+ "games": {
+  "recursive-tic-tac-toe": [
+   "/recursive-tic-tac-toe"
+  ],
+  "gold-coin": [
+   "/gold-coin"
+  ],
+  "chomp": [
+   "/chomp"
+  ],
+  "nim": [
+   "/nim"
+  ],
+  "pentago": [
+   "/pentago"
+  ],
+  "notakto": [
+   "/notakto"
+  ],
+  "toot-otto": [
+   "/toot-otto"
+  ],
+  "sim": [
+   "/sim"
+  ]
+ },
+ "bytes": 23664174
+}

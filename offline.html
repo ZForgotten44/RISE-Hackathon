@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Not saved on this device · Z Forgotten Games</title>
+<!-- shown by sw.js when you're offline and open a page that isn't saved on this device. Self-contained: no other files. -->
+<style>
+:root{--bg:#f3f2ee;--fg:#0a0a0a;--g3:#c8c5ba;--g5:#8b8a83;--g6:#46443d;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--bg:#0b0b0a;--fg:#f4f2ec;--g3:#2b2b28;--g5:#8b8a83;--g6:#b3b1a9}}
+html[data-inv]{--bg:#0b0b0a;--fg:#f4f2ec;--g3:#2b2b28;--g6:#b3b1a9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--fg);font:400 16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px 16px}
+main{width:min(520px,100%)}
+h1{margin:0 0 10px;font-size:24px;line-height:1.25;letter-spacing:-.01em}
+p{margin:0 0 14px;color:var(--g6)}
+ul{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+a{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 14px;border:1px solid var(--g3);border-radius:12px;color:var(--fg);text-decoration:none;font-weight:600}
+a:hover,a:focus-visible{border-color:var(--fg)}
+a span{color:var(--g5);font-weight:500;font-size:13px}
+.k{font:600 11px ui-monospace,monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--g5);margin:0 0 8px}
+</style>
+</head>
+<body>
+<main>
+  <p class="k">Offline</p>
+  <h1>This page isn’t saved on this device yet.</h1>
+  <p>You’re not connected right now. Open it once while you’re online and it will be saved for playing against the computer without internet.</p>
+  <div id="saved"></div>
+</main>
+<script>
+(function(){ try{ if(localStorage.getItem('zf-invert')==='1') document.documentElement.setAttribute('data-inv',''); }catch(e){}
+  var names={'recursive-tic-tac-toe':'Recursive Tic-Tac-Toe','gold-coin':'The Gold Coin','chomp':'Chomp','nim':'Nim','pentago':'Pentago','notakto':'Notakto','toot-otto':'TOOT & OTTO','sim':'Sim'};
+  var s={}; try{ s=JSON.parse(localStorage.getItem('zf-offline-saved')||'{}'); }catch(e){}
+  var ks=Object.keys(s).filter(function(k){ return names[k]; }); if(!ks.length) return;
+  var box=document.getElementById('saved'); box.innerHTML='<p style="margin-top:22px">These games are saved here and work offline:</p><ul>'+ks.map(function(k){ return '<li><a href="/'+k+'">'+names[k].replace(/&/g,'&amp;')+' <span>Play →</span></a></li>'; }).join('')+'</ul>';
+})();
+</script>
+</body>
+</html>

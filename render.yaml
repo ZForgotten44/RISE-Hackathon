@@ -1,0 +1,15 @@
+# Render (render.com) infrastructure-as-code for the "Online friend" room server.
+# This deploys ONLY server/room-server.js — the small stateful WebSocket process that Nim, Domineering, and
+# Pentago's online rooms talk to. The static site itself (everything else in this repo) is deployed separately
+# as Cloudflare Workers static assets; it is not affected by this file. See README-ROOMS.md for the full
+# walkthrough of connecting the two.
+services:
+  - type: web
+    name: zfgames-room-server
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install --omit=dev
+    startCommand: node server/room-server.js
+    healthCheckPath: /healthz
+    autoDeploy: true

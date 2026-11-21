@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300" fill="none" role="img" aria-label="ZF rubber duck side view"><g id="duck" stroke="#24231F" stroke-linecap="round" stroke-linejoin="round">
+<path id="body" fill="#F5F2E8" stroke-width="5.5" d="M143 145 C138 132 135 117 138 102 C142 72 164 51 194 51 C225 51 249 72 250 101 C251 119 241 131 244 145 C247 158 264 166 276 183 C286 198 287 214 280 229 C267 253 235 261 197 262 C158 263 120 260 94 249 C64 237 47 217 44 195 C42 180 46 165 53 164 C60 163 61 178 74 181 C95 160 119 149 143 145 Z"/>
+<path id="belly-shade" fill="#E2DDCF" stroke="none" d="M56 215 C80 240 130 249 180 249 C221 250 258 245 279 228 C266 252 234 260 197 261 C158 262 120 259 94 248 C77 241 64 229 56 215 Z"/>
+<g id="wing">
+<path fill="#EAE5D8" stroke="none" d="M98 200 C117 184 140 181 160 187 C182 194 192 207 209 208 C196 226 172 234 151 229 C126 226 109 215 98 200 Z"/>
+<path stroke="#B5AE9D" stroke-width="3.2" d="M103 205 C123 225 151 232 174 227 C188 224 199 218 205 211"/>
+<path stroke="#D5CEBD" stroke-width="2.8" d="M114 191 C128 185 144 185 157 189"/>
+</g>
+<g id="bill" stroke-width="4">
+<path fill="#C5A23C" d="M242 109 C250 107 257 113 265 116 C275 120 288 118 290 125 C292 133 282 141 268 142 C255 143 245 138 241 131 C237 124 237 114 242 109 Z"/>
+<path fill="#AD8A2D" stroke="none" d="M243 128 C258 134 276 135 287 128 C285 136 278 140 267 140 C256 140 247 137 243 128 Z"/>
+<path d="M246 128 C259 133 275 134 285 129" stroke="#796323" stroke-width="2.3"/>
+</g>
+<g id="eye" stroke="none"><ellipse cx="223" cy="100" rx="6.5" ry="7.5" fill="#24231F"/><circle cx="225" cy="97.5" r="1.9" fill="#FFFDF6"/></g>
+</g></svg>

@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Z Forgotten Games (ZF Games) | Free Multiplayer &amp; Strategy Games</title>
+<meta name="description" content="Free, open-source games built by Mahmoud Hafez. Play strategy board games, create a room, and invite friends. No account needed.">
+<link rel="canonical" href="https://zfgames.org/">
+<meta name="application-name" content="Z Forgotten Games">
+<!-- Open Graph / social previews: keep name, title and description in sync with the <title>/<meta name="description">
+     above and with the WebSite structured data below -- three different places saying three different things is
+     exactly what let a search engine guess a name on its own instead of using ours. -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zfgames.org/">
+<meta property="og:site_name" content="Z Forgotten Games">
+<meta property="og:title" content="Z Forgotten Games (ZF Games) | Free Multiplayer &amp; Strategy Games">
+<meta property="og:description" content="Free, open-source games built by Mahmoud Hafez. Play strategy board games, create a room, and invite friends. No account needed.">
+<meta property="og:image" content="https://zfgames.org/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Z Forgotten Games — the site's duck mascot with its games">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Z Forgotten Games (ZF Games) | Free Multiplayer &amp; Strategy Games">
+<meta name="twitter:description" content="Free, open-source games built by Mahmoud Hafez. Play strategy board games, create a room, and invite friends. No account needed.">
+<meta name="twitter:image" content="https://zfgames.org/og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Z Forgotten Games","alternateName":["ZF Games","ZFGames"],"url":"https://zfgames.org/"}
+</script>
+<script src="theme.js?v=2d54ba4d"></script>
+<script src="sound.js?v=90368e02"></script>
+<script src="music.js?v=a5570acd"></script>
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f2ee" media="(prefers-color-scheme: light)">
+<link rel="preload" href="/fonts/fast-blaze.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="site.css?v=76e3772a">
+<script src="cursor.js?v=cd3951a0" defer></script>
+<script src="engines2.js?v=b2bfcb3a"></script>
+<script src="gold-engine.js?v=a7e20373"></script>
+<script src="zart.js?v=4bafc2c6"></script>
+<script src="duck.js?v=ee1c558d"></script>
+<script src="side-duck.js?v=851c58a9"></script>
+<script src="duck-face.js?v=e25b0001"></script>
+<script src="party-duck.js?v=aefb47b3"></script>
+<script src="shared.js?v=fb6926ed"></script>
+<link rel="stylesheet" href="story.css?v=0e515ec7">
+<style>
+/* Fast Blaze: the homepage wordmark only (self-hosted; see fonts/fast-blaze-license.txt) */
+@font-face{font-family:"Fast Blaze";src:url("/fonts/fast-blaze.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;--navh:54px}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--fg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html,body{overflow-x:clip}   /* a zoomed-in About duck can never widen the page or let phones pan sideways (clip, unlike hidden, keeps sticky positioning working) */
+nav,.tag,.secnum,.term,.termbar,#tout,#tinput,.tin,#dock,#dockLauncher,#runCtl,#runTip,#wfBar,#curLbl,.stripctl .ind,.gi{font-family:var(--font-mono)}
+.display{font-family:var(--font-sans);font-weight:700}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+html[data-inv="1"] #about .dk .grd,html[data-inv="0"] [data-tone="dark"] .dk .grd{fill:rgba(255,255,255,.12)}
+html[data-inv="1"] #about .dk .sh{fill:rgba(0,0,0,.09)}
+.wrap{width:100%;max-width:1360px;margin:0 auto;padding:0 5vw}
+.wrap.wide{max-width:none;padding:0 5vw}
+.tag{font-size:11px;color:var(--g5);letter-spacing:.08em}
+.secnum{font-family:var(--font-sans);font-weight:700;line-height:.85;color:var(--g3);user-select:none}
+.enter{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
+.enter.in{opacity:1;transform:none}
+body.wireframe section *{outline:1px solid rgba(255,90,90,.35)!important}
+#wfBar{display:none;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:900;background:var(--bg);color:var(--fg);border:1px solid var(--fg);padding:8px 14px;font-size:11px;gap:14px;align-items:center}
+body.wireframe #wfBar{display:flex}
+
+#mesh{position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:difference;opacity:.6}
+
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;color:var(--fg);background:var(--nav-bg);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--nav-line);transition:background .25s,color .25s,border-color .25s}
+.navin{max-width:1180px;margin:0 auto;padding:10px 5vw;display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.navpath{position:relative;display:flex;gap:16px}
+.navitem{opacity:.7;padding:2px 4px 10px;transition:opacity .15s;position:relative}
+.navitem:hover,.navitem:focus-visible{opacity:.92}
+.navitem.current{opacity:1}
+/* only the current item keeps its underline lit, close under its label; hover just darkens the text (via
+   opacity above) so it can't be mistaken for the current-page indicator. It's absolutely positioned, so it
+   never adds or removes layout height when the active section changes. */
+.navitem::after{content:"";position:absolute;left:4px;right:4px;bottom:4px;height:1.5px;width:auto;transform:scaleX(0);transform-origin:left;background:currentColor;transition:transform .2s}
+.navitem.current::after{transform:scaleX(1)}
+.navright{display:flex;align-items:center;gap:10px;margin-left:auto}
+.navin .brandmark{margin-right:24px}
+.navmenu{display:none}
+/* below 640px the four links move into a dropdown so the header row only ever holds the duck and the three
+   controls -- no shrinking every control to make four words fit beside them. */
+@media (max-width:640px){
+  .navmenu{display:inline-flex}
+  .navpath{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;margin:0;padding:6px 5vw 16px;background:var(--nav-bg);border-bottom:1px solid var(--nav-line);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .navpath.open{display:flex}
+  .navitem{padding:13px 2px;opacity:.75}
+  .navitem::after{left:2px;right:2px;bottom:7px}
+  .navin .brandmark{margin-right:16px}
+}
+
+/* Create room / Join room: in the header on laptops (the 44px buttons take the row's padding, so the bar keeps its
+   54px height); below 860px the header can't hold them beside the four links, so the Games heading carries the
+   pair instead, and the phone menu lists them too. One pair per view. */
+nav .roomnav{margin-right:16px}
+.navin:has(.roomnav){padding-top:4px;padding-bottom:4px}
+.navrooms{display:none}
+@media (max-width:860px){nav .roomnav{display:none}.navin:has(.roomnav){padding-top:10px;padding-bottom:10px}}
+@media (max-width:640px){
+  .navpath.open .navrooms{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;font-family:var(--font-sans)}
+  .navrooms .roombtn{width:100%;min-height:50px}
+  /* the open menu is an opaque sheet over a dimmed page, so the wordmark doesn't show through under its edge */
+  nav:has(.navpath.open),nav .navpath.open{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .navscrim{position:fixed;inset:0;z-index:499;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s}
+  body.navopen .navscrim{opacity:1;pointer-events:auto}
+}
+/* touch screens: no hover tooltip on the menu button (a tap would leave "Menu" stuck on screen) */
+@media (hover:none){.navmenu::after{display:none}}
+footer .sitelinks{margin-top:14px}
+/* every game by name (written by tools/build-routes.js), a quieter row under the site links */
+footer .footgames{gap:2px 18px;font-size:12.5px;padding-top:12px;border-top:1px solid var(--g3)}
+footer .footgames a{padding:3px 0}
+@media (pointer:coarse){footer .footgames{gap:0 18px}footer .footgames a{padding:8px 0}}
+#home{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1;overflow:hidden;scroll-margin-top:0}
+#home{padding:var(--navh) 0 calc(18vh + env(safe-area-inset-bottom,0px))}
+/* a quiet route to the games under the tagline (the wordmark itself also leads there) */
+#home .explore{position:relative;z-index:3;display:inline-flex;align-items:center;gap:.55em;min-height:44px;margin-top:calc(clamp(46px,min(10.6vw,17vh),150px) * -.3 - 2px);padding:0 18px;font-family:var(--font-mono);font-size:clamp(13px,1.2vw,17px);letter-spacing:.06em;color:var(--wm-sub);text-decoration:none;transition:color .16s,opacity .25s}
+#home .explore .t{text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 35%,transparent);text-underline-offset:.35em;transition:text-decoration-color .16s}
+#home .explore .ar{display:inline-block;transition:transform .16s}
+#home .explore:hover,#home .explore:focus-visible{color:var(--wm-sub-hi)}
+#home .explore:focus-visible{outline:2px solid var(--wm);outline-offset:2px;border-radius:8px}
+#home .explore:hover .ar,#home .explore:focus-visible .ar{transform:translateY(2px)}
+#home .explore:hover .t,#home .explore:focus-visible .t{text-decoration-color:currentColor}
+#home.runlive .explore{opacity:0;pointer-events:none}
+/* phones: the title, tagline and Explore link sit as one group, a little below centre so they stay close to the runner's prompt */
+@media (max-width:640px){#home .explore{margin-top:calc(clamp(30px,12.2vw,76px) * -.3 + 2px);font-size:12px}}
+@media (max-width:599px){#home{min-height:100svh;justify-content:flex-end;padding-bottom:calc(max(24vh,224px) + 20vh - 38px + env(safe-area-inset-bottom,0px));padding-bottom:calc(max(24svh,224px) + 20svh - 38px + env(safe-area-inset-bottom,0px))}}   /* 100svh: the hero, track included, fits above Safari's toolbar even when it is expanded; the taller runner takes its extra 38px from the gap, so the title stays put */
+.title{display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;padding:0 4vw}
+.wm{display:flex;flex-direction:column;align-items:center;text-align:center;padding:.3em .5em .35em;color:var(--wm);transition:transform .16s cubic-bezier(.3,.9,.3,1.1);-webkit-tap-highlight-color:transparent;font-size:clamp(46px,min(10.6vw,17vh),150px)}
+.wm .l1,.wm .l2{display:block;font-family:"Fast Blaze",var(--font-sans);font-weight:400;letter-spacing:.01em;line-height:1;white-space:nowrap}
+.wm .l2{margin-top:.16em;position:relative}
+.wm .g0{position:relative;z-index:1}
+/* the rubber duck peeking out from behind the G, showing both eyes and the whole bill with the G overlapping only the right edge of
+   its head (~13%). On phones (no hover) it rests there; on laptops it is tucked out of sight until the wordmark is hovered or its
+   link gets keyboard focus, then slides out, and tucks away again after. It sits under the G (z-index), so it never covers a
+   letter; only transforms and opacity animate, so no letter or layout moves. Now and then it gives a small wobble. */
+.wm .wmduck{position:absolute;z-index:0;left:-.4em;top:.14em;width:.54em;height:.54em;transform:translateX(-.07em) rotate(-4deg);transform-origin:70% 80%;transition:transform .32s cubic-bezier(.3,1.5,.5,1);pointer-events:none}
+.wm .wmduck img{width:100%;height:100%;display:block;transform-origin:70% 85%;animation:duckwob 7s ease-in-out 2s infinite}
+.wm:hover .wmduck,.wm:focus-visible .wmduck{transform:translateX(-.13em) rotate(-10deg)}
+@media (hover:hover) and (pointer:fine){
+  .wm .wmduck{opacity:0;transform:translateX(.3em) rotate(6deg);transition:transform .38s cubic-bezier(.3,1.35,.5,1),opacity .22s ease}
+  .wm:hover .wmduck,.wm:focus-visible .wmduck{opacity:1;transform:translateX(-.07em) rotate(-4deg)}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce){.wm .wmduck{transition:opacity .15s}}
+@keyframes duckwob{0%,86%,100%{transform:rotate(0)}89%{transform:rotate(-7deg)}92%{transform:rotate(5deg)}95%{transform:rotate(-3deg)}}
+@media (prefers-reduced-motion:reduce){.wm .wmduck{transition:none}.wm .wmduck img{animation:none}}
+/* the play "o": Fast Blaze's own O, with a small Play triangle set into its counter. Offsets are em units of the glyph
+   (its counter is centred ~.31em in from the glyph's left edge and ~.85em down from the top of the inline box) */
+.wm .wo{position:relative}
+.wm .wo svg{position:absolute;width:.1em;height:.116em;left:.268em;top:.78em;overflow:visible}
+@media (max-width:640px){.wm .wo svg{width:.145em;height:.168em;left:.246em;top:.754em}}
+.wm .wo::before{content:"";position:absolute;left:-.12em;right:-.12em;top:.1em;bottom:-.1em}   /* a generous invisible target around the play O (the whole wordmark is one link to the games) */
+.wm .wo .tri{fill:var(--wm);transition:transform .24s cubic-bezier(.3,1.3,.5,1),fill .16s}
+.wm .sub{display:block;margin-top:clamp(18px,3.2vh,34px);font-family:var(--font-mono);font-weight:400;font-size:clamp(13px,1.35vw,19px);letter-spacing:.06em;color:var(--wm-sub);transition:color .16s}
+.wm .tri{transform-box:fill-box;transform-origin:center}
+.wm:hover .tri,.wm:focus-visible .tri{fill:var(--fg);transform:scale(1.22);animation:none}
+.wm .plab{position:absolute;left:50%;bottom:calc(100% - 1.9em);padding:.24em .6em .26em;border-radius:999px;background:var(--wm);color:var(--bg);font:600 max(12px,.16em)/1 var(--font-sans);letter-spacing:.02em;white-space:nowrap;opacity:0;transform:translate(-50%,4px);pointer-events:none;transition:opacity .16s,transform .16s}
+.wm:hover .plab,.wm:focus-visible .plab{opacity:1;transform:translate(-50%,0)}
+/* an occasional double nudge: the triangle invites, then rests (about every 8.5 s while Home is on screen) */
+.wm.idle .tri{animation:trinudge 8.5s ease-in-out infinite}
+@keyframes trinudge{0%,82%{transform:translateX(0) rotate(0)}85%{transform:translateX(3px) rotate(4deg)}88%{transform:translateX(0) rotate(0)}91%{transform:translateX(3px) rotate(4deg)}94%,100%{transform:translateX(0) rotate(0)}}
+@media (prefers-reduced-motion:reduce){.wm .tri{fill:var(--fg);filter:drop-shadow(0 0 2px var(--g5))}.wm.idle .tri{animation:none}}
+.wm:hover .sub,.wm:focus-visible .sub{color:var(--wm-sub-hi)}
+.wm:focus-visible{outline:2px solid var(--wm);outline-offset:10px}
+.wm.press{transform:translateY(0) scale(.992)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.xo-field{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;pointer-events:none;user-select:none}   /* xo-field.js: the drifting X and O pieces, behind each region's content */
+#about>.xo-field{z-index:-1}
+@media (max-width:640px){.wm{font-size:clamp(31.5px,12.8vw,80px)}.wm .sub{font-size:12px}}
+
+#runner{position:absolute;left:0;right:0;bottom:0;height:calc(max(30vh,176px) + env(safe-area-inset-bottom,0px));z-index:1;outline:none}      /* tall enough that the duck's head clears the top edge at the apex of a jump */
+@media (max-width:599px){#runner{height:calc(max(24vh,224px) + env(safe-area-inset-bottom,0px));height:calc(max(24svh,224px) + env(safe-area-inset-bottom,0px))}}   /* phones: a shorter strip, still clear of the larger duck's jump apex (svh: sized to the viewport with Safari's toolbar showing, so it never shifts as the toolbar hides) */
+#runner:focus-visible{outline:none}
+#runner canvas{width:100%;height:100%;display:block}
+#runCtl{position:absolute;left:50%;transform:translateX(-50%);top:62%;z-index:2;display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;max-width:calc(100% - 32px);font-size:12px;letter-spacing:.08em;color:var(--g6);opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+#home.runlive #runCtl{opacity:1}
+#runRetry{color:var(--fg);font-weight:600}
+#runHit,#runHitD{position:absolute;cursor:pointer;z-index:3;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#runTip{position:absolute;z-index:4;transform:translateX(-50%);font-size:11px;letter-spacing:.08em;color:var(--fg);text-shadow:0 0 3px var(--bg),0 0 6px var(--bg);opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+#runTip.show{opacity:1}
+#runCtl .sc{min-width:52px;text-align:right;color:var(--fg)}
+#home.launching .title{transition:opacity .38s ease;opacity:0}
+
+section.hidden-section{display:none!important}
+section.sec{position:relative;z-index:1;padding:44px 0 64px;min-height:0;scroll-margin-top:var(--navh);display:flex;flex-direction:column;justify-content:flex-start}
+section.sec#about{padding:56px 0 72px}
+/* desktop: the whole About group (heading, introduction, links and duck) sits in the middle of the screen under the
+   header, with equal padding above and below; the section only grows past that when its content needs it */
+@media (min-width:641px){section.sec#about{min-height:calc(100vh - var(--navh));min-height:calc(100svh - var(--navh));padding:48px 0;justify-content:center}}
+/* two columns: the duck is drawn about a fifth larger than its column (same proportions, overflowing it evenly) and its
+   column is lined up with the introduction and paragraphs by alignAboutDuck() below */
+@media (min-width:901px){#about .agrid{align-items:start}#about .duckwrap svg{width:min(122%,683px);flex-shrink:0}}
+section.sec#terminal{min-height:0;padding:40px 0 18px}
+section.sec>.wrap{width:100%}
+.sechead{display:flex;align-items:baseline;gap:.34em;margin-bottom:26px;font-size:var(--fs-section);line-height:1}
+.sechead .secnum{font-family:var(--font-mono);font-weight:500;font-size:.72em;line-height:1;letter-spacing:-.06em;color:var(--g4);user-select:none}
+.sechead .st{display:block;padding:0}
+.sechead h2{font-family:var(--font-sans);font-size:1em;font-weight:700;letter-spacing:-.02em;color:var(--fg);line-height:1;margin:0}
+
+
+
+
+
+.btn{border:1px solid var(--g3);padding:7px 12px;font-size:11px;letter-spacing:.03em;transition:border-color .12s,transform .08s,background .12s;display:inline-block}
+.btn:hover{border-color:var(--fg)}.btn:active{transform:scale(.96)}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+
+.a4 .next{opacity:0}.gcard:is(.on,.live) .a4 .next{animation:pop .3s .2s forwards}.a4 .thr{opacity:0}.gcard:is(.on,.live) .a4 .thr{animation:pop .3s .8s forwards}
+
+
+.duck-link{font-weight:inherit}
+a.duck-link{border-bottom:1.5px solid currentColor}
+a.duck-link:hover{opacity:.7}
+
+.agrid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,1fr);gap:clamp(36px,5vw,88px);align-items:center}
+@media (max-width:900px){.agrid{grid-template-columns:1fr}}
+.bio .lead{font-family:var(--font-sans);font-weight:700;font-size:clamp(30px,3.5vw,44px);line-height:1.2;color:var(--fg);max-width:22ch;margin-bottom:0}
+.bio .leadsub{font-family:var(--font-mono);font-weight:500;font-size:clamp(15px,1.3vw,18px);line-height:1.35;letter-spacing:.04em;margin:6px 0 0}
+.ahead{margin-bottom:26px}   /* the heading and its alias read as one unit: the alias sits tight under it, smaller and quieter */
+#about .bio .leadsub{color:var(--g6)}
+.contactrow{margin-top:26px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:14px}
+.contactrow a{border:1px solid var(--fg);padding:9px 14px;color:var(--fg)}
+.contactrow a:hover{background:var(--fg);color:var(--bg)}
+.contactrow span{color:var(--g5);font-size:12px}
+.bio p{font-family:var(--font-sans);font-size:clamp(18px,1.45vw,21.5px);font-weight:400;line-height:1.68;color:var(--g7);max-width:56ch;margin-bottom:16px}
+
+.duckcol{position:relative;z-index:30}
+.duckwrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:0;user-select:none;touch-action:manipulation;z-index:30}
+.duckwrap svg{transition:transform .28s cubic-bezier(.34,1.3,.5,1);transform-origin:center center}
+.duckcap{position:relative;z-index:1300}
+.duckwrap svg{width:min(100%,560px);height:auto;overflow:visible;cursor:grab}
+.duckwrap.drag svg{cursor:grabbing}
+.duckwrap:focus-visible{outline:none}.duckwrap:focus-visible svg{outline:2px solid currentColor;outline-offset:6px;border-radius:44%}   /* keyboard focus follows the duck, not the column's box */
+#duck{transform-origin:281px 160px;transition:transform .2s cubic-bezier(.34,1.5,.5,1)}
+#duck.squish{transform:scale(1.12,.88)}
+#duck.stretch{transform:scale(.92,1.1)}
+body.duck-big #about{z-index:60}
+#duckSvg{pointer-events:none}
+#duckSvg .dk34{pointer-events:visiblePainted}
+#duckSvg .grd{pointer-events:none}
+#duckHud{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:1300;display:none;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:999px;background:var(--bg);color:var(--fg);border:1px solid var(--g4);font:600 14px var(--font-sans);box-shadow:0 6px 24px rgba(0,0,0,.18);max-width:94vw}
+#duckHud.on{display:flex}
+#duckHud button{display:none;border:none;border-radius:999px;background:var(--fg);color:var(--bg);min-height:36px;padding:0 14px;font:600 13px var(--font-sans);cursor:pointer}
+#duckHud.btn button{display:block}
+#duckHud span,#duckHud button{white-space:nowrap}
+@media (max-width:640px){#duckHud{flex-wrap:wrap;justify-content:center;row-gap:8px;padding:8px 10px;border-radius:24px;text-align:center}}   /* narrow phones: the line and the put-back button stack instead of squeezing each other */
+#duck{--ink:#0a0a0a}
+.dk34 .wing{transform-origin:302px 216px;transform-box:view-box;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.dk34.flap .wing{animation:wingwaveL .34s ease-in-out 1}
+@keyframes wingwaveL{0%,100%{transform:rotate(0)}45%{transform:rotate(-34deg)}}
+.dk34 .gl{fill:#fff}.dk34 .ink{fill:var(--ink,#0a0a0a)}.dk34 .ln.sm{stroke-width:2.4}
+#duckhead{transform-origin:236px 168px;transform-box:view-box;transition:transform .18s ease-out}
+.dk34 .eyeN,.dk34 .eyeF{transform-box:fill-box;transform-origin:center;transition:transform .07s}
+.dk34.blink .eyeN,.dk34.blink .eyeF{transform:scaleY(.1)}
+.dk34.slowblink .eyeN,.dk34.slowblink .eyeF{transition:transform .2s ease-in-out}
+.dk34 .ln.dzstar{fill:#fffdf6;pointer-events:none}.dk34 .ln.dzstar.g{fill:#e2cd8f}
+.dk34.shake{animation:dkshake .3s}
+/* every press squeezes it: a quick squash from its base and back, with the squeak */
+.dk34.dkpress{transform-box:view-box;transform-origin:276px 296px;animation:dkpress .28s ease-out}
+@keyframes dkpress{0%{transform:none}35%{transform:scale(1.07,.88)}70%{transform:scale(.97,1.04)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.dk34.dkpress{animation:none}}
+@keyframes dkshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}45%{transform:translateX(7px)}70%{transform:translateX(-4px)}}
+.duckreset{display:none}
+.old-duckreset{display:block;margin:10px auto 0;padding:9px 16px;border:1px solid var(--fg);border-radius:10px;background:transparent;color:var(--fg);font:600 13px var(--font-sans);cursor:pointer;pointer-events:auto}
+.duckreset:hover{background:var(--fg);color:var(--bg)}
+.dk .ln{fill:none;stroke:var(--ink,#0a0a0a);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.dk .ln.fl{fill:#fffdf6}.dk .ln.bk{fill:#e2cd8f}
+.dk .sh{fill:rgba(0,0,0,.075)}.dk .grd{fill:rgba(0,0,0,.16)}
+.dk .pu{fill:var(--ink,#0a0a0a)}.dk .eyew{fill:#fff}
+.dk .wing{transform-origin:226px 186px;transform-box:view-box;transition:transform .25s cubic-bezier(.3,1.4,.5,1)}
+.dk.wave .wing{animation:wingwave .42s ease-in-out 2}
+@keyframes wingwave{0%,100%{transform:rotate(0)}45%{transform:rotate(34deg)}}
+.dk.flap .wing{animation:wingwave .34s ease-in-out 1}
+.dk .wing2{opacity:0;transform-origin:226px 186px;transform-box:view-box}
+.dk .eyeg{transform-origin:222px 93px;transform-box:view-box;transition:transform .14s}
+.dk.grab .eyeg{transform:scale(1.4)}
+.dk.grab .wing{transform:rotate(72deg)}.dk.grab .wing2{opacity:1;transform:rotate(60deg)}
+.dk.drag .wing{animation:wingflap .2s ease-in-out infinite alternate}.dk.drag .wing2{animation:wingflap .2s .1s ease-in-out infinite alternate}
+@keyframes wingflap{from{transform:rotate(56deg)}to{transform:rotate(86deg)}}
+.dk.offended .eyeg{transform:scaleY(.45)}
+.dk.offended .wing{transform:rotate(-8deg)}
+body.duck-held,body.duck-held *{user-select:none!important;-webkit-user-select:none!important}
+#eye{transition:transform .08s}
+.duckcap{font-size:12.5px;color:var(--g6);letter-spacing:.04em;text-align:center;margin-top:10px;min-height:18px;font-family:var(--font-sans)}
+#about .bio p{color:var(--g7)}
+#about .lead{color:var(--fg)}
+.currently{margin-top:26px;font-size:11.5px;color:var(--g5);line-height:1.9}
+.currently span{color:var(--fg)}
+
+footer{position:relative;z-index:1;padding:26px 0 44px;font-size:12.5px;color:var(--g5)}
+footer .frow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px 28px;padding-top:20px;border-top:1px solid var(--g3)}
+footer .frow b{font-weight:500;color:var(--g6)}
+/* the story is the About section's main action; support is a smaller outlined button (cup and label) under the socials */
+.storybox{margin-top:26px}
+/* one primary action (the desktop: a solid button in the section's ink, so black on light and light on dark) and one
+   quieter underlined link to the story beside it */
+.storybox{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
+.deskbtn{display:inline-flex;align-items:center;gap:10px;min-height:52px;box-sizing:border-box;padding:0 24px;border-radius:12px;background:var(--fg);color:var(--bg);border:1.5px solid var(--fg);font:700 16px var(--font-sans);letter-spacing:.01em;transition:transform .16s,opacity .16s}
+.deskbtn:hover{transform:translateY(-2px)}.deskbtn:active{transform:scale(.98)}
+.deskbtn:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.whylink{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--g6);font:600 15px var(--font-sans);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px;transition:color .16s}
+.whylink:hover{color:var(--fg)}
+.whylink:focus-visible{outline:2px solid var(--fg);outline-offset:3px;border-radius:4px}
+.deskbtn .ar,.whylink .ar{display:inline-block;transition:transform .18s}
+.deskbtn:hover .ar,.deskbtn:focus-visible .ar,.whylink:hover .ar,.whylink:focus-visible .ar{transform:translateX(3px)}
+@media (prefers-reduced-motion:reduce){.deskbtn,.deskbtn .ar,.whylink .ar{transition:none}.deskbtn:hover{transform:none}}
+/* the last label opens leftward so it never widens the page on a phone */
+@media (max-width:900px){.duckwrap svg{width:min(100%,420px)}}
+/* phones only: heading and alias, then the duck, then the biography, story link, socials and coffee. The desktop two-column layout is untouched. */
+@media (max-width:640px){
+  section.sec#about{padding:36px 0 calc(56px + env(safe-area-inset-bottom,0px))}
+  #about .sechead{margin-bottom:18px}
+  .agrid{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .bio{display:contents}
+  .ahead{order:1;margin-bottom:4px}                                   /* the drawing's own top margin brings the visible duck ~28px below the alias */
+  .duckcol{order:2;align-self:center;width:176px;margin:0 0 20px}     /* a small centred stage; headings and biography stay left-aligned */
+  .bio>:not(.ahead){order:3}
+  .duckwrap svg{width:176px}
+  .duckcap{margin-top:6px;white-space:nowrap}
+  .bio p{font-size:18.5px;line-height:1.5;margin-bottom:14px}
+  .storybox{margin-top:14px}                                           /* ~28px under "This site is one of them." */
+}
+</style>
+</head>
+<body data-tone="dark">
+<canvas id="mesh"></canvas>
+<div class="navscrim" id="navScrim" aria-hidden="true"></div>
+<div id="wfBar">construction lines visible <button class="btn" id="wfOff">restore view</button></div>
+
+<nav id="topnav" data-tone="light"><div class="navin"><a class="brandmark" href="#home" aria-label="Z Forgotten Games, home"><img src="duck-face.png" alt="" width="26" height="26"></a><div class="navpath" id="navpath">
+  <a class="navitem current" href="#home" data-t="home">/home</a>
+  <a class="navitem" href="#games" data-t="games">/games</a>
+  <a class="navitem" href="#about" data-t="about">/about</a>
+  <div class="navrooms"><a class="roombtn fill" href="/join">Join a room</a><a class="roombtn" href="/create">Create a room</a></div>
+
+</div><div class="navright"><div class="roomnav"><a class="roombtn" href="/create">Create room</a><a class="roombtn fill" href="/join">Join room</a></div><button type="button" class="themesw" data-theme-toggle aria-label="Invert colors" title="Invert colors"><span class="ts-knob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 8.94 10.06A7 7 0 0 1 12 3Z" fill="currentColor"/></svg></span></button><button type="button" class="navmenu" id="navMenuBtn" aria-label="Menu" data-tip="Menu" aria-expanded="false" aria-controls="navpath"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div></div></nav>
+
+<section id="home" data-tone="light">
+  <h1 class="title">
+    <a class="wm" id="play" href="#games" aria-label="Z Forgotten Games — enter games">
+      <span class="l1">Z Forg<span class="wo">o<svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path class="tri" d="M0 0L12 7L0 14Z"/></svg><span class="plab" aria-hidden="true">Play</span></span>tten</span>
+      <span class="l2"><span class="wmduck" aria-hidden="true"><img src="duck-face.png" alt="" width="64" height="64"></span><span class="g0">G</span>ames</span>
+      <span class="sub">Old rules. New mistakes.</span>
+    </a>
+  </h1>
+  <a class="explore" href="#games"><span class="t">Explore games</span><span class="ar" aria-hidden="true">↓</span></a>
+  <div id="runCtl" aria-live="polite"><span id="runHelp"></span><span class="sc" id="runScore"></span><span id="runRetry" hidden>Tap to retry</span></div>
+  <div id="runner" tabindex="0" aria-label="a small landscape with a runner. press enter to play the runner; space jumps; escape leaves"><canvas id="runCanvas"></canvas><div id="runHit" aria-hidden="true"></div><div id="runHitD" aria-hidden="true"></div><div id="runTip">Click to play.</div></div>
+</section>
+
+
+
+<section class="sec" id="games" data-tone="dark"><div class="ss-run" id="ssRun"><div class="ss-stage" id="ssStage">
+  <div class="sechead ss-head"><div class="secnum">01</div><div class="st"><h2>Games</h2></div></div>
+  <a class="ss-all" id="ssAll" href="/arcade">All games ↗</a>
+  <svg class="ss-back" id="ssBack" aria-hidden="true"></svg>
+  <div class="ss-ring" id="ssRing" role="group" aria-roledescription="carousel" aria-label="Featured games: arrow keys to browse, enter to play" tabindex="0"></div>
+  <svg class="ss-front" id="ssFront" aria-hidden="true"></svg>
+  <div class="ss-rooms" id="ssRooms"><a class="roombtn" id="ssCreate" href="/create"><span>Create room</span></a><a class="roombtn fill" id="ssJoin" href="/join"><span>Join room</span></a></div>
+  <button class="ss-arrow" id="ssPrev" type="button" aria-label="Previous game">◁</button><button class="ss-arrow" id="ssNext" type="button" aria-label="Next game">▷</button>
+  <div class="ss-foot" id="ssFoot"><span class="ind" id="ssInd">01 / 08</span><a class="viewall" href="/arcade">See all games <span class="arr" aria-hidden="true">↗</span></a></div>
+</div></div></section>
+
+
+<section class="sec" id="about" data-tone="light"><div class="wrap">
+  <div class="sechead"><div class="secnum">02</div><div class="st"><h2>About</h2></div></div>
+  <div class="agrid">
+    <div class="bio">
+      <div class="ahead"><p class="lead">Hi, it’s Mansy!</p><p class="leadsub">aka zForgotten</p></div>
+      <p>I build things, ask questions that create even bigger questions, and collect too many <span class="duck-link" id="duckMuseum">rubber ducks</span>.</p>
+      <p>I'm into design, the strange ways people make decisions (sounds familiar?), and ideas that start small and become everyone's problem.</p>
+      <p>This site is one of them.</p>
+      <div class="storybox"><a class="whylink" href="/story">Our story <span class="ar" aria-hidden="true">→</span></a></div>
+    </div>
+    <div class="duckcol">
+      <div class="duckwrap" id="duckwrap" tabindex="0" role="button" aria-label="a rubber duck. click it.">
+        <svg viewBox="81 0 400 320" aria-hidden="true" id="duckSvg"></svg>
+      </div>
+      <div class="duckcap" id="duckcap">squeeze to inspect.</div>
+    </div>
+  </div>
+</div></section>
+
+<footer data-tone="dark"><div class="wrap"><div class="frow"><span class="brandmark"><img src="duck-face.png" alt="" width="26" height="26">© 2019 Z Forgotten Games</span><span>Developed by <b>Mahmoud Hafez</b></span></div><div class="sitelinks" role="navigation" aria-label="Site"><a href="/join">Join a room</a><a href="/create">Create a room</a><a href="/arcade">All games</a><a href="/story">Our story</a></div><!-- games:start --><div class="sitelinks footgames" role="navigation" aria-label="Games"><a href="/recursive-tic-tac-toe">Recursive Tic-Tac-Toe</a><a href="/gold-coin">The Gold Coin</a><a href="/chomp">Chomp</a><a href="/nim">Nim</a><a href="/pentago">Pentago</a><a href="/notakto">Notakto</a><a href="/toot-otto">TOOT &amp; OTTO</a><a href="/sim">Sim</a></div><!-- games:end --></div></footer>
+
+<script>
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const COARSE=matchMedia('(pointer: coarse)').matches;
+const $=id=>document.getElementById(id);
+const svgEl=(t,a)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+/* mesh */
+const mc=$('mesh'),mx=mc.getContext('2d');let mW,mH,pts=[];function buildMesh(){mW=mc.width=innerWidth;mH=mc.height=innerHeight;pts=[];const g=80,cols=Math.ceil(mW/g)+2,rows=Math.ceil(mH/g)+2;for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)pts.push({x:c*g-g+(r%2)*g/2,y:r*g-g});}buildMesh();addEventListener('resize',buildMesh);
+let mouseX=-9e3,mouseY=-9e3;
+function drawMesh(){mx.clearRect(0,0,mW,mH);const R=190;for(let i=0;i<pts.length;i++){const p=pts[i];const dp=Math.hypot(mouseX-p.x,mouseY-p.y);if(dp>R)continue;mx.beginPath();mx.arc(p.x,p.y,1,0,7);mx.fillStyle=`rgba(255,255,255,${.1+(1-dp/R)*.35})`;mx.fill();for(let j=i+1;j<pts.length;j++){const q=pts[j];if(Math.hypot(q.x-p.x,q.y-p.y)>82)continue;const dq=Math.hypot(mouseX-q.x,mouseY-q.y);if(dq>R)continue;mx.beginPath();mx.moveTo(p.x,p.y);mx.lineTo(q.x,q.y);mx.strokeStyle=`rgba(255,255,255,${(1-dp/R)*(1-dq/R)*.28})`;mx.lineWidth=.6;mx.stroke();}}if(!REDUCED)requestAnimationFrame(drawMesh);}
+if(!COARSE)drawMesh();
+
+/* cursor */
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;},{passive:true});
+
+/* discoveries */
+const SECRETS={wireframe:'found the construction lines',duck:'maxed out the duck',runner:'ran far enough to earn a hat'};
+let found=JSON.parse(localStorage.getItem('mansy-found')||'[]');
+function discover(k){if(found.includes(k))return;found.push(k);localStorage.setItem('mansy-found',JSON.stringify(found));renderJournal();}
+function renderJournal(){}
+renderJournal();
+
+/* nav */
+const navItems=[...document.querySelectorAll('.navitem')];
+function setNav(id){navItems.forEach(n=>n.classList.toggle('current',n.dataset.t===id));}
+/* mobile dropdown: the same .navitem links, just repositioned by CSS below 640px -- no separate menu markup
+   to keep in sync with setNav(). */
+const navMenuBtn=$('navMenuBtn'), navPathEl=$('navpath');
+function closeNavMenu(){navPathEl.classList.remove('open');navMenuBtn.setAttribute('aria-expanded','false');document.body.classList.remove('navopen');}
+navMenuBtn.addEventListener('click',e=>{e.stopPropagation();const open=navPathEl.classList.toggle('open');navMenuBtn.setAttribute('aria-expanded',open?'true':'false');document.body.classList.toggle('navopen',open);});
+/* choosing anything in the menu closes it (the Join/Create links too, so a page restored with Back never shows it still open) */
+navItems.forEach(n=>n.addEventListener('click',closeNavMenu));
+navPathEl.querySelectorAll('.navrooms a').forEach(a=>a.addEventListener('click',closeNavMenu));
+$('navScrim').addEventListener('click',closeNavMenu);
+addEventListener('pageshow',closeNavMenu);
+document.addEventListener('click',e=>{if(navPathEl.classList.contains('open')&&!navPathEl.contains(e.target)&&e.target!==navMenuBtn)closeNavMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNavMenu();});
+addEventListener('resize',()=>{if(innerWidth>640)closeNavMenu();});
+const secs=[...document.querySelectorAll('section[id]')].filter(x=>!x.classList.contains('hidden-section'));
+function spy(){const y=scrollY+54+innerHeight*0.25;let c='home';secs.forEach(s=>{if(y>=s.offsetTop)c=s.id;});if(scrollY+innerHeight>=document.documentElement.scrollHeight-6)c=secs[secs.length-1].id;setNav(c);const under=scrollY+60;let tn='light';secs.forEach(s=>{if(under>=s.offsetTop)tn=s.dataset.tone||'light';});if(window.ZSTORY_TONE)tn=window.ZSTORY_TONE;const topnav=document.getElementById('topnav');if(topnav.dataset.tone!==tn){topnav.dataset.tone=tn;window.ZFTheme&&window.ZFTheme.resync&&window.ZFTheme.resync();}}
+addEventListener('hashchange',()=>{const id=location.hash.slice(1);if(document.getElementById(id))setNav(id);});
+addEventListener('scroll',spy,{passive:true});setTimeout(spy,80);
+const enterObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.2});
+document.querySelectorAll('.enter').forEach(e=>enterObs.observe(e));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.body.classList.remove('wireframe');}});
+
+/* home play control */
+const play=$('play');let launched=false;
+if(!REDUCED){ play.classList.add('idle'); new IntersectionObserver(es=>es.forEach(e=>{ if(!play.dataset.engaged) play.classList.toggle('idle',e.isIntersecting); })).observe($('home')); const stop=()=>{ play.dataset.engaged='1'; play.classList.remove('idle'); }; play.addEventListener('pointerenter',stop); play.addEventListener('focus',stop); play.addEventListener('pointerdown',stop); }
+play.addEventListener('pointerdown',()=>play.classList.add('press'));['pointerup','pointerleave','pointercancel'].forEach(t=>play.addEventListener(t,()=>play.classList.remove('press')));
+play.addEventListener('click',e=>{e.preventDefault();if(launched)return;launched=true;$('home').classList.add('launching');if(!REDUCED)WORLD.launch();setTimeout(()=>{go('games');setNav('games');},REDUCED?0:340);setTimeout(()=>{$('home').classList.remove('launching');launched=false;},1400);});
+
+/* ===== WORLD ART: pixel sprites as rect lists =====
+   rect: [x, y, w, h, shade]   shade: 0 dark · 1 mid · 2 light · 3 bright · 4 cut-out */
+const ART = (function(){
+/* ---------- LANDMARKS (redrawn; same footprints as before) ---------- */
+const rc=(r,x,y,w,h,s)=>{ if(w>0&&h>0) r.push([x,y,w,h,s]); };
+function archCut(r,cx,baseY,w,h,s){                  // an arched opening: round top, straight sides
+  const half=Math.floor(w/2), top=baseY-h; if(s===undefined) s=0;
+  for(let k=0;k<half;k++){ const dx=half-k-0.5, ww=Math.max(1,Math.round(Math.sqrt(Math.max(0,half*half-dx*dx))*2)); rc(r,cx-Math.floor(ww/2),top+k,ww,1,s); }
+  rc(r,cx-half,top+half,half*2,h-half,s); }
+function pyramidStone(cx,baseY,base,h,sL,sR){        // two faces, a dark ridge between them, courses of stone
+  const r=[];
+  for(let i=0;i<h;i++){ const half=Math.max(1,Math.round((base/2)*(1-i/h))), y=baseY-i, course=i%4===0;
+    r.push([cx-half,y,half,1,course?Math.max(0,sL-1):sL]); r.push([cx,y,half,1,course?Math.max(0,sR-1):sR]); }
+  r.push([cx,baseY-h,1,1,3]); r.push([cx,baseY-h+1,1,h-1,0]);
+  return r; }
+function dune(x0,w,h,baseY,shade,crest){
+  const r=[];
+  for(let i=0;i<w;i++){ const t=i/(w-1), v=Math.max(1,Math.round(Math.sin(Math.PI*t)*h*(0.85+0.15*Math.sin(t*9))));
+    r.push([x0+i,baseY-v,1,v,shade]); if(crest!==undefined&&v>2) r.push([x0+i,baseY-v,1,1,crest]); }
+  return r; }
+const PYRAMIDS={ w:150, h:50, rects:(function(){
+  const r=[]; const B=48;
+  r.push(...pyramidStone(24,B-6,44,24,0,0));
+  r.push(...pyramidStone(58,B-2,84,46,2,1));
+  r.push(...pyramidStone(120,B-4,52,28,1,0));
+  rc(r,52,B-9,12,7,0); rc(r,55,B-7,6,5,0);                                     // a dark entrance in the great pyramid
+  r.push(...dune(0,58,7,B,0,1)); r.push(...dune(46,64,9,B,0,1)); r.push(...dune(104,46,6,B,0,1));
+  r.push([0,B,150,2,0]);
+  return r; })() };
+
+const EIFFEL={ w:32, h:58, rects:(function(){
+  const r=[]; const CX=16;
+  for(let y=57;y>=43;y--){ const t=(57-y)/14, e=Math.pow(t,1.35);                    // four legs sweeping in, concave
+    const outer=Math.round(14-e*7), th=t<.5?3:2;
+    rc(r,CX-outer,y,th,1,2); rc(r,CX+outer-th,y,th,1,2);
+    const inner=Math.round(outer-th-1); if(y<52&&y>=44){ rc(r,CX-inner,y,1,1,1); rc(r,CX+inner-1,y,1,1,1); } }
+  for(let x=-9;x<=9;x++){ const y=Math.round(50-Math.sqrt(Math.max(0,1-(x/9)*(x/9)))*5); rc(r,CX+x,y,1,2,2); }   // the open arch under the first platform
+  for(let y=44;y<=48;y++){ const d=(y-44); rc(r,CX-5+d,y,1,1,0); rc(r,CX+4-d,y,1,1,0); }                       // restrained cross-bracing
+  rc(r,CX-12,41,24,2,3); rc(r,CX-11,43,22,1,1);                                                                 // first platform
+  for(let y=40;y>=24;y--){ const t=(40-y)/16, w=Math.round(8-t*4);
+    rc(r,CX-w,y,1,1,2); rc(r,CX+w-1,y,1,1,2); if(w>1) for(let x=-w+1;x<w-1;x++) if((x+y)%4===0) rc(r,CX+x,y,1,1,0); }   // lattice
+  rc(r,CX-6,22,12,2,3); rc(r,CX-5,24,10,1,1);                                                                   // second platform
+  for(let y=21;y>=8;y--){ const t=(21-y)/13, w=Math.max(1,Math.round(4-t*2.6)); rc(r,CX-w,y,w*2,1,(y%5===0)?0:1); }
+  rc(r,CX-3,6,6,2,3); rc(r,CX-1,2,2,4,2); rc(r,CX,0,1,2,3);
+  return r; })() };
+
+/* the Statue of Liberty, drawn to read at a glance: a fan of seven crown rays, the torch arm raised high with a cup and
+   flame, the tablet held against the body, a robe that widens to the feet, on its tall stepped pedestal */
+const LIBERTY={ w:30, h:64, rects:(function(){
+  const r=[]; const CX=14;
+  const line=(x0,y0,x1,y1,s,w)=>{ const n=Math.max(Math.abs(x1-x0),Math.abs(y1-y0)); for(let i=0;i<=n;i++){ const x=Math.round(x0+(x1-x0)*i/n), y=Math.round(y0+(y1-y0)*i/n); rc(r,x,y,w||1,1,s); } };
+  rc(r,0,61,30,3,0); rc(r,2,58,26,3,1); rc(r,2,58,26,1,2);                                                              // stepped base
+  rc(r,6,43,18,15,1); rc(r,6,43,1,15,2); rc(r,23,43,1,15,0);                                                            // pedestal
+  rc(r,5,41,20,2,2); rc(r,7,39,16,2,1); rc(r,8,38,14,1,2);                                                              // cornice and cap
+  for(const x of [9,12,15,18,21]) rc(r,x,46,1,9,0);                                                                     // pedestal columns
+  for(let y=37;y>=23;y--){ const t=(37-y)/14, w=Math.round(11-t*5), x=CX-Math.floor(w/2)+(y<30?1:0);                  // the robe, widening to the feet
+    rc(r,x,y,w,1,1); rc(r,x,y,1,1,2); if(y>26&&(37-y)%3===1) rc(r,x+2+((37-y)%2),y,1,2,0); }
+  rc(r,CX-3,20,8,3,1); rc(r,CX-3,20,1,3,2);                                                                             // shoulders
+  rc(r,CX-1,18,3,2,2);                                                                                                  // neck
+  rc(r,CX-2,13,5,5,2); rc(r,CX-2,13,1,5,3); rc(r,CX,16,1,1,0);                                                          // head
+  rc(r,CX-3,12,7,1,3);                                                                                                  // crown band
+  for(const [dx,ex,ey] of [[-3,-6,9],[-2,-4,8],[-1,-2,7],[0,0,7],[1,2,7],[2,4,8],[3,6,9]]) line(CX+dx,11,CX+ex,ey,3);   // seven rays, fanned
+  line(CX+4,21,CX+6,7,1,2);                                                                                             // raised torch arm
+  rc(r,CX+5,5,4,2,2); rc(r,CX+4,4,6,1,3);                                                                              // torch cup
+  rc(r,CX+5,1,4,3,3); rc(r,CX+6,0,2,1,3);                                                                               // flame
+  rc(r,CX-6,22,4,8,2); rc(r,CX-6,22,4,1,3); rc(r,CX-2,24,2,3,1);                                                         // tablet held against the body
+  return r; })() };
+
+const BRIDGE={ w:190, h:52, rects:(function(){
+  const r=[]; const H=52, DECK=22, WATER=H-7, T1=68, T2=122, TOP=2, VL=52, VR=138, FL=34, FR=156;
+  const top=x=>x<FL?Math.min(H-1,DECK+(FL-x)):(x>FR?Math.min(H-1,DECK+(x-FR)):DECK);
+  for(let x=0;x<190;x++){
+    if(x>=VL&&x<VR){ const d=Math.min(x-VL,VR-1-x), wall=d<10?(10-d)*3:0, wt=Math.min(H-8,DECK+2+(30-wall)>H-8?H-8:DECK+2+(30-wall));
+      if(wall) r.push([x,wt,1,H-wt,1]);
+      r.push([x,WATER,1,H-WATER,0]); if((x*7)%11<3) r.push([x,WATER+2,2,1,1]);
+    } else { const t=top(x); r.push([x,t,1,H-t,1]); if(H-t>3) r.push([x,t+2,1,1,2]); }
+  }
+  for(let x=0;x<190;x++){ if(x>=VL&&x<VR){ r.push([x,DECK,1,2,3]); r.push([x,DECK+2,1,1,0]); } else { const t=top(x); r.push([x,t,1,2,3]); } }   // one continuous deck, with an edge line
+  for(let x=FL+4;x<FR;x+=10) r.push([x,DECK-2,1,2,1]);
+  for(const T of [T1,T2]){ r.push([T,TOP,4,WATER-TOP,2]); r.push([T-1,TOP+5,6,1,1]); r.push([T-1,TOP+12,6,1,1]); r.push([T-1,TOP,6,1,3]); r.push([T-2,WATER-4,8,4,0]); }
+  const A1=FL+4, A2=FR-4;
+  r.push([A1-3,DECK-6,7,6,0]); r.push([A2-3,DECK-6,7,6,0]);
+  const cy=x=>{ if(x<=T1+2) return Math.round(DECK-6-((x-A1)/(T1+2-A1))*(DECK-6-TOP));
+    if(x>=T2+2) return Math.round(TOP+((x-(T2+2))/(A2-(T2+2)))*(DECK-6-TOP));
+    const t=(x-(T1+2))/((T2+2)-(T1+2)); return Math.round(TOP+Math.sin(Math.PI*t)*13); };
+  for(let x=A1;x<=A2;x++) r.push([x,cy(x),1,1,3]);
+  for(let x=A1+3;x<T1;x+=4){ const y=cy(x); r.push([x,y,1,DECK-y,1]); }                              // hangers on the side spans too
+  for(let x=T1+6;x<T2;x+=4){ const y=cy(x); r.push([x,y,1,DECK-y,1]); }
+  for(let x=T2+6;x<A2;x+=4){ const y=cy(x); r.push([x,y,1,DECK-y,1]); }
+  return r; })() };
+
+const COLOSSEUM={ w:96, h:40, rects:(function(){
+  const r=[]; const B=40, top=x=>x<62?4:(x<72?9:(x<82?15:(x<90?21:27)));                 // the far end is broken away in steps
+  for(let x=2;x<94;x++){ const t=top(x); rc(r,x,t,1,B-t,(Math.floor((x-2)/7)%2)?1:2); }
+  rc(r,2,4,1,B-4,0); rc(r,93,27,1,B-27,0);
+  for(const y of [14,26]) for(let x=2;x<94;x++) if(top(x)<=y) rc(r,x,y,1,1,3);              // ledges between the three storeys
+  rc(r,2,3,60,1,3);
+  for(let x=5;x<90;x+=7){ if(top(x)<=27) archCut(r,x+1,39,5,10,0);                        // ground arches
+    if(top(x)<=15) archCut(r,x+1,25,5,9,0);                                                // middle arches
+    if(top(x)<=6) rc(r,x,6,3,5,0); }                                                       // attic windows
+  for(const [x,y,w,h] of [[84,36,5,3],[89,34,4,5],[78,37,3,2]]) rc(r,x,y,w,h,1);           // fallen stone
+  rc(r,0,B-1,96,1,0);
+  return r; })() };
+
+const BIGBEN={ w:56, h:60, rects:(function(){
+  const r=[]; const B=60;
+  rc(r,22,44,34,16,1); rc(r,22,44,34,1,3); rc(r,22,43,34,1,2);                            // the palace wing
+  for(let x=24;x<54;x+=4){ rc(r,x,48,2,4,0); rc(r,x,54,2,4,0); } for(const x of [26,36,46]) rc(r,x,40,2,3,1);
+  rc(r,6,24,12,36,1); rc(r,6,24,2,36,2); rc(r,16,24,2,36,0);                               // tower shaft
+  for(let y=28;y<58;y+=6) rc(r,10,y,4,3,0);
+  rc(r,4,12,16,12,1); rc(r,4,12,16,1,3); rc(r,4,23,16,1,0);                                // clock stage
+  rc(r,7,14,10,9,3); rc(r,8,15,8,7,0); rc(r,11,16,2,4,3); rc(r,11,19,4,1,3);               // clock face and hands
+  for(const [x,y] of [[11,14],[11,22],[7,18],[16,18]]) rc(r,x,y,1,1,4);
+  rc(r,5,7,14,5,1); for(let x=6;x<18;x+=3) rc(r,x,8,1,3,0);                                  // belfry
+  for(const x of [4,18]){ rc(r,x,4,2,8,2); rc(r,x,3,2,1,3); }                                // corner turrets
+  for(let i=0;i<7;i++){ const w=2+i*2; rc(r,12-Math.floor(w/2),i,w,1,i%2?1:2); }
+  rc(r,11,0,2,1,3);
+  return r; })() };
+
+const TORII={ w:44, h:38, rects:(function(){
+  const r=[]; const B=38;
+  for(let i=0;i<4;i++) rc(r,8-i*0,B-1-i,28+i*0,1,0); rc(r,4,B-3,36,2,0); rc(r,6,B-4,32,1,1);   // stone base and steps
+  for(const x of [10,31]){ rc(r,x,10,4,B-14,2); rc(r,x,10,1,B-14,3); rc(r,x+3,10,1,B-14,0); rc(r,x-1,B-8,6,4,1); }   // two pillars on plinths
+  for(let x=0;x<44;x++){ const lift=x<7?Math.round((7-x)*.5):(x>36?Math.round((x-36)*.5):0); rc(r,x,3-lift,1,4,x%2?1:2); } rc(r,0,2,44,1,3);   // the upswept top beam
+  rc(r,4,14,36,3,1); rc(r,4,14,36,1,2);                                                     // second beam
+  rc(r,20,7,4,7,3); rc(r,21,8,2,5,0);                                                       // name plaque
+  return r; })() };
+
+const WINDMILLS={ w:96, h:44, rects:(function(){
+  const r=[]; const B=44;
+  for(let x=0;x<96;x++){ rc(r,x,B-8-Math.round(Math.sin(x/9)*1.2),1,8,1); }                // dike
+  rc(r,0,B-3,96,3,0); for(let x=2;x<94;x+=7) rc(r,x,B-2,3,1,1);                              // canal with ripples
+  const mill=(cx,base,h,bw,rot)=>{ for(let i=0;i<h;i++){ const w=Math.round(bw-(i/h)*(bw*.45)); rc(r,cx-Math.floor(w/2),base-i,w,1,i%6===0?0:(i%2?1:2)); }
+    for(let i=0;i<5;i++){ const w=2+i*2; rc(r,cx-Math.floor(w/2),base-h-5+i,w,1,i%2?0:1); }   // cap
+    rc(r,cx-1,base-h-7,2,2,1);
+    const hy=base-h+3; for(let k=0;k<4;k++){ const a=rot+k*Math.PI/2; for(let d=2;d<=13;d++){ rc(r,Math.round(cx+Math.cos(a)*d),Math.round(hy+Math.sin(a)*d),1,1,d>6?3:1); } }
+    rc(r,cx-1,base-5,3,5,0); };
+  mill(26,B-8,24,12,Math.PI/4); mill(70,B-8,20,10,Math.PI/7);
+  return r; })() };
+
+const AQUEDUCT={ w:150, h:44, rects:(function(){
+  const r=[]; const B=44;
+  const ground=x=>x<26?Math.round(26*(1-x/26)*1.0)+0:(x>124?Math.round((x-124)):0);      // hillsides rise at both ends
+  for(let x=0;x<150;x++){ const g=ground(x); if(g>0) rc(r,x,B-g-2,1,g+2,1); }
+  rc(r,0,B-2,150,2,0);
+  rc(r,0,5,150,4,2); rc(r,0,5,150,1,3); rc(r,0,9,150,1,0);                                // the water channel on top
+  for(let x=2;x<148;x+=4) rc(r,x,6,2,2,1);
+  for(let i=0;i<10;i++){ const cx=13+i*13, w=9; rc(r,cx-8,9,4,B-11,1); rc(r,cx-8,9,1,B-11,2); rc(r,cx-5,9,1,B-11,0); archCut(r,cx,B-2,w,B-14-ground(cx)*0,0); }   // tall lower arches
+  for(let i=0;i<20;i++){ const cx=6+i*6.5; archCut(r,Math.round(cx),20,3,7,0); }           // upper row of small arches
+  return r; })() };
+
+const DOMES={ w:84, h:46, rects:(function(){
+  const r=[]; const B=46;
+  rc(r,14,30,56,16,1); rc(r,14,30,56,1,3); rc(r,14,45,56,1,0);                              // prayer hall walls
+  for(let x=18;x<68;x+=6) archCut(r,x+2,45,3,8,0);
+  const dome=(cx,base,rad)=>{ for(let i=0;i<rad;i++){ const w=Math.round(Math.sqrt(rad*rad-(rad-i-.5)*(rad-i-.5))*2), x=cx-Math.floor(w/2); rc(r,x,base-rad+i,Math.floor(w/2),1,2); rc(r,x+Math.floor(w/2),base-rad+i,w-Math.floor(w/2),1,1); }
+    rc(r,cx,base-rad-3,1,3,3); rc(r,cx-1,base-rad-2,3,1,3); };
+  rc(r,29,22,26,8,1); for(let x=31;x<53;x+=4) rc(r,x,24,2,4,0);                              // drum with windows
+  dome(42,22,13); dome(21,30,7); dome(63,30,7);
+  for(const x of [3,76]){ rc(r,x,8,3,38,1); rc(r,x,8,1,38,2); rc(r,x-1,20,5,2,2); rc(r,x-1,19,5,1,3); for(let i=0;i<8;i++) rc(r,x+1-Math.floor(i/4),i,1+Math.floor(i/4)*0+(i>3?1:0),1,i%2?1:2); rc(r,x+1,0,1,2,3); }   // minarets with balconies and pointed caps
+  rc(r,0,B-1,84,1,0);
+  return r; })() };
+
+const COLUMNS={ w:26, h:20, rects:(function(){ const r=[]; for(const [x,h] of [[1,20],[7,12],[13,18],[19,8]]){ rc(r,x,20-h,4,h,1); rc(r,x,20-h,1,h,2); rc(r,x-1,20-h,6,1,3); rc(r,x-1,19,6,1,0);} rc(r,0,17,26,3,0); return r; })() };
+const MINARET={ w:8, h:34, rects:(function(){ const r=[]; rc(r,3,4,3,30,1); rc(r,3,4,1,30,2); rc(r,1,17,7,2,2); rc(r,1,16,7,1,3); rc(r,2,0,1,1,3); rc(r,3,1,2,3,2); rc(r,2,31,5,3,0); return r; })() };
+const LANTERN={ w:8, h:14, rects:[[3,0,2,1,3],[1,1,6,2,1],[2,3,4,4,3],[3,4,2,2,0],[1,7,6,1,1],[3,8,2,4,1],[1,12,6,2,0]] };
+const PAGODA={ w:18, h:30, rects:(function(){ const r=[]; for(let i=0;i<3;i++){ const y=4+i*8, w=16-i*3; rc(r,9-Math.floor(w/2),y+3,w,5,1); rc(r,9-Math.floor(w/2)+1,y+5,w-2,2,0); rc(r,9-Math.floor(w/2)-1,y+2,w+2,1,3); rc(r,9-Math.floor(w/2)-1,y+3,w+2,1,2);} rc(r,9,0,1,4,2); rc(r,2,28,14,2,0); return r; })() };
+
+const ARCH={ w:26, h:26, rects:[[0,8,26,18,1],[8,14,10,12,4],[7,12,12,2,4],[0,6,26,2,2],[2,10,3,2,0],[21,10,3,2,0]] };
+
+const CITY={ w:80, h:34, rects:(function(){
+  const r=[]; const b=[[0,14,10],[11,20,8],[20,10,12],[33,24,7],[41,16,10],[52,28,6],[59,18,9],[69,11,11]];
+  for(const [x,h,w] of b){ r.push([x,34-h,w,h,0]); r.push([x,34-h,w,1,1]);
+    for(let wy=34-h+2; wy<33; wy+=3) for(let wx=x+1; wx<x+w-1; wx+=3) r.push([wx,wy,1,1,1]); }
+  return r; })() };
+
+const DUNE={ w:60, h:12, rects:(function(){ const r=[];
+  for(let i=0;i<30;i++){ const h=Math.round(Math.sin(i/30*Math.PI)*10); if(h>0) r.push([i*2,12-h,2,h,0]); } return r; })() };
+
+
+
+/* ---------- procedural scenery: small seed pools keep the sprite cache bounded ---------- */
+function srand(seed){ let s=(seed*9301+49297)%233280; return ()=>{ s=(s*9301+49297)%233280; return s/233280; }; }
+function ridge(w,h,seed,rough){                     // hill / dune profile: 2-unit columns, varied slopes
+  const R=srand(seed+1), p1=R()*6, p2=R()*6, r=[];
+  for(let i=0;i<w/2;i++){ const t=i/(w/2), env=Math.sin(Math.PI*t);
+    const v=env*(0.72+0.28*Math.sin(t*7+p1))*(1-rough*0.5*Math.abs(Math.sin(t*13+p2)));
+    const c=Math.max(1,Math.round(v*h)); r.push([i*2,h-c,2,c,0]); }
+  return r;
+}
+function skyline(w,h,seed){                         // plain silhouettes, no windows: distant, quiet
+  const R=srand(seed+7), r=[]; let x=0;
+  while(x<w){ const bw=4+Math.floor(R()*9), bh=Math.round(h*(0.25+R()*0.7)); const ww=Math.min(bw,w-x);
+    r.push([x,h-bh,ww,bh,0]);
+    if(R()<.3&&ww>4) r.push([x+Math.floor(ww/2),h-bh-3,1,3,1]);          // antenna
+    if(R()<.25&&ww>5) r.push([x+1,h-bh-1,ww-2,1,1]);                    // stepped top
+    x+=ww+Math.floor(R()*3); }
+  return r;
+}
+function townBlock(w,h,seed){                       // ordinary mid-distance building with a pitched roof
+  const R=srand(seed+3), r=[]; const rh=Math.round(h*0.28);
+  r.push([0,rh,w,h-rh,1]);
+  for(let i=0;i<rh;i++){ const inset=Math.round((rh-i)*(w/2-1)/rh); r.push([inset,i,w-inset*2,1,1]); }
+  r.push([w-4,0,2,rh,0]);
+  for(let x=2;x<w-2;x+=4) r.push([x,rh+3,2,3,0]);                        // one row of windows
+  if(R()<.5) for(let x=2;x<w-2;x+=4) r.push([x,rh+9,2,3,0]);
+  r.push([0,h-1,w,1,0]);
+  return r;
+}
+/* ordinary buildings for the towns between landmarks, each a different silhouette: a flat block with setbacks, a row of
+   gabled houses, a church spire, a domed hall, a stepped tower. No windows lit, nothing that competes with the duck */
+function building(w,h,seed,type){ const R=srand(seed+11), r=[];
+  if(type==='gables'){ const n=Math.max(2,Math.round(w/8)), bw=Math.floor(w/n);
+    for(let i=0;i<n;i++){ const x=i*bw, bh=Math.round(h*(.45+R()*.25)), rh=Math.ceil(bw/2); r.push([x,h-bh,bw,bh,1]);
+      for(let k=0;k<rh;k++){ const ins=Math.round((rh-k)*(bw/2)/rh); r.push([x+ins,h-bh-rh+k,Math.max(1,bw-ins*2),1,1]); }
+      r.push([x+bw-1,h-bh,1,bh,0]); if(bh>8) r.push([x+Math.floor(bw/2)-1,h-bh+3,2,2,0]); } return r; }
+  if(type==='spire'){ const bw=Math.max(8,Math.round(w*.55)), bh=Math.round(h*.42), tw=Math.max(4,Math.round(bw*.4)), tx=w-tw-1, th=Math.round(h*.38);
+    r.push([0,h-bh,bw,bh,1]); for(let k=0;k<4;k++) r.push([k,h-bh-4+k,bw-k*2,1,1]);
+    r.push([tx,h-bh-th,tw,bh+th,1]); for(let k=0;k<h-bh-th;k++){ const ww=Math.max(1,Math.round(tw*k/(h-bh-th))); r.push([tx+Math.floor((tw-ww)/2),k,ww,1,2]); }
+    r.push([tx+Math.floor(tw/2)-1,h-bh-th+3,2,3,0]); return r; }
+  if(type==='dome'){ const bh=Math.round(h*.5), dr=Math.min(Math.floor(w/2)-1,Math.round(h*.3));
+    r.push([0,h-bh,w,bh,1]); r.push([0,h-bh,w,1,2]);
+    for(let k=0;k<dr;k++){ const ww=Math.round(2*Math.sqrt(dr*dr-(dr-k)*(dr-k))); r.push([Math.floor((w-ww)/2),h-bh-dr+k,Math.max(1,ww),1,k<2?2:1]); }
+    r.push([Math.floor(w/2)-1,h-bh-dr-3,2,3,1]); for(let x=2;x<w-2;x+=4) r.push([x,h-bh+4,2,Math.max(2,bh-7),0]); return r; }
+  if(type==='stepped'){ let x0=0,x1=w,y=h; const steps=3+Math.floor(R()*2), sh=Math.floor(h/(steps+.5));
+    for(let i=0;i<steps;i++){ r.push([x0,y-sh,x1-x0,sh,1]); r.push([x0,y-sh,x1-x0,1,2]); const ins=Math.max(1,Math.round((x1-x0)*.16)); x0+=ins; x1-=ins; y-=sh; }
+    r.push([Math.floor(w/2),y-Math.round(h*.12),1,Math.round(h*.12),1]); return r; }
+  /* 'flat': a plain block, sometimes with a setback and a water tank */
+  const bh=h-(R()<.5?0:Math.round(h*.18)); r.push([0,h-bh,w,bh,1]); r.push([0,h-bh,w,1,2]);
+  if(bh<h){ const sw=Math.round(w*.5), sx=Math.round(R()*(w-sw)); r.push([sx,0,sw,h-bh,1]); }
+  else if(w>9&&R()<.6){ r.push([w-6,h-bh-4,4,3,1]); r.push([w-6,h-bh-1,1,1,0]); r.push([w-3,h-bh-1,1,1,0]); }
+  for(let yy=h-bh+3;yy<h-3;yy+=4) r.push([2,yy,w-4,1,0]);
+  return r; }
+const OBELISK={ w:8, h:34, rects:[[3,0,2,3,2],[2,3,4,26,1],[1,29,6,2,0],[0,31,8,3,0]] };
+const LIGHTHOUSE={ w:12, h:36, rects:[[4,0,4,3,2],[3,3,6,2,0],[3,5,6,16,1],[4,9,4,2,0],[4,15,4,2,0],[2,21,8,2,0],[1,23,10,13,1],[0,34,12,2,0]] };
+
+/* DUCK: the rubber-duck mascot in pixels, 34 x 30 units, facing right, feet on the last row.
+   Shades: 0 outline · 1 wing/bill/feet · 2 body · 3 highlight · 5 eye */
+const DUCK_W=34, DUCK_H=30;
+function duckGrid(pose,tick){
+  const W=DUCK_W,H=DUCK_H, G=[]; for(let y=0;y<H;y++) G.push(new Array(W).fill(-1));
+  const px=(x,y,s)=>{ x=Math.round(x); y=Math.round(y); if(x>=0&&y>=0&&x<W&&y<H) G[y][x]=s; };
+  const rect=(x,y,w,h,s)=>{ for(let j=0;j<h;j++)for(let i=0;i<w;i++) px(x+i,y+j,s); };
+  const ell=(cx,cy,rx,ry,s,keep)=>{ for(let y=Math.floor(cy-ry);y<=Math.ceil(cy+ry);y++)for(let x=Math.floor(cx-rx);x<=Math.ceil(cx+rx);x++){ const dx=(x+.5-cx)/rx, dy=(y+.5-cy)/ry; if(dx*dx+dy*dy<=1&&(!keep||keep(x,y))) px(x,y,s); } };
+  const tri=(ax,ay,bx,by,cx,cy,s)=>{ const x0=Math.floor(Math.min(ax,bx,cx)),x1=Math.ceil(Math.max(ax,bx,cx)),y0=Math.floor(Math.min(ay,by,cy)),y1=Math.ceil(Math.max(ay,by,cy));
+    const e=(X,Y,x1_,y1_,x2_,y2_)=>(X-x2_)*(y1_-y2_)-(x1_-x2_)*(Y-y2_);
+    for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){ const X=x+.5,Y=y+.5,d1=e(X,Y,ax,ay,bx,by),d2=e(X,Y,bx,by,cx,cy),d3=e(X,Y,cx,cy,ax,ay); if(!((d1<0||d2<0||d3<0)&&(d1>0||d2>0||d3>0))) px(x,y,s); } };
+  const GR=H-1;
+  let b=0, squash=0, wingUp=false, feet;
+  if(pose==='run'){ const f=tick%4; b=(f===1||f===3)?-1:0;
+    feet=[[[16,GR-1,false],[9,GR-3,true]],[[14,GR-1,false],[14,GR-1,false]],[[9,GR-3,true],[16,GR-1,false]],[[14,GR-1,false],[14,GR-1,false]]][f]; }   // [near, far]: x, y, lifted
+  else if(pose==='jump'){ b=-3; wingUp=true; feet=[[15,GR-6,true],[10,GR-5,true]]; }
+  else if(pose==='land'){ squash=2; feet=[[17,GR-1,false],[10,GR-1,false]]; }
+  else { feet=[[14,GR-1,false],[14,GR-1,false]]; }
+  const by=19+b+squash;                                     // body centre y
+  // legs and feet (far one first, darker)
+  const foot=(f,s)=>{ const [x,y]=f; const top=by+6-squash; rect(x+1,top,2,Math.max(1,y-top+1),s); rect(x-1,y,6,2,s); };
+  foot(feet[1],1);
+  // tail curl
+  [[5,by],[4,by-2],[3,by-4],[3,by-6],[4,by-8],[6,by-9],[8,by-8]].forEach(([x,y])=>rect(x,y,2,2,2));
+  // body
+  ell(15,by,squash?12:11,squash?6:7.2,2);
+  ell(15,by+5,squash?9:8,1.6,1,(x,y)=>{ const dx=(x+.5-15)/(squash?12:11), dy=(y+.5-by)/(squash?6:7.2); return dx*dx+dy*dy<=1; });   // belly shade
+  // neck + head
+  rect(21,by-8,6,9,2); ell(24.5,by-8+ (squash?1:0),6,5.6,2);
+  // bill: broad, slightly open
+  rect(28,by-9+(squash?1:0),6,3,1); rect(28,by-6+(squash?1:0),5,2,1); px(33,by-8+(squash?1:0),1);
+  // eye
+  rect(26,by-11+(squash?1:0),2,2,5);
+  // wing
+  if(wingUp){ tri(12,by-2,22,by-4,8,by-13,1); tri(12,by-2,19,by+2,11,by+3,1); rect(11,by-3,7,1,3); }
+  else { ell(13,by-.5,5.4,3.4,1); rect(9,by-2,7,1,3); }
+  foot(feet[0],1);
+  return G;
+}
+function duckRects(pose,tick){
+  const G=duckGrid(pose,tick), H=DUCK_H, W=DUCK_W;
+  const filled=(x,y)=>x>=0&&y>=0&&x<W&&y<H&&G[y][x]>=0;
+  const out=G.map(r=>r.slice());
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){ if(G[y][x]>=0) continue; if(filled(x-1,y)||filled(x+1,y)||filled(x,y-1)||filled(x,y+1)) out[y][x]=0; }
+  const r=[]; for(let y=0;y<H;y++){ let x=0; while(x<W){ const s=out[y][x]; if(s<0){x++;continue;} let e=x; while(e+1<W&&out[y][e+1]===s)e++; r.push([x,y,e-x+1,1,s]); x=e+1; } }
+  return r;
+}
+
+const DUCK={ w:DUCK_W, h:DUCK_H, frame:duckRects };
+const GEN={ ridge, skyline, townBlock, building };
+const LANDMARKS={ colosseum:COLOSSEUM, bigben:BIGBEN, torii:TORII, windmills:WINDMILLS, aqueduct:AQUEDUCT, domes:DOMES, columns:COLUMNS, minaret:MINARET, lantern:LANTERN, pagoda:PAGODA, pyramids:PYRAMIDS, eiffel:EIFFEL, liberty:LIBERTY, bridge:BRIDGE, arch:ARCH, city:CITY, dune:DUNE, obelisk:OBELISK, lighthouse:LIGHTHOUSE };
+window.ZF_ART={ DUCK, LANDMARKS, GEN };
+return { DUCK, LANDMARKS, GEN };
+})();
+
+/* living world: cached pixel sprites, one delta-timed loop.
+   depth: far skyline (0.2x) · mid landmarks (0.45x) · route with the duck + obstacles (1x) */
+const WORLD=(function(){
+let handed=false;
+const wrap=$('runner'),cv=$('runCanvas'),cx=cv.getContext('2d'),dockEl=$('dock');
+/* scenery palettes per theme: dark = pale duck and spikes on a black world; light = dark spikes, gray silhouettes on paper */
+const SCENES={
+  dark:{ FAR:['#0e0e0e','#141414','#1a1a1a','#212121'], MID:['#1f1f1f','#2b2b2b','#383838','#4a4a4a'], DPAL:['#0b0b0b','#9b9992','#ece9df','#ffffff','#000000','#0b0b0b'], OPAL:['#0b0b0b','#b8b8b8','#f4f4f4','#ffffff'],
+         horizon:'#0a0a0a', terrain:'#151515', ground:'#1c1c1c', edge:'#262626', edgeHi:'#3a3a3a', dash:'#2f2f2f', hatBrim:'#0b0b0b', hatBand:'#ece9df' },
+  light:{ FAR:['#d6d3c8','#cdcabe','#c3c0b3','#b8b5a8'], MID:['#aeab9e','#9f9c90','#8f8c81','#7e7b71'], DPAL:['#0f0f0e','#8a887f','#fffdf6','#ffffff','#000000','#0f0f0e'], OPAL:['#0f0f0e','#5b594f','#1d1d1b','#000000'],
+         horizon:'#e2dfd4', terrain:'#c9c6ba', ground:'#3d3c37', edge:'#1f1f1d', edgeHi:'#000000', dash:'#5b5a53', hatBrim:'#0f0f0e', hatBand:'#fffdf6' } };
+let SC=SCENES[ZFTheme.tone('light')], FAR=SC.FAR, MID=SC.MID, DPAL=SC.DPAL, OPAL=SC.OPAL;
+const F_FAR=0.2, F_MID=0.45;
+let W=0,H=0,dpr=1,GY=0,P=3,K=1,vis=true,hidden=false,resX=1e9,resY=1e9;
+/* one seeded sequence for the scenery, so the world is generated once and never reshuffled by a resize or a theme change */
+const SEED=(Math.random()*2147483647)|0; let rs=SEED;
+function srnd(){ rs=rs+0x6D2B79F5|0; let t=Math.imul(rs^rs>>>15,1|rs); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }
+function rnd(a,b){ return a+srnd()*(b-a); }
+function pick(a){ return a[Math.floor(srnd()*a.length)]; }
+/* a piece of scenery keeps how to draw itself, not a finished picture: a theme change or a new pixel density redraws it
+   in place, at the same spot, instead of building a new landscape */
+function art(mk){ return {img:mk(),mk,pal:SC,dp:dpr}; }
+function imgOf(o){ if(o.pal!==SC||o.dp!==dpr){ o.img=o.mk(); o.pal=SC; o.dp=dpr; } return o.img; }
+
+const cache=new Map();
+function sprite(key,rects,w,h,scale,pal){
+  const k=key+'@'+Math.round(scale*10)+'@'+pal[2];
+  if(cache.has(k)) return cache.get(k);
+  const c=document.createElement('canvas'), S=scale*dpr;               // drawn in device pixels, so a fractional scale (phones) still gives even pixel blocks
+  c.width=Math.max(1,Math.ceil(w*S)); c.height=Math.max(1,Math.ceil(h*S)); c.w=c.width/dpr; c.h=c.height/dpr;   // c.w / c.h: size in CSS pixels
+  const g=c.getContext('2d');
+  for(const [x,y,rw,rh,s] of rects){
+    if(s===4){ g.clearRect(x*S,y*S,rw*S,rh*S); continue; }
+    g.fillStyle=pal[s===undefined?2:s]; g.fillRect(Math.round(x*S),Math.round(y*S),Math.ceil(rw*S),Math.ceil(rh*S));
+  }
+  cache.set(k,c); return c;
+}
+function lm(name,pal,scale){ const L=ART.LANDMARKS[name]; return sprite(name,L.rects,L.w,L.h,scale,pal); }
+function gen(kind,w,h,seed,pal,scale,rough){ const G=ART.GEN;
+  const rects=kind==='ridge'?G.ridge(w,h,seed,rough||.3):kind==='sky'?G.skyline(w,h,seed):kind==='block'?G.townBlock(w,h,seed):G.building(w,h,seed,kind);
+  return sprite(kind+w+'x'+h+'s'+seed,rects,w,h,scale,pal); }
+
+/* ---- the route: each destination owns one stretch, separated by quiet terrain ---- */
+let SEGS=[],TOTAL=1;
+const MAINLM={desert:'pyramids',bridge:'bridge',paris:'eiffel',liberty:'liberty',rome:'colosseum',london:'bigben',kyoto:'torii',holland:'windmills',aqueduct:'aqueduct',istanbul:'domes'};
+const DETAIL={desert:['obelisk'],bridge:['lighthouse'],paris:['block'],liberty:['lighthouse'],rome:['arch','columns'],london:['block'],kyoto:['lantern','pagoda'],holland:['block'],aqueduct:['columns'],istanbul:['minaret','block']};
+function buildRoute(){
+  const main=Math.max(900,W*1.6), quiet=Math.max(320,W*.55); let x=0; SEGS=[];
+  const kinds=Object.keys(MAINLM); for(let i=kinds.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [kinds[i],kinds[j]]=[kinds[j],kinds[i]]; }   // a fresh order each time, so no place repeats back-to-back
+  const seq=[]; kinds.forEach((k,i)=>{ seq.push(k); if(i%3===2) seq.push('quiet'); });
+  for(const k of seq){ const len=k==='quiet'?quiet:main; SEGS.push({k,start:x,len}); x+=len; }
+  TOTAL=x;
+}
+function segAt(ws){ const cyc=Math.floor(ws/TOTAL), m=ws-cyc*TOTAL;
+  for(let i=0;i<SEGS.length;i++){ const s=SEGS[i]; if(m<s.start+s.len) return {k:s.k,u:m-s.start,len:s.len,key:cyc*32+i}; }
+  return {k:'quiet',u:0,len:1,key:cyc*32}; }
+
+/* continuous terrain: one profile behind the whole route, its character blending from place to place */
+const AMP={desert:1,quiet:.5,bridge:.3,paris:.12,liberty:.22,rome:.35,london:.15,kyoto:.5,holland:.1,aqueduct:.7,istanbul:.3};
+function ampAt(ws){ let a=0; for(const o of [-600,-300,0,300,600]) a+=AMP[segAt(ws+o).k]||.4; return a/5; }
+function terrainH(u,r){ const a=ampAt(r);
+  const prof=(Math.sin(u/150)*.5+.5)*(.62+.38*Math.sin(u/47+2))+.15*Math.sin(u/23);
+  return Math.max(0,a*prof)*6; }                                                     // in mid-scale pixels
+/* obstacles: one consistent family (bright triangular spikes), three sizes */
+const OB={ spike:{w:6,h:8}, tall:{w:8,h:11}, twin:{w:13,h:8}, wide:{w:20,h:8} };
+function spikeRects(x0,w,h){ const r=[];
+  for(let i=0;i<h;i++){ const cw=Math.max(1,Math.ceil((i+1)*w/h)), x=x0+Math.floor((w-cw)/2), half=Math.ceil(cw/2);
+    r.push([x,i,half,1,2]); if(cw>half) r.push([x+half,i,cw-half,1,1]); }
+  return r; }
+function obstacleArt(t){ const d=OB[t];
+  if(t==='twin'){ return [...spikeRects(0,6,8),...spikeRects(7,6,8).map(q=>q.slice()) ]; }
+  if(t==='wide'){ return [...spikeRects(0,6,8),...spikeRects(7,6,8),...spikeRects(14,6,8)]; }
+  return spikeRects(0,d.w,d.h); }
+
+let far=[],mid=[],near=[],curFar=0,curMid=0,curNear=0,usedLM=new Set();
+let worldX=0,boost=0,last=0,hoverPlay=false;
+let live=false,pendingLive=false,dead=false,y=0,vy=0,runT=0,score=0,parts=[],landT=0,jumpBuf=0,uiT=0;
+let best=+(localStorage.getItem('mansy-run-best')||0), hat=best>=500;
+const D=ART.DUCK;
+let duckCache={};
+const RX=()=>Math.min(170,W*0.16);
+const DW=()=>D.w*P, DH=()=>D.h*P;
+const sceneryMax=()=>H*(W<600?0.5:0.62);   // the tallest a landmark may stand; the strip above it stays clear for the prompt
+const SPD=()=>230*K, JV=()=>660*K, GRAV=()=>1900*K;
+const APEX=660/1900, AIR=2*660/1900;                       // seconds: independent of scale
+const hx0=()=>RX()+DW()*0.14, hx1=()=>RX()+DW()*0.94;      // autopilot clears the whole silhouette: tail curl to bill tip
+const lx0=()=>RX()+DW()*0.22, lx1=()=>RX()+DW()*0.80;      // a player's collision box is forgiving: body and head, not the bill tip or tail curl
+
+function spawnFar(){
+  const s=segAt(curFar+W/(2*F_FAR)), sc=()=>Math.max(2,Math.round(P*0.7)); let it,gap;
+  if(s.k==='desert'){ const w=pick([70,90,120]), h=pick([7,10,14]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('ridge',w,h,sd,FAR,sc(),.2)); gap=rnd(40,260); }
+  else if(s.k==='quiet'){ const w=pick([60,100,150]), h=pick([5,8,12]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('ridge',w,h,sd,FAR,sc(),.5)); gap=rnd(120,420); }
+  else { const w=pick([44,60,84]), h=pick([14,20,28]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('sky',w,h,sd,FAR,sc())); gap=rnd(10,120); }
+  it.x=curFar*F_FAR+W; far.push(it); curFar+=(it.img.w+gap)/F_FAR;
+}
+let lastDetail='', town=0;
+/* between monuments the mid distance has rhythm: a small town of two to four varied buildings close together, then an
+   open stretch of low ground, then a detail that belongs to the place. Never dense everywhere, never taller than the
+   landmarks, so the runner and its route stay the clearest thing in the picture */
+const TOWN_TYPES=['flat','gables','spire','dome','stepped','flat','gables'];
+function spawnMid(){
+  const s=segAt(curMid+W/(2*F_MID)), sc=()=>Math.max(2,P), maxH=()=>sceneryMax(); let it,gap;
+  const fit=(name,m)=>Math.max(1,Math.min(Math.round(sc()*m),Math.floor(maxH()/ART.LANDMARKS[name].h)));
+  const main=MAINLM[s.k], ridge=(ws,hs,rough)=>{ const w=pick(ws), h=pick(hs), sd=Math.floor(rnd(0,6)); return art(()=>gen('ridge',w,h,sd,MID,sc(),rough)); };
+  if(s.k==='quiet'){ town=0; it=ridge([50,80,120],[6,9,13],.55); gap=rnd(120,300); }
+  else if(!usedLM.has(s.key) && s.u>s.len*0.15){ town=0;
+    usedLM.add(s.key); const m=main==='eiffel'?1.15:main==='liberty'?1.1:1; it=art(()=>lm(main,MID,fit(main,m))); gap=rnd(110,240); }
+  else if(town>0||(s.k!=='desert'&&srnd()<.42)){                              // a town: the first building starts it, the rest follow close by
+    if(town<=0) town=2+Math.floor(srnd()*3);
+    town--; const type=pick(TOWN_TYPES), w=type==='gables'?pick([16,24,32]):pick([10,13,16,20]), h=pick(type==='stepped'||type==='spire'?[24,30,36]:[14,18,22,26]), sd=Math.floor(rnd(0,9));
+    it=art(()=>gen(type,w,h,sd,MID,Math.max(1,Math.min(sc(),Math.floor(maxH()*.62/h)))));
+    gap=town>0?rnd(3,14):rnd(160,320); }                                       // after the last one, an open stretch
+  else {                                                                   // small architecture that belongs to the place, never the same twice in a row
+    const pool=(DETAIL[s.k]||[]).filter(n=>n!==lastDetail);
+    if(pool.length&&srnd()<.6){ const n=pick(pool); lastDetail=n;
+      if(n==='block'){ const w=pick([14,18,22]), h=pick([15,20,26]), sd=Math.floor(rnd(0,6)); it=art(()=>gen('block',w,h,sd,MID,sc())); } else it=art(()=>lm(n,MID,sc()));
+      gap=rnd(50,170); }
+    else { lastDetail=''; it=ridge(s.k==='desert'?[50,70,100]:[30,50,70],s.k==='desert'?[6,9,12]:[4,7],s.k==='desert'?.25:.4); gap=rnd(70,200); } }
+  it.x=curMid*F_MID+W; mid.push(it); curMid+=(it.img.w+gap)/F_MID;
+}
+/* difficulty comes from patterns as well as pace. Survived time (liveT) drives it:
+     0-20 s   generous spacing, single spikes: learn the jump
+     20-45 s  a little faster, a wider twin spike appears
+     45-90 s  readable combinations (two jumps in a row) with a breather after each
+     90 s+    pace eases toward its cap while widths and gaps keep varying */
+let liveT=0, comboNext=false, sinceRest=0;
+const pace=()=>{ if(!live) return 1; const t=liveT; if(t<20) return 1; if(t<45) return 1+.12*(t-20)/25; if(t<90) return 1.12+.2*(t-45)/45; return 1.5-.18*Math.exp(-(t-90)/60); };
+function spawnNear(gapC){
+  const t0=live?liveT:0;
+  const shapes=t0<20?['spike','spike','tall']:(t0<45?['spike','tall','twin','spike','tall']:['spike','tall','twin','wide','spike','tall']);
+  const lo=SPD()*2.4*(AIR+0.25);                                                     // any two obstacles stay far enough apart for the biggest speed boost
+  let t=pick(shapes), c;
+  if(comboNext){ comboNext=false; t=pick(['spike','tall']); c=curNear+SPD()*pace()*(AIR+0.17); sinceRest=0; }      // the second jump of a pair: land, then go again
+  else { const rest=sinceRest>=5; let m=t0<20?rnd(1.5,2.2):(t0<45?rnd(1.25,1.9):rnd(1.15,1.7)); if(rest){ m=rnd(2.3,3); sinceRest=0; } else sinceRest++;
+    c=curNear+Math.max(gapC||0,m*lo); if(t0>=45&&!rest&&Math.random()<.3) comboNext=true; }
+  const d=OB[t]; curNear=c;
+  near.push(Object.assign(art(()=>sprite('ob'+t,obstacleArt(t),d.w,d.h,P,OPAL)),{t,x:c-d.w*P/2,w:d.w*P,h:d.h*P,e:0,sink:0,seen:false}));
+}
+function build(){
+  rs=SEED; far=[];mid=[];near=[];usedLM=new Set(); town=0; lastDetail=''; buildRoute();
+  curFar=worldX-1.4*W/F_FAR; curMid=worldX-1.6*W/F_MID; curNear=worldX+W*0.9;
+  while(curFar-worldX<W*2.4)spawnFar();
+  while(curMid-worldX<W*2.4)spawnMid();
+  while(curNear-worldX<W*2)spawnNear();
+}
+
+/* ---- sizing ---- */
+const hit=$('runHit'),hitD=$('runHitD'),tip=$('runTip');
+function measureReserve(){                              // keep scenery and obstacles out from behind the terminal launcher
+  resX=1e9;resY=1e9; if(!dockEl||!dockEl.classList.contains('show')) return;
+  const r=wrap.getBoundingClientRect(), d=dockEl.getBoundingClientRect(); if(!d.width||d.top>r.bottom) return;
+  resX=Math.max(0,d.left-r.left-14); resY=Math.max(0,d.top-r.top-12);
+}
+function measure2(){ measureReserve(); layoutHit(); layoutCtl(); }
+function layoutCtl(){ const sub=document.querySelector('#home .wm .sub'), ctl=$('runCtl'), h=$('home'); if(!sub||!ctl||!h) return; const sb=sub.getBoundingClientRect().bottom-h.getBoundingClientRect().top; ctl.style.top=Math.round(sb+16)+'px'; }
+function layoutHit(){ const rx=RX(), jump=JV()*JV()/(2*GRAV());
+  const trackTop=Math.max(0,GY-Math.max(64,DH()*0.9)), colTop=Math.max(0,GY-DH()-jump-30), left=Math.max(0,rx-34);
+  const right=resX<1e8?Math.max(0,Math.min(W,resX-4)):W;                                    // the floating launcher keeps its own corner
+  /* the invisible activation region: the runner's full width, and from just under the title down to the ground, so nobody has to find the duck or the track line.
+     It never covers the wordmark (with its Play triangle), the navigation or the terminal launcher, and nothing in the drawing itself changes size. */
+  const ttl=document.querySelector('#home .explore')||document.querySelector('#home .title'), wr=wrap.getBoundingClientRect(); let up=0; if(ttl){ const tb=ttl.getBoundingClientRect().bottom; up=Math.max(0,Math.min(200,wr.top-tb-10)); }
+  hit.style.left='0px'; hit.style.top=Math.round(-up)+'px'; hit.style.width=Math.round(W)+'px'; hit.style.height=Math.round(H+up)+'px';
+  hit.style.clipPath=resX<1e8?`polygon(0 0,100% 0,100% ${Math.round(resY+up)}px,${Math.round(resX)}px ${Math.round(resY+up)}px,${Math.round(resX)}px 100%,0 100%)`:'';   // only the launcher's corner is left out
+  hitD.style.left=Math.round(left)+'px'; hitD.style.top=Math.round(colTop)+'px'; hitD.style.width=Math.round(DW()+110)+'px'; hitD.style.height=Math.round(H-colTop)+'px'; }
+function size(){
+  const r=wrap.getBoundingClientRect(); W=Math.max(1,r.width); H=Math.max(1,r.height);
+  const phone=W<600;
+  dpr=Math.min(phone?3:2,devicePixelRatio||1);                   // phones keep their full pixel density so the larger duck's scale snaps to whole device pixels
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+  cx.setTransform(dpr,0,0,dpr,0,0); cx.imageSmoothingEnabled=false;
+  /* phones: a fixed scale, about 55% larger than the old 1.5, big enough to read as a duck and invite a tap. It no longer follows the
+     window height, so Safari's toolbar growing or shrinking never resizes the duck mid-run. Snapped to whole device pixels (7/3 at 3x, 2.5 at 2x). */
+  P=phone?Math.max(2,Math.round(2.35*dpr)/dpr):Math.max(2,Math.min(4,Math.round(H/95)));
+  K=P/3;
+  GY=H-Math.round(H*0.10);
+  /* only a change of scale or pixel density redraws the pieces; the world itself is built once. A new scale stretches the
+     same world (positions and the route scale together), so a resize, a phone toolbar sliding away or a move to another
+     monitor never shuffles the buildings */
+  if(!built){ built=true; cache.clear(); duckCache={}; y=0; vy=0; build(); }
+  else if(P!==oldP||dpr!==oldDpr){ cache.clear(); duckCache={}; const k=P/oldP;
+    if(k!==1){ worldX*=k; curFar*=k; curMid*=k; curNear*=k; y*=k; vy*=k; SEGS.forEach(sg=>{ sg.start*=k; sg.len*=k; }); TOTAL*=k;
+      for(const o of far) o.x*=k; for(const o of mid) o.x*=k; for(const o of near){ o.x*=k; o.w*=k; o.h*=k; } } }
+  oldP=P; oldDpr=dpr; measureReserve(); layoutHit();
+}
+let built=false, oldP=0, oldDpr=0;
+function duckImg(pose,tick){ const k=pose+tick; if(!duckCache[k]) duckCache[k]=sprite('d'+k,D.frame(pose,tick),D.w,D.h,P,DPAL); return duckCache[k]; }
+
+/* ---- run state ---- */
+function clearAhead(from){ near=[]; curNear=from; while(curNear-worldX<W*2)spawnNear(); }
+function resetRun(){ y=0;vy=0;score=0;dead=false;parts=[];jumpBuf=0;liveT=0;comboNext=false;sinceRest=0; clearAhead(worldX+Math.max(W*0.7,SPD()*2.4*1.4)); }
+function jump(){ if(dead||y>1) return false; vy=-JV(); if(live&&window.ZS) ZS.play('jsqueak'); return true; }
+function landFx(){ for(let i=0;i<4;i++)parts.push({x:RX()+rnd(0,DW()*0.6),y:GY,vx:rnd(-70,70),vy:rnd(-160,-50),l:0.5}); }
+function nextObstacle(spd){                              // nearest obstacle not yet passed: time until its centre crosses the duck
+  for(const o of near){ if(o.sink) continue; const sx=o.x-worldX, d1=sx-hx1(), d2=sx+o.w-hx0(); if(d2<0) continue;
+    return {o,d1,d2,tc:((d1+d2)/2)/spd}; }
+  return null; }
+
+/* background autopilot: jump so the airborne arc is centred on the obstacle */
+function autopilot(dt,spd){
+  if(y>1) return;
+  const n=nextObstacle(spd); if(!n) return;
+  if(n.tc<=APEX+dt*0.5 && n.d1>-4){ vy=-JV(); return; }
+  if(n.d1<=0 && n.d2>0){ n.o.sink=0.0001; }               // timing was lost (e.g. long stall): retract the spike rather than clip it
+}
+
+function frame(now){
+  requestAnimationFrame(frame);
+  if(hidden||!vis){ last=0; return; }
+  if(!last){ last=now; return; }
+  let dt=(now-last)/1000; last=now;
+  if(dt>0.06) dt=0.06;                                   // returning to a tab must not teleport anything
+  if(handed){ draw(); return; }                          // the duck has left for Games: the track holds still until it comes back
+  const moving=!REDUCED||live||pendingLive;
+  const spd=SPD()*(1+boost)*pace();
+  if(live&&!dead&&moving) liveT+=dt;
+  if(!dead&&moving){ worldX+=spd*dt; runT+=dt*Math.min(18,spd/(5*P)); if(live)score+=dt*11; if(boost>0)boost=Math.max(0,boost-dt*0.8); }
+  while(far.length&&far[0].x-worldX*F_FAR+far[0].img.w<-240)far.shift();
+  while(mid.length&&mid[0].x-worldX*F_MID+mid[0].img.w<-240)mid.shift();
+  while(near.length&&near[0].x-worldX+near[0].w<-90)near.shift();
+  while(curFar-worldX<W*2.4)spawnFar();
+  while(curMid-worldX<W*2.4)spawnMid();
+  while(curNear-worldX<W*2)spawnNear();
+  const auto=!live;
+  if(auto&&!dead&&moving) autopilot(dt,spd);
+  if(pendingLive&&y<=1&&vy===0){ const n=nextObstacle(spd); if(!n||n.tc>0.9){ pendingLive=false; live=true; score=0; jumpBuf=0; liveT=0; comboNext=false; sinceRest=0; } }   // hand over only on the ground with a clear stretch ahead
+  if(!dead&&moving){ vy+=GRAV()*dt; y-=vy*dt;
+    if(y<0){ if(vy>200*K){landT=0.16;landFx(); if(live&&window.ZS) ZS.play('softland');} y=0; vy=0; if(jumpBuf>0&&live){ vy=-JV(); jumpBuf=0; if(window.ZS) ZS.play('jsqueak'); } } }
+  if(landT>0)landT-=dt; if(jumpBuf>0)jumpBuf-=dt;
+  for(const p of parts){ p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=900*dt; p.l-=dt; }
+  if(parts.length) parts=parts.filter(p=>p.l>0);
+  const appear=Math.min(W-30,resX-22);
+  for(const o of near){ const sx=o.x-worldX;
+    if(o.sink){ o.sink+=dt*3; if(o.sink>1){ o.dead=true; } o.e=Math.max(0,1-o.sink); continue; }
+    if(sx<appear){ o.seen=true; o.e=Math.min(1,o.e+dt*4); } else if(!o.seen) o.e=0;
+    if(live&&!dead&&sx+o.w*0.18<lx1()&&sx+o.w*0.82>lx0()&&y<o.h*0.85-P){
+      dead=true; if(window.ZS){ ZS.play('boop'); if(score>best&&best>0) setTimeout(()=>ZS.play('pb'),380); } if(score>best){ best=Math.floor(score); localStorage.setItem('mansy-run-best',best); }
+      if(score>=500&&!hat){ hat=true; discover('runner'); } } }
+  if(near.some(o=>o.dead)) near=near.filter(o=>!o.dead);
+  if(uiT>0){ uiT-=dt; if(uiT<=0&&(live||pendingLive)) $('runHelp').textContent='Space / tap to jump · Esc to leave'; }
+  draw();
+}
+
+function draw(){
+  cx.clearRect(0,0,W,H);
+  const fb=GY-P*3, mb=GY-P;                                // horizon steps: far sits behind mid, mid behind the route
+  for(const o of far){ const sx=Math.round(o.x-worldX*F_FAR); if(sx>W+40||sx+o.img.w<-40)continue; const im=imgOf(o); cx.drawImage(im,sx,Math.round(fb-im.h),im.w,im.h); }
+  cx.fillStyle=SC.horizon; cx.fillRect(0,fb,W,GY-fb);
+  { const step=Math.max(2,P)*2; cx.fillStyle=SC.terrain;
+    for(let x=0;x<W+step;x+=step){ const xs=x-Math.round((worldX*F_MID)%step); const h=Math.round(terrainH(xs+worldX*F_MID,worldX+(xs-W/2)/F_MID)*Math.max(2,P)/2)*2; if(h>0) cx.fillRect(xs,mb-h,step,h+P); } }
+  for(const o of mid){ const sx=Math.round(o.x-worldX*F_MID); if(sx>W+40||sx+o.img.w<-40)continue; const im=imgOf(o); cx.drawImage(im,sx,Math.round(mb-im.h),im.w,im.h); }
+  cx.fillStyle=SC.ground; cx.fillRect(0,GY,W,H-GY);
+  cx.fillStyle=hoverPlay?SC.edgeHi:SC.edge; cx.fillRect(0,GY,W,Math.max(1,Math.round(P/2)));
+  cx.fillStyle=SC.dash;
+  for(let i=0;i<W+P*9;i+=P*9){ const gx=Math.round(i-(worldX%(P*9))); cx.fillRect(gx,GY+P*2,P*3,Math.max(1,Math.round(P/2))); }
+  for(const o of near){ if(!o.e) continue; const sx=Math.round(o.x-worldX); if(sx>W+40||sx+o.w<-40)continue;
+    const im=imgOf(o), vh=Math.max(1,Math.round(im.h*o.e)); cx.drawImage(im,0,(im.h-vh)*dpr,im.width,vh*dpr,sx,GY-vh,im.w,vh); }
+  const rx=Math.round(RX()), ry=Math.round(GY-y);
+  const pose=dead?'land':(y>2?'jump':(landT>0?'land':'run'));
+  const img=duckImg(pose,Math.floor(runT)%4);
+  const sh=Math.max(DW()*0.14,DW()*0.34*(1-Math.min(1,y/(JV()*JV()/(2*GRAV())*1.3))));
+  cx.fillStyle='rgba(0,0,0,'+(0.55-0.25*Math.min(1,y/(JV()*JV()/(2*GRAV())))).toFixed(2)+')';
+  if(!handed){
+  cx.beginPath(); cx.ellipse(rx+DW()*0.55,GY+P,sh,Math.max(1.5,P*0.7),0,0,7); cx.fill();
+  cx.drawImage(img,rx,ry-img.h,img.w,img.h); }
+  if(hat&&!handed){ cx.fillStyle=SC.hatBrim; const hx=rx+20*P,hy=ry-img.h+(pose==='jump'?4:7)*P; cx.fillRect(hx,hy-P,9*P,P); cx.fillRect(hx+P,hy-4*P,7*P,3*P); cx.fillStyle=SC.hatBand; cx.fillRect(hx+P,hy-2*P,7*P,P); }
+  cx.fillStyle=DPAL[2]; for(const p of parts) cx.fillRect(Math.round(p.x),Math.round(p.y),P,P);
+  if(live){ $('runScore').textContent=String(Math.floor(score)).padStart(4,'0'); $('runRetry').hidden=!dead; $('runHelp').style.display=dead?'none':''; }
+}
+
+/* ---- the duck itself is the control ---- */
+const coarse=matchMedia('(pointer: coarse)').matches; if(coarse)wrap.classList.add('touch');
+function say(t,ms){ $('runHelp').textContent=t; uiT=ms||0; }
+function take(){ if(live||pendingLive)return; pendingLive=true; wrap.classList.add('live'); $('home').classList.add('runlive'); tip.classList.remove('show'); tip.style.transform='none'; score=0; $('runScore').textContent='0000'; say('your turn',1.1); wrap.focus({preventScroll:true}); }
+function release(){ liveT=0;comboNext=false;sinceRest=0; live=false; pendingLive=false; dead=false; wrap.classList.remove('live'); $('home').classList.remove('runlive'); $('runRetry').hidden=true; $('runHelp').textContent=''; $('runHelp').style.display=''; $('runScore').textContent=''; uiT=0; clearAhead(worldX+Math.max(W*0.7,SPD()*2.4*1.4)); touchTip(); }
+function press(){ if(!live){ take(); return; } if(dead){ resetRun(); return; } if(!jump()&&y>1) jumpBuf=0.15; }     // a jump pressed just before landing fires on landing (the ground is flat, so there are no edges to forgive)
+/* "click to play": steady above the duck when the pointer is on it, otherwise beside the pointer; always kept inside the runner */
+const TIPTXT=coarse?'Tap the duck to play.':'Click to play.'; tip.textContent=TIPTXT;
+function tipBesideDuck(){ tip.style.position=''; const tw=tip.offsetWidth||150; tip.style.left=Math.round(Math.max(tw/2+12,RX()+DW()*0.5))+'px'; tip.style.top=Math.round(Math.max(4,Math.min(GY-DH()-34,GY-sceneryMax()-26)))+'px'; tip.style.transform='translateX(-50%)'; }
+function showTip(e,onDragon){ if(live||pendingLive)return; tip.classList.add('show');
+  if(e&&typeof e.clientX==='number'&&!coarse){                    // directly under the pointer (about 16px below its tip), kept inside the window
+    const w=tip.offsetWidth||90, h=tip.offsetHeight||16; const x=Math.max(w/2+8,Math.min(innerWidth-w/2-8,e.clientX)), y=Math.max(4,Math.min(innerHeight-h-8,e.clientY+16));
+    tip.style.position='fixed'; tip.style.left=Math.round(x)+'px'; tip.style.top=Math.round(y)+'px'; tip.style.transform='translateX(-50%)'; return; }
+  tipBesideDuck(); }                                              // keyboard focus and touch screens have no pointer position: the prompt sits by the duck
+function touchTip(){ if(coarse&&!live&&!pendingLive) showTip({}); }
+for(const [el,d] of [[hit,false],[hitD,true]]){
+  el.addEventListener('pointerenter',e=>showTip(e,d)); el.addEventListener('pointermove',e=>{ if(e.pointerType==='touch')return; const onD=hitD.matches(':hover'); showTip(e,onD); });
+  el.addEventListener('pointerleave',()=>{ if(!hit.matches(':hover')&&!hitD.matches(':hover')) tip.classList.remove('show'); });
+  el.addEventListener('pointerdown',e=>{ e.stopPropagation(); });
+  el.addEventListener('click',e=>{ e.stopPropagation(); e.preventDefault(); press(); }); }
+wrap.addEventListener('click',e=>{ if(e.target===hit||e.target===hitD)return; if(live)press(); });
+wrap.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!live&&!pendingLive){ e.preventDefault(); take(); return; }
+  if(!live&&!pendingLive)return;
+  if(e.key==='Escape'){ e.preventDefault(); release(); wrap.blur(); return; }
+  if(!live)return;
+  if(e.key===' '||e.key==='ArrowUp'){ e.preventDefault(); press(); } });
+wrap.addEventListener('focus',()=>{ if(live||pendingLive||!wrap.matches(':focus-visible')) return; tip.textContent='Press Enter to play.'; showTip({},true); });
+wrap.addEventListener('blur',()=>{ tip.classList.remove('show'); tip.textContent=TIPTXT; touchTip(); });
+wrap.addEventListener('blur',e=>{ if((live||pendingLive)&&!(e.relatedTarget&&wrap.contains(e.relatedTarget)))release(); });
+
+/* a theme change recolours the same world: every piece is redrawn in place from its own recipe (imgOf), the route,
+   positions, the duck's jump and the obstacles ahead all stay as they were */
+document.addEventListener('zf-theme',()=>{ SC=SCENES[ZFTheme.tone('light')]; FAR=SC.FAR; MID=SC.MID; DPAL=SC.DPAL; OPAL=SC.OPAL; cache.clear(); duckCache={}; if(handed||!vis) draw(); });
+size(); touchTip();
+addEventListener('resize',()=>{ size(); touchTip(); });
+/* only while Home is on or near the screen: measuring on every scroll further down the page forced a layout per frame
+   (a stutter on phones during the Games story) */
+let homeNear=true; if(window.IntersectionObserver) new IntersectionObserver(es=>{ homeNear=es[es.length-1].isIntersecting; if(homeNear) measure2(); },{rootMargin:'200px 0px'}).observe($('home'));
+addEventListener('scroll',()=>{ if(homeNear) measure2(); },{passive:true});
+setInterval(()=>{ if(homeNear) measure2(); },400);
+document.addEventListener('visibilitychange',()=>{ hidden=document.hidden; last=0; });
+new IntersectionObserver(es=>es.forEach(e=>{ vis=e.isIntersecting; last=0; })).observe(wrap);
+requestAnimationFrame(frame);
+return { hover(v){ hoverPlay=v; }, launch(){ boost=1.4; }, active(){ return live||pendingLive; },
+  /* story.js takes the duck off the track as Games scrolls in, and gives it back on the way up */
+  /* a game in progress ends where the duck leaves, and the track holds still: the same hand-off for every way into Games */
+  hideDuck(v){ v=!!v; if(v&&!handed&&(live||pendingLive)) release(); handed=v; last=0; if(REDUCED||!vis) draw(); }, duckRect(){ const r=cv.getBoundingClientRect(), d=duckImg('run',0); const x=r.left+RX(), b=r.top+GY-y; return {left:x,right:x+d.w,top:b-d.h,bottom:b,width:d.w,height:d.h}; },
+  debug:{ headroom(){ return {H,P,K,GY,DH:DH(),apex:Math.round(JV()*JV()/(2*GRAV())),pad:Math.round(GY-DH()-JV()*JV()/(2*GRAV()))}; }, sampleJump(){ return new Promise(res=>{ let maxY=0; const w0=performance.now(); const go=()=>{ if(y>1&&performance.now()-w0<2500) return requestAnimationFrame(go); const t0=performance.now(); jump(); const tick=()=>{ maxY=Math.max(maxY,y); if(performance.now()-t0<1000) requestAnimationFrame(tick); else res({maxY:Math.round(maxY),headTopPx:Math.round(GY-maxY-DH()),canvasTopClear:GY-maxY-DH()>=0}); }; tick(); }; go(); }); }, goTo(kind){ const g=SEGS.find(x=>x.k===kind); if(g){ worldX=g.start+g.len*0.02; usedLM=new Set(); build(); } return !!g; }, setLiveT(t){ liveT=t; }, forceLive(v){ live=v; pendingLive=false; dead=false; if(v){ clearAhead(worldX+W*0.9); } }, sim(t){ /* generate the next 60 obstacles as if surviving t seconds */ const sv=[live,liveT]; live=true; liveT=t; comboNext=false; sinceRest=0; near=[]; curNear=worldX; for(let i=0;i<60;i++) spawnNear(); const out=near.map(o=>({t:o.t,x:o.x+o.w/2})); live=sv[0]; liveT=sv[1]; clearAhead(worldX+W*0.9); return out; }, stats(){ return {live,liveT:+liveT.toFixed(1),pace:+pace().toFixed(3),ahead:near.filter(o=>o.x>worldX).slice(0,8).map(o=>({t:o.t,d:Math.round(o.x-worldX)})),landmarks:mid.map(m=>m.img.width).length,route:SEGS.map(s=>s.k)}; }, jumpNow(){ return jump(); }, obstacles(){ return near.map(o=>({t:o.t,x:Math.round(o.x)})); } } };
+})();
+
+$('play').addEventListener('mouseenter',()=>WORLD.hover(true));$('play').addEventListener('mouseleave',()=>WORLD.hover(false));
+$('play').addEventListener('focus',()=>WORLD.hover(true));$('play').addEventListener('blur',()=>WORLD.hover(false));
+
+/* the Play triangle in the wordmark: a soft plucked note on activation (mouse, touch or keyboard) */
+{ const pl=$('play'); if(pl) pl.addEventListener('click',()=>{ if(window.ZS) ZS.play('playpluck'); }); }
+/* games: the featured carousel and the duck scroll story live in story.js */
+const GAMES=ZF.GAMES;
+
+
+/* "rubber ducks" links to the museum once /duck-museum exists; until then it stays plain text */
+(function(){ const DUCK_MUSEUM_URL=null; const el=document.getElementById('duckMuseum'); if(el&&DUCK_MUSEUM_URL){ const a=document.createElement('a'); a.href=DUCK_MUSEUM_URL; a.className='duck-link'; a.textContent=el.textContent; el.replaceWith(a); } })();
+/* the About duck: the logo duck's face (duck-face.js) on the rubber-duck body, turned three-quarters toward the
+   introduction on wide screens and mostly facing you on phones, where it sits above the text. Crossing that width
+   re-poses the same elements in place, so everything holding on to them keeps working. */
+const DUCK34={ markup:()=>ZFDuckFace.drawing() };
+$('duckSvg').setAttribute('viewBox',ZFDuckFace.VIEWBOX);
+$('duckSvg').innerHTML=DUCK34.markup();
+(function(){ const svg=$('duckSvg'), mq=matchMedia('(max-width:640px)');
+  const copy=(a,b)=>{ for(const at of [...b.attributes]) if(at.name!=='transform'&&at.name!=='class'&&at.name!=='style') a.setAttribute(at.name,at.value); [...b.children].forEach((c,i)=>{ if(a.children[i]) copy(a.children[i],c); }); };
+  mq.addEventListener('change',()=>{ const tmp=document.createElementNS('http://www.w3.org/2000/svg','svg'); tmp.innerHTML=DUCK34.markup(); copy(svg.firstElementChild,tmp.firstElementChild); document.dispatchEvent(new Event('zf-duck-pose')); }); })();
+
+/* about duck: the pupils follow the pointer inside their eyes (pointer positions are converted into the drawing's own coordinates, so growth,
+   tilt and scrolling never make them drift). Each click grows the drawing with a small alternating tilt, continuing from whatever size is on screen.
+   The layout never changes and nothing covers the page: the duck simply grows over it. Esc or the small button puts it back. */
+(function(){const wrap=$('duckwrap'),svg=wrap.querySelector('svg'),duck=$('duck'),p1=$('pupil'),p2=$('pupil2'),head=$('duckhead'),cap=$('duckcap');
+ let G=ZFDuckFace.about(); const EYE={x:G.near.cx,y:G.near.cy}, HEAD={x:G.head[0],y:G.head[1]}; let n=0, override=false, settleT=null, idleT=null, cur={s:1,r:0};
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const hud=document.createElement('div'); hud.id='duckHud'; hud.setAttribute('role','status'); hud.innerHTML='<span></span><button type="button">put the duck back (esc)</button>'; document.body.appendChild(hud); const hudTxt=hud.firstChild, hudBtn=hud.lastChild;
+ svg.style.transformOrigin='50% 58%';
+ /* a deliberate 13-click cycle: 1 greets, 2-9 grow with a small change of angle, 10-12 are extreme close-ups (eye, beak, wing), and 13 glides back to the start and resets */
+ const CYCLE=13;
+ const restCap=()=>matchMedia('(max-width:640px)').matches?'Tap the duck.':'squeeze to inspect.';   // phones get the plainer prompt
+ if(cap.textContent==='squeeze to inspect.') cap.textContent=restCap();
+ const SZ=[1,1.15,1.4,1.7,2.1,2.6,3.5,4.6,6.6], ROT=[0,-2,2.2,-2.6,3,-3.6,2.8,-3,2];
+ /* close-up points in the drawing's units (the viewBox starts at VBX): the eye, the bill, the wing */
+ const FOCU=()=>({6:[G.head[0]-6,108],7:[G.head[0]-12,104],8:[G.head[0]-16,98],9:[G.near.cx,G.near.cy],10:[G.near.cx,G.near.cy],11:G.bill,12:G.wing}), CLOSE={10:9.5,11:15,12:24};
+ const SAY=[null,'hi.',null,'okay.','that’s enough.','stop.','STOP.','please.','I am asking nicely.','this is my page now.','YOU HAVE INSPECTED ENOUGH.','that is an eye.','that is a wing.'];
+ const vpf=()=>clamp(Math.min(innerWidth,innerHeight*1.25)/1000,.92,1.25);
+ // baseSize() used to read svg.getBoundingClientRect() live, on every call -- but that rect reflects whatever
+ // scale/translate the *previous* step already applied, so every later step's "base" was already inflated by the
+ // one before it. Multiplied into a translate that itself scales with t.s (up to ~24x at the closest steps), that
+ // compounding error is exactly what sent the duck thousands of pixels off-screen after enough taps. baseSize()
+ // now always returns the size captured once at rest (see captureRestRect() below) instead of measuring live.
+ let restSize={w:400,h:320};
+ function baseSize(){ return restSize; }
+ function capScale(){ const b=baseSize(); return Math.max(3,Math.min(innerWidth*.95/b.w*1.05,innerHeight*.95/b.h*1.05)); }
+ /* on a phone-size viewport (either orientation -- use the smaller side so landscape still counts), the extreme
+    close-up steps (6-12) are capped to whatever the viewport actually fits, so the drawing's own edges never
+    sail past it; on desktop those steps deliberately zoom in past the viewport edges (a real close-up crop),
+    which is untouched (capScale() above stays exactly as it was, still used unchanged for the early-step
+    translate interpolation on every screen size). The reference size for that cap is captured only while the
+    duck is at rest (script init, and every putBack()), never read live mid-zoom: once scaled up, the drawing's
+    own overflowing box can itself inflate the mobile layout viewport (innerWidth/svg.offsetWidth grow to fit
+    it), and reading those live would feed that growth right back into the cap, defeating it. */
+ let phoneRef={w:innerWidth,h:innerHeight,bw:400,bh:320};
+ function capturePhoneRef(){ const b=baseSize(); phoneRef={w:innerWidth,h:innerHeight,bw:b.w,bh:b.h}; }
+ const isPhoneViewport=()=>Math.min(phoneRef.w,phoneRef.h)<=560;
+ /* unlike capScale() above (which floors at 3 -- fine for its own job of interpolating early-step translate,
+    since on any real desktop that floor never binds), this is a genuine "what actually fits" ratio with no
+    floor above 1: on a small phone the drawing already fills most of its container at rest, so a few of the
+    later steps legitimately have less zoom room than on desktop, and that's the point of containing them. */
+ function phoneCapScale(){ return Math.max(1,Math.min(phoneRef.w*.95/phoneRef.bw*1.05,phoneRef.h*.95/phoneRef.bh*1.05)); }
+ function target(k){ if(k<=0||k>=CYCLE) return {s:1,r:0}; let s,r,focal; const FOC=FOCU(); if(k<=9){ s=k>=7?SZ[k-1]*vpf():SZ[k-1]; r=ROT[k-1]; focal=FOC[k]; } else { s=CLOSE[k]*vpf(); r=0; focal=FOC[k]; } if(isPhoneViewport()) s=Math.min(s,phoneCapScale()); return {s,r,focal}; }
+ /* place()'s own math needs wrap's and svg's boxes as they are AT REST -- but reading them live, on every call,
+    reflects whatever the *previous* call already scaled/translated them to (transform is visual-only and
+    shouldn't affect an ancestor's layout box by spec, but in practice both boxes were still drifting further off
+    with every step, and at the largest close-up steps (scale up to ~24x) even a tiny per-step drift got
+    multiplied into thousands of pixels -- exactly the "drifts downward/offscreen" symptom, and baseSize() above
+    now always returns this same captured size instead of measuring live). Recording the rest position once, on a
+    stable surface (the page, not the viewport), and re-deriving the current viewport-relative box from that plus
+    the live scroll position removes any path for the duck's own growth to feed back into where it thinks it's
+    starting from. */
+ let restRect=null;
+ function captureRestRect(){ const r=wrap.getBoundingClientRect(); restRect={left:r.left+scrollX,top:r.top+scrollY,width:r.width,height:r.height};
+   const sr=svg.getBoundingClientRect(); if(sr.width&&sr.height) restSize={w:sr.width,h:sr.height}; }
+ function currentRestRect(){ if(!restRect) captureRestRect(); return {left:restRect.left-scrollX,top:restRect.top-scrollY,width:restRect.width,height:restRect.height}; }
+ captureRestRect(); capturePhoneRef();
+ /* desktop: the duck's visual centre (its drawing spans about 45..299 of the 320-unit box) lines up with the middle of
+    the introduction and paragraphs; links and the coffee button below them don't count */
+ const DUCK_MID=172/320, mq2=matchMedia('(min-width:901px)'), dcol=wrap.parentNode;
+ function alignAboutDuck(){ dcol.style.marginTop=''; if(!mq2.matches||n!==0) return;
+   const bio=document.querySelector('#about .bio'), ps=[...bio.querySelectorAll(':scope > p')], top=bio.querySelector('.ahead').getBoundingClientRect().top, last=ps[ps.length-1].getBoundingClientRect().bottom;
+   const r=svg.getBoundingClientRect(); if(!r.height) return;
+   const dy=(top+last)/2-(r.top+r.height*DUCK_MID); dcol.style.marginTop=Math.round(dy)+'px'; captureRestRect(); }
+ alignAboutDuck(); addEventListener('resize',alignAboutDuck); if(document.fonts) document.fonts.ready.then(alignAboutDuck); addEventListener('load',alignAboutDuck);
+ function place(t,animate,ms){ cur=t; const r=currentRestRect(); const b0=baseSize(), bw=b0.w, bh=b0.h; const bl=r.left+(r.width-bw)/2, bt=r.top+(r.height-bh)/2; const rot=REDUCED?0:t.r; let tx,ty;
+   if(t.focal){ /* bring the chosen feature of the drawing (in its own 400x320 units) to the middle of the viewport */ const k=bw/400, Ox=bl+bw/2, Oy=bt+bh*.58, Px=bl+(t.focal[0]-ZFDuckFace.VBX)*k, Py=bt+t.focal[1]*k, a=rot*Math.PI/180, dx=(Px-Ox)*t.s, dy=(Py-Oy)*t.s, rx=dx*Math.cos(a)-dy*Math.sin(a), ry=dx*Math.sin(a)+dy*Math.cos(a); tx=innerWidth/2-Ox-rx; ty=innerHeight/2-Oy-ry; }
+   else { const cs=Math.max(3,Math.min(capScale(),3)); const f=clamp((t.s-1)/(cs-1),0,1); tx=(innerWidth/2-(r.left+r.width/2))*f; ty=(innerHeight/2-(r.top+r.height/2))*f; }
+   svg.style.transition=(animate&&!REDUCED)?(ms?`transform ${ms}ms cubic-bezier(.45,0,.2,1)`:'transform .3s cubic-bezier(.3,1.35,.5,1)'):(animate?'transform .3s ease-out':'none'); svg.style.transform=t.s===1&&!rot&&!tx&&!ty?'':`translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) rotate(${rot}deg) scale(${t.s.toFixed(3)})`; document.body.classList.toggle('duck-big',t.s>1); }
+ function toLocal(x,y){ const m=svg.getScreenCTM(); if(!m) return null; const q=new DOMPoint(x,y).matrixTransform(m.inverse()); return q; }
+ /* each pupil moves inside its eye: the room left around the pupil, plus a little (the eye's outline clips the rest) */
+ const eyesOf=()=>[[p1,G.near],[p2,G.far]].map(([el,e])=>({el,c:[e.cx,e.cy],b:[e.cx,e.cy],ax:e.rx-e.prx+1.2,ay:e.ryB-e.pry+1.6}));
+ let EYES=eyesOf();
+ document.addEventListener('zf-duck-pose',()=>{ G=ZFDuckFace.about(); EYE.x=G.near.cx; EYE.y=G.near.cy; EYES=eyesOf(); rest(); });
+ /* each pupil is placed in its eye's own (elliptical) coordinates and held inside a slightly smaller ellipse, so no pointer position can push it out */
+ function place2(eye,vx,vy){ let ux=(eye.b[0]-eye.c[0])/eye.ax+vx*.9, uy=(eye.b[1]-eye.c[1])/eye.ay+vy*.9; const L=Math.hypot(ux,uy); if(L>1){ ux/=L; uy/=L; } const x=eye.c[0]+ux*eye.ax, y=eye.c[1]+uy*eye.ay; eye.el.setAttribute('transform',`translate(${(x-eye.b[0]).toFixed(2)} ${(y-eye.b[1]).toFixed(2)})`); }
+ function setPupils(vx,vy){ EYES.forEach(e=>place2(e,vx,vy)); }
+ function aim(px,py,lean){ const q=toLocal(px,py); if(!q) return; const dx=q.x-EYE.x, dy=q.y-EYE.y, d=Math.hypot(dx,dy)||1, m=Math.min(1,d/200);
+   setPupils(dx/d*m,dy/d*m);
+   if(lean&&!REDUCED){ const dl=Math.hypot(q.x-HEAD.x,q.y-HEAD.y), near=clamp(1-dl/360,0,1); head.style.transform=`rotate(${clamp((q.x-HEAD.x)/90,-1,1)*4*near}deg)`; } }
+ /* at rest it looks at the introduction: toward "Hi, it's Mansy!" beside it on wide screens, down at the text on phones */
+ function rest(){ head.style.transform=''; if(ZFDuckFace.phoneAbout()){ setPupils(0,.75); return; }
+   const lead=document.querySelector('#about .lead'), r=lead&&lead.getBoundingClientRect(); const q=r&&toLocal(r.left+r.width*.6,r.top+r.height/2);
+   if(!q){ setPupils(-.8,-.2); return; } const dx=q.x-EYE.x, dy=q.y-EYE.y, d=Math.hypot(dx,dy)||1; setPupils(dx/d,dy/d); }
+ document.addEventListener('pointermove',e=>{ if(override||e.pointerType==='touch') return; aim(e.clientX,e.clientY,true); });
+ document.addEventListener('pointerdown',e=>{ if(e.pointerType!=='touch') return; aim(e.clientX,e.clientY,true); clearTimeout(settleT); settleT=setTimeout(rest,1100); });
+ document.addEventListener('scroll',()=>{ if(n>=3) place(cur,false); },{passive:true}); addEventListener('resize',()=>{ if(n===0){ captureRestRect(); capturePhoneRef(); } if(n>=3) place(target(n),false); });
+ function blink(){ duck.classList.add('blink'); setTimeout(()=>duck.classList.remove('blink'),170); }
+ function tilt(){ if(REDUCED) return; override=true; head.style.transform='rotate(-7deg)'; setTimeout(()=>{ head.style.transform=''; override=false; },420); }
+ /* dizzy: fast back-and-forth movement close to the duck: its eyes stop following, the pupils drift in small circles
+    out of step and lose focus, three small stars go round above its head as it leans and wobbles, then a slow
+    blink, it straightens and looks at the pointer again. Only at rest (never during the squeeze), never more than
+    once in a while (duck-face.js) */
+ let dzA=0, dzStars=null;
+ const atRest=()=>n===0&&!override&&svg.style.visibility!=='hidden'&&!(window.ZSTORY&&ZSTORY.state&&!ZSTORY.state().arrived&&ZSTORY.busy());
+ function starsEl(){ if(dzStars&&dzStars[0].isConnected) return dzStars; const NS='http://www.w3.org/2000/svg', g=document.createElementNS(NS,'g'); g.setAttribute('class','dzstars');
+   dzStars=[0,1,2].map(i=>{ const p=document.createElementNS(NS,'path'); p.setAttribute('class','ln sm dzstar'+(i===1?' g':'')); g.appendChild(p); return p; }); head.appendChild(g); return dzStars; }
+ function hideStars(){ if(dzStars) dzStars.forEach(p=>p.removeAttribute('d')); }
+ function stopDizzy(){ if(!dzA) return; cancelAnimationFrame(dzA); dzA=0; override=false; head.style.transform=''; hideStars(); }
+ ZFDuckFace.watchDizzy({ near:(x,y)=>{ const r=svg.getBoundingClientRect(); return r.width>0&&Math.hypot(x-(r.left+r.width*.5),y-(r.top+r.height*.4))<Math.max(r.width,r.height)*.75; },
+   ready:()=>atRest()&&!dzA,
+   fire:()=>{ override=true; const t0=performance.now(), st=starsEl(); let blinked=false;
+     /* the eyes' own gaze while the reaction lets go of them: toward the pointer, or where they rest */
+     const gaze=EYES.map(e=>{ const m=(e.el.getAttribute('transform')||'').match(/translate\(([-\d.]+) ([-\d.]+)\)/); return m?[+m[1]/e.ax,+m[2]/e.ay]:[0,0]; });
+     const step=now=>{ const u=(now-t0)/ZFDuckFace.DIZZY_MS; if(u>=1){ dzA=0; override=false; head.style.transform=''; hideStars(); if(lastPtr) aim(lastPtr.x,lastPtr.y,true); else rest(); return; }
+       const p=ZFDuckFace.dizzyPose(u);
+       EYES.forEach((e,i)=>{ const d=p.eyes[i], vx=gaze[i][0]+(d.vx-gaze[i][0])*p.w, vy=gaze[i][1]+(d.vy-gaze[i][1])*p.w;
+         e.el.setAttribute('transform',`translate(${(e.c[0]+vx*e.ax-e.b[0]).toFixed(2)} ${(e.c[1]+vy*e.ay-e.b[1]).toFixed(2)})`); });
+       if(p.blink&&!blinked){ blinked=true; duck.classList.add('blink','slowblink'); setTimeout(()=>duck.classList.remove('blink','slowblink'),420); }
+       p.stars.forEach((s,i)=>{ st[i].setAttribute('d',ZFDuckFace.starD(236+s.x*40,30+s.y*7,7*s.r,s.rot)); st[i].style.opacity=s.op.toFixed(3); });
+       head.style.transform=`rotate(${p.tilt.toFixed(2)}deg)`; dzA=requestAnimationFrame(step); };
+     dzA=requestAnimationFrame(step); } });
+ let lastPtr=null; document.addEventListener('pointermove',e=>{ if(e.pointerType==='mouse') lastPtr={x:e.clientX,y:e.clientY}; },{passive:true});
+ document.addEventListener('pointerdown',stopDizzy,true);
+ function say(t){ if(n<4){ cap.textContent=t; hud.classList.remove('on'); } else { cap.textContent=''; hudTxt.textContent=t; hud.classList.add('on'); } hud.classList.toggle('btn',n>=5); }
+ /* the press squash is a one-off animation: its class goes as soon as it ends, so nothing can stay squashed */
+ ['animationend','animationcancel'].forEach(t=>duck.addEventListener(t,e=>{ if(e.animationName==='dkpress') duck.classList.remove('dkpress'); }));
+ function putBack(ms){ clearTimeout(idleT); n=0; duck.classList.remove('dkpress'); place({s:1,r:0},true,typeof ms==='number'?ms:0); cap.textContent=restCap(); hud.classList.remove('on','btn'); rest();
+   // Recapturing the rest box must wait for the reset transition to actually finish -- reading it the instant the
+   // transition starts (as this used to) still saw the old, scaled-up frame, so the very act of putting the duck
+   // back quietly re-armed the same drift for next time. REDUCED (no transition at all) settles immediately.
+   const dur=REDUCED?0:(typeof ms==='number'?ms:300);
+   setTimeout(()=>{ captureRestRect(); capturePhoneRef(); },dur+60); }
+ function poke(){ if(n>=CYCLE) return;
+   // The very first tap of a cycle is the one guaranteed moment the duck is truly at rest AND the page has
+   // actually finished settling (fonts, images, the rest of the homepage above this section) -- capturing the
+   // rest box back at initial script load, before any of that had necessarily happened, could freeze in a
+   // reference from a shorter/not-yet-laid-out page, permanently wrong (by exactly however much the page still
+   // grew afterward) for the rest of the session. Recapturing right here costs nothing extra and is never stale.
+   if(n===0) captureRestRect();
+   n++; if(window.ZS) ZS.play('duck',n===CYCLE?0:n===12?12:n-1); if(n===CYCLE){ say('fine.'); clearTimeout(idleT); setTimeout(()=>{ if(n===CYCLE) putBack(900); },250); return; }
+   duck.classList.remove('flap','dkpress'); void duck.getBoundingClientRect(); if(!REDUCED){ duck.classList.add('flap'); if(!(n>=7&&n%2)) duck.classList.add('dkpress'); } place(target(n),true);
+   if(n===1) blink(); if(n===2) tilt(); if(SAY[n]) say(SAY[n]); if(!REDUCED&&n>=7&&n%2){ duck.classList.add('shake'); setTimeout(()=>duck.classList.remove('shake'),320); }
+   if(n===7) discover('duck');
+   clearTimeout(idleT); if(n>=5) idleT=setTimeout(()=>{ if(n>=5){ say('fine.'); setTimeout(()=>putBack(900),900); } },30000); }
+ hudBtn.addEventListener('click',()=>putBack());
+ /* A plain 'click' listener alone missed real taps on some touch browsers here: once the duck has grown past its
+    own box (transform doesn't affect layout, but the enlarged drawing can still visually cover other elements,
+    or the tap simply lands mid a running .3s transition), the browser's own synthetic click-from-touch can end
+    up never firing. pointerup fires immediately and reliably for a touch tap regardless, so it drives growth
+    directly for touch; a short guard stops the browser's own follow-up click (when it does arrive) from also
+    calling poke() a second time for the same physical tap. Mouse and keyboard are untouched -- click still
+    covers those exactly as before. */
+ let lastPokeAt=0; function pokeOnce(){ const t=Date.now(); if(t-lastPokeAt<400) return; lastPokeAt=t; if(window.ZSTORY&&ZSTORY.claim&&ZSTORY.claim()) return; poke(); }
+ wrap.addEventListener('pointerup',e=>{ if(e.pointerType==='touch') pokeOnce(); });
+ wrap.addEventListener('click',pokeOnce);
+ wrap.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(e.repeat) return; if(window.ZSTORY&&ZSTORY.claim&&ZSTORY.claim()) return; poke(); } });
+ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&n>=1) putBack(); });
+ /* story.js hands the scroll scene's duck over to this one; it waits while a squeeze is in progress and can ask for the duck back */
+ requestAnimationFrame(rest); addEventListener('resize',()=>{ if(n===0) rest(); });
+ window.ZABOUTDUCK={ busy:()=>n!==0, putBack:()=>{ if(n!==0) putBack(); }, poke:()=>{ lastPokeAt=Date.now(); poke(); } };
+ window.__duck={ n:()=>n, state:()=>cur, poke, putBack, pupils:()=>[p1.getAttribute('transform'),p2.getAttribute('transform')] };
+})();
+
+
+/* visitor ducks: one at a time, from a safe edge, every 8-15 s, drawn from the shared side-view duck (side-duck.js).
+   You can grab one and pull it in; now and then one says something short. */
+(function(){
+ if(REDUCED||!window.ZFSideDuck) return;
+ const AVOID='nav,h1,h2,h3,p,li,a,button,input,.term,.gcard,#dock,#runner,.ss-stage,.socials,.duckwrap,.sechead,footer .frow,.rules,.setup';
+ /* a small, curated pool, each line at most once a visit; some carry a real link */
+ const strat=()=>{ const g=GAMES.filter(x=>x.tags&&x.tags[0]==='strategy'&&x.link); return g.length?g[Math.floor(Math.random()*g.length)].link:'/arcade'; };
+ const LINES=[{t:'Hi, I’m Mansy. Pick something to play.'},
+   {t:'Wondering why all the ducks? Read our story ↗',html:'Wondering why all the ducks? <a href="/story/">Read our story ↗</a>'},
+   {t:'Ready to try one? Explore the games ↗',html:'Ready to try one? <a href="#games">Explore the games ↗</a>'},
+   {t:'A few rules. Plenty to argue about. Try a strategy game ↗',get html(){ return `A few rules. Plenty to argue about. <a href="${strat()}">Try a strategy game ↗</a>`; }},
+   {t:'Every game has a “How to play” button. I checked.'},{t:'Catch me if you can.'}];
+ const duck=ZFSideDuck.start({ avoid:AVOID,
+   paused:()=>WORLD.active()||(window.ZSTORY&&ZSTORY.busy())||document.body.classList.contains('wireframe')||$('duckwrap').classList.contains('huge')||!!document.querySelector('.reader.open,.caseov.open'),
+   context:()=>({lines:LINES,every:[20000,40000],chance:.35}) });
+ window.__peekNow=f=>duck.visit(f);
+})();
+
+$('wfOff').onclick=()=>document.body.classList.remove('wireframe');
+if(location.hash&&document.getElementById(location.hash.slice(1)))setTimeout(()=>{setNav(location.hash.slice(1));spy();},100);
+</script>
+<script>window.ZRUNNER=WORLD;</script>
+<script src="game-search.js?v=0e5dd56f"></script>
+<script src="story.js?v=c039c679"></script>
+<script src="xo-field.js?v=41ce62ee"></script>
+<script src="offline.js?v=c3feb060"></script>
+</body>
+</html>
