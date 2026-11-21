@@ -1,5 +1,5 @@
 {
- "version": "94fd9b57dbc3",
+ "version": "b05cf289904e",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -39,7 +39,7 @@
   "/heritage-art.js?v=96eb478d",
   "/heritage-core.js?v=cf397801",
   "/heritage-lessons.js?v=a19dffcf",
-  "/heritage.js?v=2b7fe83b",
+  "/heritage.js?v=3692123c",
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
@@ -111,5 +111,5 @@
    "/patolli"
   ]
  },
- "bytes": 23783815
+ "bytes": 23783828
 }
