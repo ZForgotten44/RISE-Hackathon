@@ -174,7 +174,7 @@ async function setLang(c,user){
   /* switching between left-to-right and right-to-left reloads the page: some browsers (Safari) keep the old
      layout's click areas after a live direction change, so buttons would answer for their neighbours */
   const rtlNow=root.getAttribute('dir')==='rtl', rtlNext=!!byCode(c).rtl;
-  if(user&&document.body&&rtlNow!==rtlNext){ ls.set('zf-lang',c==='en'?null:c); location.reload(); return; }
+  if(user&&document.body&&rtlNow!==rtlNext){ ls.set('zf-lang',c==='en'?null:c); if((ls.get('zf-lang')||'en')===c){ location.reload(); return; } }
   lang=c; if(user) ls.set('zf-lang',c==='en'?null:c);
   setDir(); if(c!=='en') await loadPack(c); if(lang!==c) return; usePack(c);
   if(c!=='en'&&!pack){ root.setAttribute('lang','en'); root.removeAttribute('dir'); }   // phrase book did not load: the page stays honestly English

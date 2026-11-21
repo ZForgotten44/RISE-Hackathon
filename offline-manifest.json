@@ -1,5 +1,5 @@
 {
- "version": "2b988784dd68",
+ "version": "11531808cfbc",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -15,7 +15,7 @@
   "/audio/duck-squeak.mp3",
   "/audio/zfgames-3.mp3",
   "/author-duck.png",
-  "/cinema.js?v=70c7ec9b",
+  "/cinema.js?v=4b5d8549",
   "/coach.js?v=6bd2206e",
   "/cursor.js?v=cd3951a0",
   "/duck-face.png",
@@ -44,7 +44,7 @@
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
-  "/lang.js?v=cc7ab0e8",
+  "/lang.js?v=91656ce2",
   "/lessons.js?v=4eff30f6",
   "/match.js?v=2a2d0d29",
   "/music.js?v=5e683752",
@@ -109,5 +109,5 @@
    "/patolli"
   ]
  },
- "bytes": 23873564
+ "bytes": 23874279
 }
