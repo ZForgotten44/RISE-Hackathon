@@ -4,7 +4,7 @@
    matters, a small note on how sure we are. A score made for each game (Web Audio, nothing downloaded) plays only
    after the visitor taps Sound on; the site music steps aside while it does.
    - Skip, ×, Esc or Play close it, and it shrinks into the corner, where the story card (story-ticker.js) carries on.
-   - It plays by itself once per game (localStorage zf-cine-seen). The story card has a Watch button to see it again.
+   - It plays by itself every time a game is opened (not on a reload). The story card has a Watch button to see it again.
    - Tap the left or right of the picture to go back or forward.
    - Line art in currentColor, gold #c9a63f for one detail per scene, both tones, no gradients.
    - Reduced motion: no drawing, walking or zooming; the scenes and subtitles still change. */
@@ -496,7 +496,7 @@ const NOTE='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><
 const NOTE_OFF='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><g opacity=".55"><circle cx="9" cy="17.5" r="3" fill="currentColor"/><path d="M12 17.5V5l6 1.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
 const X_='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 const CSS=`
-#zfCine{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:16px;box-sizing:border-box;background:rgba(8,8,7,.66);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+#zfCine{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;box-sizing:border-box;background:rgba(8,8,7,.66);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 #zfCine.on{opacity:1;visibility:visible;transition:opacity .5s ease}
 #zfCine .zc-win{position:relative;width:min(860px,100%,calc((100dvh - 296px)*1.7778 + 28px));min-width:min(100%,340px);max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box;border:1px solid var(--g3);border-radius:18px;background:var(--bg);color:var(--fg);box-shadow:0 10px 30px rgba(0,0,0,.18);transform:translateY(28px) scale(.94);transition:transform .8s cubic-bezier(.22,1,.36,1),opacity .5s}
 #zfCine.on .zc-win{transform:none}
@@ -677,8 +677,17 @@ function close(noCard){
 }
 /* opens by itself once per heritage game, a moment after the page settles */
 const filmsOff=()=>{ try{ return localStorage.getItem('zf-films')==='0'; }catch(e){ return false; } };   // Language & accessibility menu (lang.js): films can be set not to open by themselves
-const pending=s=>!!FILMS[s]&&!seen().includes(s)&&!filmsOff()&&!/[?&]nofilm\b/.test(location.search);
-function boot(){ const s=slugNow(); if(!pending(s)) return; let n=0; const t=()=>{ if(document.querySelector('#gdrawer.open')){ if(++n<120) setTimeout(t,500); return; } play(s); }; setTimeout(t,700); }   /* waits for How to play to close */
-if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+/* Zack: the film pops up first every time a game is opened, from the homepage, the arcade or anywhere else
+   (the arcade opens games in-page, so route changes count too). A reload of the same game does not replay it. */
+const reloaded=()=>{ try{ const e=performance.getEntriesByType('navigation')[0]; return !!e&&e.type==='reload'; }catch(x){ return false; } };
+let onReload=reloaded();   // true until the page moves to another route
+const pending=s=>!!FILMS[s]&&!onReload&&!filmsOff()&&!/[?&]nofilm\b/.test(location.search);
+let bootT=null, here=slugNow();
+function boot(){ clearTimeout(bootT); const s=slugNow(); if(!pending(s)) return; bootT=setTimeout(()=>{ if(slugNow()===s&&!open) play(s); },500); }
+function onRoute(){ const s=slugNow(); if(s===here) return; here=s; onReload=false; clearTimeout(bootT); if(open&&s!==slug) close(true); boot(); }
+['pushState','replaceState'].forEach(k=>{ const f=history[k]; history[k]=function(){ const r=f.apply(this,arguments); setTimeout(onRoute,0); return r; }; });
+addEventListener('popstate',()=>setTimeout(onRoute,0));
+const first=()=>boot();
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',first); else first();
 window.ZFCinema={ play, close, has:s=>!!FILMS[s], pending, films:FILMS, renderScore };
 })();
