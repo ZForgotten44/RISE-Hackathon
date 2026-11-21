@@ -1,5 +1,5 @@
 {
- "version": "deb6382465f5",
+ "version": "cbc5b9a73b6c",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -8,14 +8,14 @@
   "/apple-touch-icon.png",
   "/arcade-duck-side.svg",
   "/arcade-duck-top.svg",
-  "/arcade-games.js?v=43febad6",
+  "/arcade-games.js?v=a30812ef",
   "/arcade-main.js?v=c301f86a",
   "/arcade-wire.js?v=4846c829",
   "/arcade.css?v=2716c656",
   "/audio/duck-squeak.mp3",
   "/audio/zfgames-3.mp3",
   "/author-duck.png",
-  "/cinema.js?v=80d51251",
+  "/cinema.js?v=70c7ec9b",
   "/coach.js?v=6bd2206e",
   "/cursor.js?v=cd3951a0",
   "/duck-face.png",
@@ -33,7 +33,7 @@
   "/feel.js?v=794aa1a5",
   "/fonts/fast-blaze.woff2",
   "/games2.js?v=7fa38874",
-  "/games3.js?v=600bcdfe",
+  "/games3.js?v=667d4a84",
   "/games4.js?v=48bcaba5",
   "/gold-engine.js",
   "/gold-engine.js?v=a7e20373",
@@ -44,6 +44,7 @@
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
+  "/lang.js?v=e18cff51",
   "/lessons.js?v=4eff30f6",
   "/match.js?v=2a2d0d29",
   "/music.js?v=5e683752",
@@ -108,5 +109,5 @@
    "/patolli"
   ]
  },
- "bytes": 23847478
+ "bytes": 23873061
 }
