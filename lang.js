@@ -14,7 +14,8 @@
        zf-motion   '1' reduce motion (also answers matchMedia('(prefers-reduced-motion: reduce)') for every script)
                    '0' full motion; unset follows the device setting
        zf-films    '0' story films do not open by themselves (cinema.js); the story card's Watch button still plays them
-       zf-text     '1' larger text (the whole page scales 115%, like browser zoom, so layouts stay intact)
+       zf-text     '1' larger text: every small and body font size on the site grows 15% (headings stay), done with plain CSS
+                   copies of the site's own font rules. No page zoom: zoom broke clicks in Safari and made the page lag.
        zf-contrast '1' stronger contrast (quiet greys and hairlines darken/lighten towards the ink colour)
    - A "Skip to content" link appears for keyboard users on the first Tab. */
 (function(){
@@ -46,6 +47,41 @@ function applyPrefs(){
   ls.get('zf-contrast')==='1'?root.setAttribute('data-contrast','hi'):root.removeAttribute('data-contrast');
 }
 applyPrefs();
+/* Larger text. For every site rule with a font size from 9px to 22px, a copy is added with the size x1.15 under
+   :where(html[data-text="lg"]), which keeps each rule's own weight in the cascade. The copies sit in one <style>
+   kept last in <head>, and are rebuilt only when a stylesheet is added or loads, never while you play. */
+const BIG='zfBigText';
+let bigT=null, bigObs=null;
+function splitSel(t){ const out=[]; let d=0,cur=''; for(const ch of t){ if(ch==='('||ch==='[') d++; else if(ch===')'||ch===']') d--; if(ch===','&&!d){ out.push(cur); cur=''; } else cur+=ch; } out.push(cur); return out.map(x=>x.trim()).filter(Boolean); }
+function bigSel(x){ if(/^(html|:root)(?![\w-])/.test(x)) return x.replace(/^(html|:root)/,'$1[data-text="lg"]'); return ':where(html[data-text="lg"]) '+x; }
+/* the size from font-size, or from the font shorthand (with var() in it the browser leaves font-size empty).
+   px sizes from 9 to 22 grow 15%. Sizes in rem, vw or clamp() grow 15% but never past 25px unless already bigger
+   (so headings stay). em and % sizes are left alone: they already follow their grown parent. */
+function bigSize(r){ let v=r.style.fontSize||'';
+  if(!v){ const f=/(?:^|;)\s*font\s*:\s*([^;]+)/.exec(r.style.cssText||''); if(!f) return null; const t=f[1].trim();
+    const m=/(?:^|\s)((?:clamp|min|max|calc)\([^;]*?\)|\d*\.?\d+(?:px|rem|vw|vmin))(?:\s*\/\s*\S+)?\s+(?=[^\d\s(]|var\()/.exec(' '+t+' '); if(!m) return null; v=m[1]; }
+  let m=/^(\d*\.?\d+)px$/.exec(v); if(m){ const n=+m[1]; return n>=9&&n<=22?(Math.round(n*115)/100)+'px':null; }
+  if(/em\b|%|var\(/.test(v.replace(/rem/g,''))) return null;
+  if(!/^(clamp|min|max|calc)\(|^\d*\.?\d+(rem|vw|vmin)$/.test(v)) return null;
+  return 'max('+v+',min(calc('+v+' * 1.15),25px))'; }
+function bigRules(list,out){ for(const r of list){
+  if(r.type===1){ const v=bigSize(r); if(!v) continue;
+    out.push(splitSel(r.selectorText).map(bigSel).join(',')+'{font-size:'+v+(r.style.getPropertyPriority('font-size')?' !important':'')+'}'); }
+  else if((r.type===4||r.type===12)&&r.cssRules){ const inner=[]; bigRules(r.cssRules,inner); if(inner.length) out.push((r.type===4?'@media '+r.media.mediaText:'@supports '+r.conditionText)+'{'+inner.join('')+'}'); } } }
+function bigBuild(){ bigT=null; const on=root.getAttribute('data-text')==='lg'; let el=document.getElementById(BIG);
+  if(!on){ if(el) el.remove(); return; }
+  const out=[]; for(const sh of document.styleSheets){ if(sh.ownerNode&&sh.ownerNode.id===BIG) continue; let rules; try{ rules=sh.cssRules; }catch(e){ continue; } if(rules) try{ bigRules(rules,out); }catch(e){} }
+  if(!el){ el=document.createElement('style'); el.id=BIG; }
+  const css=out.join('\n'); if(el.textContent!==css) el.textContent=css;
+  if(document.head&&document.head.lastElementChild!==el) document.head.appendChild(el); }
+function bigLater(){ if(!bigT) bigT=setTimeout(bigBuild,60); }
+function bigWatch(){ if(bigObs||!document.head) return;
+  bigObs=new MutationObserver(ms=>{ for(const m of ms) for(const n of m.addedNodes){ if(n.id===BIG) continue; if(n.nodeName==='STYLE'||n.nodeName==='LINK'){ if(n.nodeName==='LINK') n.addEventListener('load',bigLater,{once:true}); bigLater(); return; } } });
+  bigObs.observe(document.head,{childList:true});
+  document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',bigLater,{once:true})); }
+function bigText(){ if(root.getAttribute('data-text')==='lg'){ bigWatch(); bigBuild(); } else bigBuild(); }
+bigText();
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bigText); addEventListener('load',bigText);
 /* every script on the site asks matchMedia for reduced motion; the saved choice answers it */
 try{ const mm=window.matchMedia.bind(window);
   window.matchMedia=function(q){ const real=mm(q); const p=motionPref();
@@ -55,7 +91,6 @@ try{ const mm=window.matchMedia.bind(window);
 
 const CSS=`
 html[data-motion="reduce"] *,html[data-motion="reduce"] *::before,html[data-motion="reduce"] *::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
-html[data-text="lg"]{zoom:1.15}
 html[data-contrast="hi"][data-inv="0"] [data-tone="dark"],html[data-contrast="hi"][data-inv="1"] [data-tone="light"]{--g2:#2b2b28;--g3:#45443f;--g4:#8b8a83;--g5:#b3b1a9;--g6:#dcdad2;--card-sub:#dcdad2;--card-meta:#d2d0c8}
 html[data-contrast="hi"][data-inv="0"] [data-tone="light"],html[data-contrast="hi"][data-inv="1"] [data-tone="dark"]{--g2:#c8c5ba;--g3:#a09d91;--g4:#66645c;--g5:#46443d;--g6:#2c2b27;--card-sub:#2c2b27;--card-meta:#36352f}
 html[data-contrast="hi"] .hlp-tip,html[data-contrast="hi"] .e-small,html[data-contrast="hi"] .note{opacity:1}
@@ -204,7 +239,7 @@ function buildMenu(){
   menu.addEventListener('click',e=>{ const l=e.target.closest('.zl-l'); if(l){ setLang(l.dataset.l,true); return; }
     const s=e.target.closest('.zl-sw'); if(s){ const k=s.dataset.k, on=!swOn(k);
       if(k==='zf-films') ls.set(k,on?null:'0'); else if(k==='zf-motion') ls.set(k,on?'1':'0'); else ls.set(k,on?'1':null);
-      applyPrefs(); paintMenu(); place(); document.dispatchEvent(new CustomEvent('zf-access',{detail:{key:k,on}})); } });
+      applyPrefs(); bigText(); paintMenu(); place(); document.dispatchEvent(new CustomEvent('zf-access',{detail:{key:k,on}})); } });
   menu.addEventListener('keydown',e=>{ if(e.key==='Escape'){ e.preventDefault(); close(true); return; }
     const l=e.target.closest&&e.target.closest('.zl-l'); if(l&&/^Arrow/.test(e.key)){ const all=[...menu.querySelectorAll('.zl-l')]; let i=all.indexOf(l);
       const rtl=root.getAttribute('dir')==='rtl'; const d={ArrowDown:2,ArrowUp:-2,ArrowRight:rtl?-1:1,ArrowLeft:rtl?1:-1}[e.key]; i=Math.max(0,Math.min(all.length-1,i+d)); all[i].focus(); e.preventDefault(); } });
@@ -214,7 +249,7 @@ function paintMenu(){ if(!menu) return; let draft=false;
   menu.querySelectorAll('.zl-l').forEach(b=>{ const on=b.dataset.l===lang; b.setAttribute('aria-checked',on); b.tabIndex=on?0:-1; if(on&&byCode(lang).draft) draft=true; });
   menu.querySelector('.zl-note').hidden=!draft;
   menu.querySelectorAll('.zl-sw').forEach(s=>s.setAttribute('aria-checked',swOn(s.dataset.k))); }
-function place(){ if(!menu||menu.hidden||!opener) return; const r=opener.getBoundingClientRect(), z=root.getAttribute('data-text')?1.15:1;
+function place(){ if(!menu||menu.hidden||!opener) return; const r=opener.getBoundingClientRect(), z=1;
   const w=menu.offsetWidth, vw=document.documentElement.clientWidth;
   let left=Math.min(r.right/z-w, vw/z-w-16); left=Math.max(16,left);
   menu.style.top=Math.round(r.bottom/z+10)+'px'; menu.style.left=Math.round(left)+'px'; }
@@ -257,5 +292,5 @@ addEventListener('resize',place); addEventListener('scroll',()=>close(false),{pa
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&menu&&!menu.hidden) close(true); });
 if(sysReduce&&sysReduce.addEventListener) sysReduce.addEventListener('change',paintMenu);
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',buildButtons); else buildButtons();
-addEventListener('storage',e=>{ if(e.key==='zf-lang'){ const L=byCode(e.newValue||'en')||LANGS[0]; if(!!L.rtl!==(root.getAttribute('dir')==='rtl')) location.reload(); else setLang(L.c,false); } else if(e.key&&/^zf-(motion|text|contrast|films)$/.test(e.key)){ applyPrefs(); paintMenu(); } });
+addEventListener('storage',e=>{ if(e.key==='zf-lang'){ const L=byCode(e.newValue||'en')||LANGS[0]; if(!!L.rtl!==(root.getAttribute('dir')==='rtl')) location.reload(); else setLang(L.c,false); } else if(e.key&&/^zf-(motion|text|contrast|films)$/.test(e.key)){ applyPrefs(); bigText(); paintMenu(); } });
 })();

@@ -1,5 +1,5 @@
 {
- "version": "59be8d9f2487",
+ "version": "be895712e49c",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -44,7 +44,7 @@
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
-  "/lang.js?v=91656ce2",
+  "/lang.js?v=0ef02842",
   "/lessons.js?v=4eff30f6",
   "/match.js?v=2a2d0d29",
   "/music.js?v=5e683752",
@@ -109,5 +109,5 @@
    "/patolli"
   ]
  },
- "bytes": 23874358
+ "bytes": 23878064
 }
