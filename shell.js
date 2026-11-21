@@ -808,7 +808,7 @@ if(window.ZFSideDuck){
   /* a small, curated pool: a few lines per moment, each said at most once a visit, some with a real link or a "Show me"
      that does the thing. Links are ordinary links; the bubble around them never navigates. */
   /* on a game's pages the duck talks about this game only: no story or About links here (those belong to the homepage) */
-  const FUN=[{t:'Hi, I’m Mansy. Pick a mode and play.'}].concat(OWN[slug]?[{t:OWN[slug]}]:[]);
+  const FUN=[{t:'Hi, I’m Z Forgotten. Pick a mode and play.'}].concat(OWN[slug]?[{t:OWN[slug]}]:[]);
   const learn=()=>{ const b=document.querySelector('section.entry.show .e-learn'); if(b) b.click(); };
   const LEARN=[{t:'New to this one? I can walk you through it.',html:'New to this one? I can walk you through it. <button type="button" class="sdk-act">Show me</button>',acts:[learn]},
     {t:'That little book? It explains the game.',html:`That little ${BOOK} book? It shows how to play, with practice moves.`}];

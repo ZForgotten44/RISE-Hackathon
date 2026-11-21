@@ -18,7 +18,7 @@ No separate hub, branding or visual system. Read `zfgames-design-tokens`, `zfgam
    Load it before shared.js in `index.html`, `create/index.html` and `tools/arcade-template.html`.
 4. **Card data**: add `{id, name, rule, meta, slug, link, art}` to `GAMES` in `shared.js`, at the position mansy
    chooses. Also, as applicable: `ONLINE_IDS` (has an online friend room), `PARTY_IDS`, `TAGS` (category),
-   `NEW_SLUGS`, `KEYWORDS`, `ALIAS`, `PARTY_MIN`/`PARTY_MAX`, `roomCount`, `modeScreen`.
+   `KEYWORDS`, `ALIAS`, `PARTY_MIN`/`PARTY_MAX`, `roomCount`, `modeScreen`.
 5. **Routes**: add `[slug, name, short description]` to `tools/games-list.js` (same order as GAMES), and a full entry
    to `tools/game-pages.js` (title, description, intro, tip, ways, rel, genre, play). Renamed games keep their old
    URL through `_redirects` / `RETIRED`/`MOVED` in `tools/build-routes.js`.

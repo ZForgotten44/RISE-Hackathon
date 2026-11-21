@@ -671,10 +671,10 @@ function mansySvg(opts){ opts=opts||{}; const n=++meN, W='meW'+n, L='meL'+n, R='
 /* the guide: the same complete vector (picture, pupils with their highlights, blink lids, the five mood faces) for every
    hint, rule note, lesson and move note, and for the computer opponent. The eyes are drawn by this SVG itself, never by a
    separate overlay, so no screen can show the picture without them. opts.cls adds classes, opts.mood shows one face. */
-function guide(opts){ opts=opts||{}; return mansy(Object.assign({size:'fl',label:'Mansy’s duck'},opts,{cls:'pd-guide '+(opts.cls||'')})); }
+function guide(opts){ opts=opts||{}; return mansy(Object.assign({size:'fl',label:'Z Forgotten’s duck'},opts,{cls:'pd-guide '+(opts.cls||'')})); }
 /* the computer's avatar: html() for Mansy's duck */
 function mansy(opts){ opts=opts||{}; const mood=opts.mood&&MOODS[opts.mood]?` data-mood="${opts.mood}"`:'';
-  return `<span class="pd pd-${opts.size||'md'} pd-mansy ${opts.cls||''}"${mood} role="img" aria-label="${esc(opts.label||'Computer: Mansy’s duck, with glasses, short hair, a beard and a black tie')}">${mansySvg(opts)}</span>`; }
+  return `<span class="pd pd-${opts.size||'md'} pd-mansy ${opts.cls||''}"${mood} role="img" aria-label="${esc(opts.label||'Computer: Z Forgotten’s duck, with glasses, short hair, a beard and a black tie')}">${mansySvg(opts)}</span>`; }
 
 const API={ svg, html, mansy, mansySvg, guide, figure, describe, MOODS:Object.keys(MOODS).map(k=>[k,MOODS[k].label]), OPTIONS, SLOTS:SLOTS.map(([k,l])=>[k,l]), random, clean, fits, fitsNeck, adjust, clears, word, hairWord, GOLD,
   COLOURS:{ hair:HCOL, accessory:ACOL }, KEYS, newCreator, creatorHTML, same };
