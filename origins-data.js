@@ -135,7 +135,7 @@ root.ZF_ORIGINS={
     where:{ published:true,
       places:[{label:'Mexico and Central America', community:'Mesoamerican cacao growers and traders'}],
       intro:[
-        'When chocolate was money. People in Mesoamerica were brewing cacao more than 3,500 years ago, and in Aztec markets cacao beans worked as small change. A Spanish price list from 1545 puts a turkey at 100 beans, and forgers hollowed out beans and filled them with clay.',
+        'When chocolate was money. People in Mesoamerica were brewing cacao more than 3,500 years ago, and in Aztec markets cacao beans worked as small change. A price list from 1545 puts a turkey at 100 beans, and forgers hollowed out beans and filled them with clay.',
         'In Chomp every bite costs you, and one square is poisoned. Maths proves the first player can always win. On a square bar, bite diagonally next to the poison corner, then mirror every move. Frederik Schuh described it as a number game (1952), and David Gale turned it into a chocolate bar (1974).'
       ],
       uncertain:'Chomp has no Mesoamerican origin. The link is chocolate itself.'
