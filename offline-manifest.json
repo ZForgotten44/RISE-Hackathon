@@ -1,5 +1,5 @@
 {
- "version": "83404de9fb3f",
+ "version": "65765965bd73",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -52,7 +52,7 @@
   "/online-rooms.js?v=fc808795",
   "/online-sim.js?v=33a408c6",
   "/online-toot.js?v=fe7e9309",
-  "/origins-data.js?v=2022c8b9",
+  "/origins-data.js?v=9e2a97bc",
   "/origins.js?v=0048b475",
   "/party-duck.js?v=aefb47b3",
   "/react.js?v=0cfa1a13",
@@ -63,6 +63,7 @@
   "/site.css?v=76e3772a",
   "/site.webmanifest",
   "/sound.js?v=90368e02",
+  "/story-ticker.js?v=141272a7",
   "/theme.js?v=2d54ba4d",
   "/traces.js?v=cb511b6d",
   "/turn-timer.js?v=16c5eb30",
@@ -94,5 +95,5 @@
    "/sim"
   ]
  },
- "bytes": 23664174
+ "bytes": 23678257
 }
