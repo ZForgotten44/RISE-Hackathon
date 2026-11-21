@@ -679,14 +679,15 @@ function close(noCard){
 const filmsOff=()=>{ try{ return localStorage.getItem('zf-films')==='0'; }catch(e){ return false; } };   // Language & accessibility menu (lang.js): films can be set not to open by themselves
 /* Zack: the film pops up first every time a game is opened, from the homepage, the arcade or anywhere else
    (the arcade opens games in-page, so route changes count too). A reload of the same game does not replay it. */
-const pending=s=>!!FILMS[s]&&!filmsOff()&&!/[?&]nofilm\b/.test(location.search);
 const reloaded=()=>{ try{ const e=performance.getEntriesByType('navigation')[0]; return !!e&&e.type==='reload'; }catch(x){ return false; } };
+let onReload=reloaded();   // true until the page moves to another route
+const pending=s=>!!FILMS[s]&&!onReload&&!filmsOff()&&!/[?&]nofilm\b/.test(location.search);
 let bootT=null, here=slugNow();
 function boot(){ clearTimeout(bootT); const s=slugNow(); if(!pending(s)) return; bootT=setTimeout(()=>{ if(slugNow()===s&&!open) play(s); },500); }
-function onRoute(){ const s=slugNow(); if(s===here) return; here=s; clearTimeout(bootT); if(open&&s!==slug) close(true); boot(); }
+function onRoute(){ const s=slugNow(); if(s===here) return; here=s; onReload=false; clearTimeout(bootT); if(open&&s!==slug) close(true); boot(); }
 ['pushState','replaceState'].forEach(k=>{ const f=history[k]; history[k]=function(){ const r=f.apply(this,arguments); setTimeout(onRoute,0); return r; }; });
 addEventListener('popstate',()=>setTimeout(onRoute,0));
-const first=()=>{ if(!reloaded()) boot(); };
+const first=()=>boot();
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',first); else first();
 window.ZFCinema={ play, close, has:s=>!!FILMS[s], pending, films:FILMS, renderScore };
 })();
