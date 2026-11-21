@@ -200,7 +200,7 @@ function renderGxSetup(){
 function openGxSetup(){
   const d=cur;
   ZFA.hideAll(); show($('gxSetup'),true); ZF.backdrop&&ZF.backdrop(d.id); $('gxGame').dataset.game=d.id;
-  $('gxTitle').textContent=d.title.join(' ');
+  { const h=$('gxTitle'); h.textContent=d.title.join(' '); if(d.aka){ const k=document.createElement('small'); k.className='e-aka'; k.textContent=d.aka; h.appendChild(k); h.setAttribute('aria-label',`${d.title.join(' ')} (${d.aka})`); } else h.removeAttribute('aria-label'); }
   // A genuine fresh entry (M not already live — toSetup()'s online-lock path calls this with the real match still
   // in M, and must never touch it) still needs a previewOnly M: Customize (openGenericGxCustomize/
   // openInplaceGxCustomize) reads and mutates M.opt and, on "Play this board", calls ZFX.newGame()->start() — the
@@ -486,7 +486,7 @@ const simSets=[
  { id:'ahead', name:'Two Moves Ahead', kind:'move', note:'Choose the safe edge that leaves your opponent no safe reply.', items:(()=>{ let c; return ()=>c||(c=simPuzzles('ahead',9090,2).map(s=>{ const sf=safeEdges(s); const kill=sf.filter(e=>safeEdges(S.apply(s,e)).length===0); return {state:s,prompt:`${s.turn===1?'Solid':'Dashed'} to move: leave your opponent no safe edge.`,
     check(e){ if(kill.includes(e)) return {ok:true,explain:'After that edge every remaining edge would complete a triangle for your opponent, so they must lose next turn.',reveal:{edges:S.legal(S.apply(s,e)).filter(x=>S.completes(S.apply(s,e),x,3-s.turn))}}; const n=S.apply(s,e); return {ok:false,explain:S.completes(s,e,s.turn)?'That edge finishes your own triangle.':'That edge is safe now, but your opponent still has a safe reply. Look for the edge after which none remains.',reveal:{edges:S.legal(n).filter(x=>!S.completes(n,x,n.turn)).slice(0,6)}}; }}; })); })() }
 ];
-register({ id:'sim', title:['Sim'], blurb:'The triangle is the mistake. Claim edges between the dots, and never finish a triangle of your own.', entryReady:true,
+register({ id:'sim', title:['Sona'], aka:'Sim', blurb:'The triangle is the mistake. Claim edges between the dots, and never finish a triangle of your own.', entryReady:true,
   online:()=>{ window.ZFOnlineSim && ZFOnlineSim.open(); },
   defaults:{board:'6',rules:'classic'},
   options:[{key:'board',label:'Board',values:[['6','Six dots'],['7','Seven dots · advanced']]},{key:'rules',label:'Rules',values:[['classic','Classic'],['reverse','Reverse Sim']]}],

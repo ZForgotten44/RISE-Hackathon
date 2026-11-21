@@ -194,7 +194,7 @@ function workshop(host,o){ ZF.injectCSS&&ZF.injectCSS(); X.css(); if(!o.variant)
   draw(); }
 
 /* ---------- register ---------- */
-X.register({ id:'gold', title:['The Gold','Coin'], blurb:'Slide a coin left, or take the leftmost coin. Whoever takes the gold wins.', entryReady:true,
+X.register({ id:'gold', title:['Bao Gold'], aka:'The Gold Coin', blurb:'Slide a coin left, or take the leftmost coin. Whoever takes the gold wins.', entryReady:true,
   online:()=>{ window.ZFOnlineGold && ZFOnlineGold.open(); }, onlineCustomize:()=>{ window.ZFOnlineGold && ZFOnlineGold.customize(); },
   // .demo is the coin/track workshop (reused by the live Customize board and this entry screen's own inline
   // workshop) -- not a rules demo, so "try a move" gets its own function. This practice position is a throwaway

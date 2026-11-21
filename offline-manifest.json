@@ -1,5 +1,5 @@
 {
- "version": "ac1fd3092dbe",
+ "version": "94fd9b57dbc3",
  "fallback": "/offline.html",
  "core": [
   "/ai-core.js",
@@ -9,9 +9,9 @@
   "/arcade-duck-side.svg",
   "/arcade-duck-top.svg",
   "/arcade-games.js?v=43febad6",
-  "/arcade-main.js?v=c904ccf3",
+  "/arcade-main.js?v=c301f86a",
   "/arcade-wire.js?v=fb0c3c87",
-  "/arcade.css?v=85db43c4",
+  "/arcade.css?v=2716c656",
   "/audio/duck-squeak.mp3",
   "/audio/zfgames-3.mp3",
   "/author-duck.png",
@@ -31,14 +31,15 @@
   "/favicon.ico",
   "/feel.js?v=794aa1a5",
   "/fonts/fast-blaze.woff2",
-  "/games2.js?v=e19ef0c0",
-  "/games3.js?v=afee35cd",
-  "/games4.js?v=1af6c875",
+  "/games2.js?v=7fa38874",
+  "/games3.js?v=600bcdfe",
+  "/games4.js?v=48bcaba5",
   "/gold-engine.js",
   "/gold-engine.js?v=a7e20373",
-  "/heritage-art.js?v=b6553412",
+  "/heritage-art.js?v=96eb478d",
   "/heritage-core.js?v=cf397801",
-  "/heritage.js?v=8b5580b6",
+  "/heritage-lessons.js?v=a19dffcf",
+  "/heritage.js?v=2b7fe83b",
   "/hint-duck.js?v=2bbe4646",
   "/icon-192.png",
   "/icon-512.png",
@@ -60,13 +61,13 @@
   "/party-duck.js?v=aefb47b3",
   "/react.js?v=0cfa1a13",
   "/rules-summary.js?v=f48836b4",
-  "/shared.js?v=97ff5283",
+  "/shared.js?v=d76231c1",
   "/shell.js?v=e2bccffe",
   "/side-duck.js?v=851c58a9",
   "/site.css?v=76e3772a",
   "/site.webmanifest",
   "/sound.js?v=90368e02",
-  "/story-ticker.js?v=311dcbb6",
+  "/story-ticker.js?v=1dd552d2",
   "/theme.js?v=2d54ba4d",
   "/traces.js?v=cb511b6d",
   "/turn-timer.js?v=16c5eb30",
@@ -110,5 +111,5 @@
    "/patolli"
   ]
  },
- "bytes": 23755085
+ "bytes": 23783815
 }

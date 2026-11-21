@@ -262,6 +262,7 @@ header .back{background:none;border:none;padding:8px 0;font:inherit;color:var(--
 .e-head{container-type:inline-size}
 .e-title{font:700 clamp(40px,min(var(--fs-entry),14.2cqw),68px)/1.02 var(--font-sans);letter-spacing:-.035em;margin:0 0 18px;color:var(--fg)}
 .e-title.t2 span{display:block;white-space:nowrap}
+.e-title .e-aka{display:block;margin-top:10px;font:600 13px/1.2 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--g5)}
 @container (min-width:640px){.e-title.t2.short span{display:inline}}
 .e-blurb{font:400 clamp(17px,1.4vw,19px)/1.55 var(--font-sans);color:var(--g6);max-width:36ch;margin:0}
 .e-rules{margin-top:14px}

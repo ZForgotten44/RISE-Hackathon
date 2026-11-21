@@ -12,6 +12,7 @@ const CSS=`
 .gcard .art{height:216px;margin:14px 0 18px;display:flex;align-items:center;justify-content:center;min-height:0}
 .gcard .art svg{width:100%;height:100%;color:currentColor;overflow:visible}
 .gcard h3{font:700 var(--fs-card-title)/1.12 var(--font-sans);letter-spacing:-.015em;min-height:2.24em;margin:0 0 10px;color:inherit}
+.gcard h3 .aka{display:block;margin-top:6px;font:600 11.5px/1.2 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--card-sub)}
 .gcard .rule{font:400 16.5px/1.5 var(--font-sans);color:var(--card-sub);min-height:0}
 .gcard.on .rule{color:var(--card-sub-on)}
 .gcard .gmeta{font:500 12.5px/1.4 var(--font-mono);letter-spacing:.02em;color:var(--card-meta);margin:14px 0 16px}
@@ -261,13 +262,13 @@ const GAMES=[
 /* default order, used by the homepage carousel and the All Games page (filters keep this relative order). Party games
    (party-app.js + server/party) run one room on a shared screen with everyone playing on their own phone. */
  {id:'ult',name:'Recursive Tic-Tac-Toe',rule:'Your cell picks the board your opponent plays next.',meta:'1–2 players · expert computer',slug:'recursive-tic-tac-toe',link:'/recursive-tic-tac-toe',art:ART.ult()},
- {id:'gold',name:'The Gold Coin',rule:'Slide a coin left, or take the leftmost coin. Whoever takes the gold wins.',meta:'1–2 players · perfect computer · analysis by Hamkins',slug:'gold-coin',link:'/gold-coin',art:ART.gold()},
- {id:'chomp',name:'Chomp',rule:'Bite a tile and everything below-left of it. The corner is poison.',meta:'1–2 players · exact solver',slug:'chomp',link:'/chomp',art:ART.chomp()},
- {id:'nim',name:'Nim',rule:'Take any number from one pile. Last token wins, or loses.',meta:'1–2 players · normal & misère',slug:'nim',link:'/nim',art:ART.nim()},
- {id:'pentago',name:'Pentago',rule:'Place a marble, then twist a quadrant. Five in a row wins.',meta:'1–2 players · three difficulty levels',slug:'pentago',link:'/pentago',art:ART.pentago()},
- {id:'notakto',name:'Notakto',rule:'Both players place X. Close the last open board and you lose.',meta:'1–2 players · perfect play on 1 or 3 boards',slug:'notakto',link:'/notakto',art:ART.notakto()},
- {id:'toot',name:'TOOT & OTTO',rule:'Drop a T or an O. Spell your word, but your opponent wins if you spell theirs.',meta:'1–2 players · searches four moves ahead',slug:'toot-otto',link:'/toot-otto',art:ART.toot()},
- {id:'sim',name:'Sim',rule:'Claim edges between six dots. Complete a triangle of your own and you lose.',meta:'1–2 players · exact endgame',slug:'sim',link:'/sim',art:ART.sim()},
+ {id:'gold',name:'Bao Gold',aka:'The Gold Coin',rule:'Slide a coin left, or take the leftmost coin. Whoever takes the gold wins.',meta:'1–2 players · perfect computer · analysis by Hamkins',slug:'gold-coin',link:'/gold-coin',art:ART.gold()},
+ {id:'chomp',name:'Cacao',aka:'Chomp',rule:'Bite a tile and everything below-left of it. The corner is poison.',meta:'1–2 players · exact solver',slug:'chomp',link:'/chomp',art:ART.chomp()},
+ {id:'nim',name:'Pingala’s Piles',aka:'Nim',rule:'Take any number from one pile. Last token wins, or loses.',meta:'1–2 players · normal & misère',slug:'nim',link:'/nim',art:ART.nim()},
+ {id:'pentago',name:'Maya Wheels',aka:'Pentago',rule:'Place a marble, then twist a quadrant. Five in a row wins.',meta:'1–2 players · three difficulty levels',slug:'pentago',link:'/pentago',art:ART.pentago()},
+ {id:'notakto',name:'Kolam',aka:'Notakto',rule:'Both players place X. Close the last open board and you lose.',meta:'1–2 players · perfect play on 1 or 3 boards',slug:'notakto',link:'/notakto',art:ART.notakto()},
+ {id:'toot',name:'Viloma',aka:'TOOT & OTTO',rule:'Drop a T or an O. Spell your word, but your opponent wins if you spell theirs.',meta:'1–2 players · searches four moves ahead',slug:'toot-otto',link:'/toot-otto',art:ART.toot()},
+ {id:'sim',name:'Sona',aka:'Sim',rule:'Claim edges between six dots. Complete a triangle of your own and you lose.',meta:'1–2 players · exact endgame',slug:'sim',link:'/sim',art:ART.sim()},
  /* heritage games: rules from their own traditions and sources (Dasapada and Patolli rebuilt, with each rule tagged) */
  {id:'morabaraba',name:'Morabaraba',rule:'Line up three cows to make a mill, then shoot one of theirs.',meta:'1–2 players · Southern Africa',slug:'morabaraba',link:'/morabaraba',art:ART.heritage('morabaraba')},
  {id:'chaupar',name:'Chaupar',rule:'Throw the long dice and race your partner colours round the cross and home.',meta:'1–2 players · India',slug:'chaupar',link:'/chaupar',art:ART.heritage('chaupar')},
@@ -363,7 +364,7 @@ function makeCard(g,i,opts){
   /* the number is a position in the homepage carousel; the All Games grid passes num:false (filtered results would read
      01, 04, 05 like gaps or a ranking) and keeps the empty row so the NEW pill and the art sit exactly where they did */
   const num=opts.num===false?'':String(i+1).padStart(2,'0');
-  c.innerHTML=`${badge}<div class="gi"${num?'':' aria-hidden="true"'}>${num}</div><div class="art">${g.art}</div><h3><a class="cardlink" href="${href}" draggable="false"${room&&!pick?` aria-label="${g.name}: set up room"`:''}>${g.name}</a></h3><div class="rule">${g.rule}</div>${labels}<div class="acts"><span class="playbtn" aria-hidden="true">${pick?'Play →':room?'Set up room →':'Play ↗'}</span><a class="rules-link" href="${g.link}#rules" draggable="false" data-cursor="RULES" aria-label="${g.name} rules">Rules</a></div>`;
+  c.innerHTML=`${badge}<div class="gi"${num?'':' aria-hidden="true"'}>${num}</div><div class="art">${g.art}</div><h3><a class="cardlink" href="${href}" draggable="false"${room&&!pick?` aria-label="${g.name}: set up room"`:''}>${g.name}</a>${g.aka?`<small class="aka">${g.aka}</small>`:''}</h3><div class="rule">${g.rule}</div>${labels}<div class="acts"><span class="playbtn" aria-hidden="true">${pick?'Play →':room?'Set up room →':'Play ↗'}</span><a class="rules-link" href="${g.link}#rules" draggable="false" data-cursor="RULES" aria-label="${g.name} rules">Rules</a></div>`;
   const np=c.querySelector('.newpill'); if(np&&wigIO) wigIO.observe(np);
   const go=(kind,e)=>{ if(opts.shouldSuppress&&opts.shouldSuppress()){ e.preventDefault(); return; } if(opts.onOpen&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey){ e.preventDefault(); opts.onOpen(g,kind,e); } };
   c.querySelector('.cardlink').addEventListener('click',e=>go('play',e));
@@ -492,7 +493,7 @@ const lev=(a,b,max)=>{ if(Math.abs(a.length-b.length)>max) return max+1; let p=A
   for(let i=1;i<=a.length;i++){ const c=[i]; let lo=i; for(let j=1;j<=b.length;j++){ c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1)); lo=Math.min(lo,c[j]); } if(lo>max) return max+1; p=c; } return p[b.length]; };
 let SEARCH=null;
 function searchIndex(){ if(SEARCH) return SEARCH; SEARCH=GAMES.map((g,i)=>{ const t=normQ(g.name).replace(/^the /,''), tw=t.split(' ');
-  const al=normQ(ALIAS[g.id]||''), ini=tw.map(w=>/^\d/.test(w)?w:w[0]).join('');
+  const al=normQ((ALIAS[g.id]||'')+' '+(g.aka||'')), ini=tw.map(w=>/^\d/.test(w)?w:w[0]).join('');
   return {g,i,t,tw,compact:t.replace(/ /g,''),alias:al,aw:(al+' '+ini).split(' ').filter(Boolean),ini,more:normQ([g.rule,g.keywords,g.tags.join(' ')].join(' ')).split(' ')}; }); return SEARCH; }
 function findGames(q){ q=normQ(q); if(!q) return []; const qs=q.split(' '), qc=q.replace(/ /g,'');
   const pre=(words,x)=>words.some(w=>w.startsWith(x)||w.startsWith(x.replace(/s$/,'')));

@@ -44,6 +44,10 @@ const CSS=`
 .hg-act:disabled{opacity:.4;cursor:default}
 .hg-say{width:100%;text-align:center;font:500 15px/1.45 var(--font-sans);color:var(--g6);min-height:1.45em}
 .hg-say b{color:var(--fg)}
+.hg-steps{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:0 0 12px;font:600 14px var(--font-sans);color:var(--g6)}
+.hg-steps .st{padding:7px 13px;border-radius:999px;background:var(--surf2);color:var(--g5)}
+.hg-steps .st.done{color:var(--g6);background:var(--surf3)}
+.hg-steps .st.cur{background:var(--fg);color:var(--bg)}
 .hg-key{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin-top:12px;font:500 14px var(--font-sans);color:var(--g6)}
 .hg-key svg{width:18px;height:18px;vertical-align:-3px;margin-right:6px;color:var(--fg)}
 @media (prefers-reduced-motion:no-preference){.hg .fresh{animation:hgin .32s ease-out both}}
@@ -56,6 +60,8 @@ function keyRow(c,a,b){ const n=p=>c.opp==='2p'?(window.ZFName?ZFName(p):'Player
 const disc=(x,y,r,p,cls)=>`<circle class="${p===1?'p1':'p2'} ${cls||''}" cx="${x}" cy="${y}" r="${p===1?r:r-1.5}"/>`;
 const sq=(x,y,r,p,cls)=>`<rect class="${p===1?'p1':'p2'} ${cls||''}" x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" rx="${r*.35}"/>`;
 function bindGo(host,fn){ host.querySelectorAll('[data-go]').forEach(el=>{ const act=()=>fn(JSON.parse(el.dataset.go)); el.addEventListener('click',act); el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } }); }); }
+/* the two steps of a turn, as a strip above the board (the same strip Pentago shows) */
+const steps=(s,c,cur,a,b)=>s.over?'':`<div class="hg-steps" aria-live="polite"><span>${c.opp==='2p'?(window.ZFName?ZFName(s.turn):'Player '+s.turn):(c.human?'You':'Computer')}</span><span class="st ${cur>0?'done':'cur'}">1 · ${a}</span><span class="st ${cur===1?'cur':''}">2 · ${b}</span></div>`;
 const goAttr=(o,label)=>`class="go" tabindex="0" role="button" aria-label="${label}" data-go='${JSON.stringify(o)}'`;
 /* a small live board on the entry screen: try one move with the real rules */
 function tryDemo(host,{init,render,note,after}){ ZF.injectCSS&&ZF.injectCSS(); css(); let st=init(), msg=note;
@@ -86,7 +92,7 @@ function mbRender(host,s,c){ css(); if(mbFor!==s){ mbFor=s; mbSel=-1; }
     else if(tgt.has(i)){ g+=`<g ${goAttr({k:'to',i},(s.hand[s.turn]>0?'place a cow on ':'move to ')+name)}>${inner}<circle class="tgt" cx="${x}" cy="${y}" r="11"/><circle cx="${x}" cy="${y}" r="30" fill="transparent"/></g>`; }
     else g+=inner; }
   const handTxt=p=>s.hand[p]?`${s.hand[p]} to place`:`${MB.count(s,p)} on board${MB.flying(s,p)?' · flying':''}`;
-  host.innerHTML=`<div class="hg"><svg viewBox="0 0 500 500" role="group" aria-label="Morabaraba board">${g}</svg></div>${keyRow(c,handTxt(1),handTxt(2))}`;
+  host.innerHTML=`${steps(s,c,s.shoot?1:0,s.hand[s.turn]>0?'Place a cow':MB.flying(s,s.turn)?'Fly a cow':'Move a cow','Shoot, if you made a mill')}<div class="hg"><svg viewBox="0 0 500 500" role="group" aria-label="Morabaraba board">${g}</svg></div>${keyRow(c,handTxt(1),handTxt(2))}`;
   bindGo(host,o=>{ if(!c.human) return;
     if(o.k==='pick'){ if(s.shoot){ c.play({t:'shoot',at:o.i}); return; } mbSel=mbSel===o.i?-1:o.i; mbRender(host,s,c); return; }
     if(s.hand[s.turn]>0){ c.play({t:'place',to:o.i}); return; }
@@ -147,7 +153,7 @@ function chRender(host,s,c){ css(); if(chFor!==s){ chFor=s; chDie=null; }
     bar=`<span class="lbl">Dice</span>`+thrown.map(v=>{ const live=rem[v]>0; if(live) rem[v]--; return `<button type="button" class="hg-die${live?'':' used'}" data-die="${v}" aria-pressed="${me&&live&&chDie===v}" ${me&&live&&L.some(m=>m.v===v)?'':'disabled'}>${v}</button>`; }).join('');
     if(me&&!L.length) bar+=`<span class="hg-say">No die can be used. <button type="button" class="hg-act" data-hg="pass">Pass</button></span>`;
     else if(me) bar+=`<span class="hg-say">Pick a die, then a piece. A 1 or a 6 brings a piece in from the centre.</span>`; }
-  host.innerHTML=`<div class="hg"><svg viewBox="0 0 ${W} ${W}" role="group" aria-label="Chaupar board">${g}</svg></div><div class="hg-bar">${bar}</div>${keyRow(c,`${CH.homeCount(s,1)} of ${s.per*2} home`,`${CH.homeCount(s,2)} of ${s.per*2} home`)}`;
+  host.innerHTML=`${steps(s,c,s.phase==='throw'?0:1,'Throw the dice','Move a piece with each die')}<div class="hg"><svg viewBox="0 0 ${W} ${W}" role="group" aria-label="Chaupar board">${g}</svg></div><div class="hg-bar">${bar}</div>${keyRow(c,`${CH.homeCount(s,1)} of ${s.per*2} home`,`${CH.homeCount(s,2)} of ${s.per*2} home`)}`;
   bindGo(host,o=>{ if(!c.human) return; const m=moves.find(mm=>mm.pc===o.pc); if(m) c.play(m); });
   host.querySelectorAll('[data-die]').forEach(b=>b.onclick=()=>{ chDie=+b.dataset.die; chRender(host,s,c); });
   const th=host.querySelector('[data-hg="throw"]'); if(th) th.onclick=()=>c.play({t:'throw'});
@@ -200,7 +206,7 @@ function dpRender(host,s,c){ css(); if(dpFor!==s){ dpFor=s; dpSel=-1; }
   else { const nm=DP.NAMES[s.t], vb=DP.VERB[s.t];
     bar=`<span class="hg-say">${gr?`${gr.all?'Took the whole pile':'Grabbed'} <b>${gr.k} nuts</b>: ${gr.rem} left after counting by fours, so <b>${nm} ${vb}</b>.`:''} ${me?({4:'Walk a standing piece 4 (or lift a piece a stage if none stands).',3:'Stand up a risen piece, or walk a standing piece 3.',2:'Raise a lying piece, or walk a standing piece 2.',1:'Lay down one of your own pieces, or curse an enemy next to your standing piece.'}[s.t]):''}</span>`;
     if(me&&L.length===1&&L[0].t==='pass') bar+=`<button type="button" class="hg-act" data-hg="pass">Nothing to do: pass</button>`; }
-  host.innerHTML=`<div class="hg"><svg viewBox="0 0 ${W} ${W}" role="group" aria-label="Dasapada board, ten by ten">${g}</svg></div><div class="hg-bar">${bar}</div>${keyRow(c,`${s.home[1]} of ${DP.WIN} across`,`${s.home[2]} of ${DP.WIN} across`)}`;
+  host.innerHTML=`${steps(s,c,s.phase==='throw'?0:1,'Grab nuts, count by fours',s.phase==='throw'?'Lie, rise, stand or walk':`${DP.NAMES[s.t]} ${DP.VERB[s.t]}`)}<div class="hg"><svg viewBox="0 0 ${W} ${W}" role="group" aria-label="Dasapada board, ten by ten">${g}</svg></div><div class="hg-bar">${bar}</div>${keyRow(c,`${s.home[1]} of ${DP.WIN} across`,`${s.home[2]} of ${DP.WIN} across`)}`;
   bindGo(host,o=>{ if(!c.human) return;
     if(o.k==='walk'){ const m=walks[o.n]; if(m){ dpSel=-1; c.play(m); } return; }
     const ms=pickable.get(o.key)||[]; const nonWalk=ms.filter(m=>m.t!=='walk'), hasWalk=ms.some(m=>m.t==='walk');
@@ -257,7 +263,7 @@ function ptRender(host,s,c){ css(); if(ptFor!==s){ ptFor=s; ptBean=null; }
   else { const T=s.thrown||[]; bar=`<span class="lbl">Beans</span>`+T.map((u,k)=>{ const v=k+1, live=u&&up.includes(v); return `<button type="button" class="hg-die${!u?' used':''}" data-bean="${v}" aria-pressed="${me&&ptBean===v}" ${me&&live&&L.some(m=>m.v===v)?'':'disabled'} aria-label="bean ${v}${u?(live?', face up':', used'):', blank'}">${u?v:'·'}</button>`; }).join('');
     if(me&&!L.length) bar+=`<span class="hg-say">${up.length?'No bean can be used.':'All blank.'} <button type="button" class="hg-act" data-hg="pass">Pass</button></span>`;
     else if(me) bar+=`<span class="hg-say">Pick a bean, then a pebble, or the pebble waiting at the edge to bring it on.</span>`; }
-  host.innerHTML=`<div class="hg"><svg viewBox="0 0 ${W} ${W}" role="group" aria-label="Patolli mat">${g}</svg></div><div class="hg-bar">${bar}</div>${keyRow(c,`${s.done[1]} of ${PT.PEBBLES} round`,`${s.done[2]} of ${PT.PEBBLES} round`)}`;
+  host.innerHTML=`${steps(s,c,s.phase==='throw'?0:1,'Throw the beans','Move with each bean')}<div class="hg"><svg viewBox="0 0 ${W} ${W}" role="group" aria-label="Patolli mat">${g}</svg></div><div class="hg-bar">${bar}</div>${keyRow(c,`${s.done[1]} of ${PT.PEBBLES} round`,`${s.done[2]} of ${PT.PEBBLES} round`)}`;
   bindGo(host,o=>{ if(!c.human) return; const m=o.k==='enter'?moves.find(mm=>mm.t==='enter'):moves.find(mm=>mm.i===o.i&&mm.t!=='enter'); if(m) c.play(m); });
   host.querySelectorAll('[data-bean]').forEach(b=>b.onclick=()=>{ ptBean=+b.dataset.bean; ptRender(host,s,c); });
   const th=host.querySelector('[data-hg="throw"]'); if(th) th.onclick=()=>c.play({t:'throw'});
