@@ -61,7 +61,7 @@ const disc=(x,y,r,p,cls)=>`<circle class="${p===1?'p1':'p2'} ${cls||''}" cx="${x
 const sq=(x,y,r,p,cls)=>`<rect class="${p===1?'p1':'p2'} ${cls||''}" x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" rx="${r*.35}"/>`;
 function bindGo(host,fn){ host.querySelectorAll('[data-go]').forEach(el=>{ const act=()=>fn(JSON.parse(el.dataset.go)); el.addEventListener('click',act); el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(); } }); }); }
 /* the two steps of a turn, as a strip above the board (the same strip Pentago shows) */
-const steps=(s,c,cur,a,b)=>s.over?'':`<div class="hg-steps" aria-live="polite"><span>${c.opp==='2p'?(window.ZFName?ZFName(s.turn):'Player '+s.turn):(c.human?'You':'Computer')}</span><span class="st ${cur>0?'done':'cur'}">1 · ${a}</span><span class="st ${cur===1?'cur':''}">2 · ${b}</span></div>`;
+const steps=(s,c,cur,a,b)=>s.over?'':`<div class="hg-steps" aria-live="polite"><span>${c.demo?'You':c.opp==='2p'?(window.ZFName?ZFName(s.turn):'Player '+s.turn):(c.human?'You':'Computer')}</span><span class="st ${cur>0?'done':'cur'}">1 · ${a}</span><span class="st ${cur===1?'cur':''}">2 · ${b}</span></div>`;
 const goAttr=(o,label)=>`class="go" tabindex="0" role="button" aria-label="${label}" data-go='${JSON.stringify(o)}'`;
 /* a small live board on the entry screen: try one move with the real rules */
 function tryDemo(host,{init,render,note,after}){ ZF.injectCSS&&ZF.injectCSS(); css(); let st=init(), msg=note;
