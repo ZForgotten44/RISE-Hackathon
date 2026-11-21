@@ -49,20 +49,21 @@ function morabaraba(){ const P=(x,y)=>[56+x*24,34+y*24]; let g=T(128,14,'Three c
   g+=T(128,207,'Solid places its third cow…','zmc1')+T(128,207,'A mill: shoot one open cow','zmc2');
   return `<svg viewBox="0 0 256 216" class="ahm" role="img" aria-label="Morabaraba: solid places a third cow in a line, makes a mill and shoots an open cow off the board">${g}</svg>`; }
 
-/* Chaupar: the long dice roll 6 · 2 · 5, and a solid piece runs out of the centre down its arm */
-function chaupar(){ const C=10, X0=128-9.5*C, Y0=4; let g='';
-  const cell=(gx,gy,safe)=>`<rect x="${X0+gx*C+.7}" y="${Y0+gy*C+.7}" width="${C-1.4}" height="${C-1.4}" rx="1.6" fill="currentColor" fill-opacity="${safe?.36:.16}"/>`;
-  for(let gx=0;gx<19;gx++) for(let gy=0;gy<19;gy++){ const inV=gx>=8&&gx<=10, inH=gy>=8&&gy<=10; if(inV===inH) continue;
-    const arm=inV?(gy>10?gy-11:7-gy):(gx>10?gx-11:7-gx), side=inV?gx-8:gy-8; g+=cell(gx,gy,(arm===7&&side===1)||(arm===3&&side!==1)); }
-  const cx=X0+8*C; g+=`<rect x="${cx+.7}" y="${Y0+8*C+.7}" width="${3*C-1.4}" height="${3*C-1.4}" rx="4" fill="none" stroke="currentColor" stroke-opacity=".6" stroke-width="1.8"/>`;
-  const at=(gx,gy)=>[X0+gx*C+C/2,Y0+gy*C+C/2], sq=(x,y,r,f)=>`<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" rx="${r*.35}" ${f?'fill="currentColor"':'fill="var(--cbg,var(--bg))" stroke="currentColor" stroke-width="2.2"'}/>`;
-  const [px,py]=at(9,11); g+=`<g class="zcp" style="--dy:${6*C}px">${solid(px,py-C,4.4)}</g>`;
-  g+=sq(...at(9,4),4,true)+open(...at(14,9),4.6)+sq(...at(3,9),4,false)+open(...at(10,13),4.6);
-  /* the three long dice, in the empty corner */
-  [6,2,5].forEach((v,k)=>{ const x=186+k*20, y=140; g+=`<g class="zcd" style="--i:${k}"><rect x="${x}" y="${y}" width="15" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><text class="zcn" x="${x+7.5}" y="${y+25}" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor" font-family="var(--font-mono)">${v}</text></g>`; });
-  g+=T(128,208,'Throw the three long dice…','zcc1')+T(128,208,'The 6 brings a piece in, the 5 runs it','zcc2',12);
+/* Chaupar: close up on the centre and your own arm. The long dice roll 6 · 2 · 5, and a solid piece runs out of the centre */
+function chaupar(){ const C=18, cx=128, cy=51; let g='';
+  /* cells around the centre: (i, j) in cell units from the centre square's middle */
+  const cell=(i,j,safe)=>`<rect x="${cx+i*C-C/2+.8}" y="${cy+j*C-C/2+.8}" width="${C-1.6}" height="${C-1.6}" rx="2.4" fill="currentColor" fill-opacity="${safe?.38:.16}"/>`;
+  const mark=(i,j)=>{ const x=cx+i*C, y=cy+j*C; return `<path d="M${x-3.5} ${y-3.5}l7 7m0 -7l-7 7" stroke="currentColor" stroke-width="1.6" stroke-opacity=".8"/>`; };
+  for(let k=2;k<=7;k++) for(const s of [-1,0,1]){ const safe=(k===5&&s!==0); g+=cell(s,k,safe)+(safe?mark(s,k):''); }          // south arm: your own
+  for(let k=2;k<=2;k++) for(const s of [-1,0,1]) g+=cell(s,-k,false);                                                       // north arm, cut off
+  for(let k=2;k<=5;k++) for(const s of [-1,0,1]){ const safe=(k===5&&s!==0); g+=cell(k,s,safe)+cell(-k,s,safe)+(safe?mark(k,s)+mark(-k,s):''); }   // east and west
+  g+=`<rect x="${cx-1.5*C+1}" y="${cy-1.5*C+1}" width="${3*C-2}" height="${3*C-2}" rx="6" fill="none" stroke="currentColor" stroke-opacity=".65" stroke-width="2"/>`;
+  const sq=(x,y,r,f)=>`<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" rx="${r*.35}" ${f?'fill="currentColor"':'fill="var(--cbg,var(--bg))" stroke="currentColor" stroke-width="2.4"'}/>`;
+  g+=sq(cx-C*.55,cy-C*.55,5.4,true)+open(cx+C*.55,cy-C*.55,6.6)+sq(cx-C*.55,cy+C*.55,5.4,false);
+  g+=`<g class="zcp" style="--dy:${5*C}px">${solid(cx,cy+C,7.5)}</g>`+open(cx+C*4,cy,7.5)+open(cx-C,cy+C*4,7.5);
+  [6,2,5].forEach((v,k)=>{ const x=182+k*20, y=124; g+=`<g class="zcd" style="--i:${k}"><rect x="${x}" y="${y}" width="15" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><text class="zcn" x="${x+7.5}" y="${y+25}" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor" font-family="var(--font-mono)">${v}</text></g>`; });
+  g+=T(128,207,'Throw the three long dice…','zcc1')+T(128,207,'The 6 brings a piece in, the 5 runs it','zcc2',12);
   return `<svg viewBox="0 0 256 216" class="ahc" role="img" aria-label="Chaupar: the long dice roll six, two and five, and a solid piece runs out of the centre down its arm">${g}</svg>`; }
-
 /* Dasapada: a ten-row board; one piece lies, rises, stands, then walks up four rows */
 function dasapada(){ const C=15, X0=53, Y0=22; let g=T(128,14,'Count the nuts by fours','',12,700,true);
   for(let r=0;r<10;r++) for(let c=0;c<10;c++) g+=`<rect x="${X0+c*C+.7}" y="${Y0+r*C+.7}" width="${C-1.4}" height="${C-1.4}" rx="2.4" fill="currentColor" fill-opacity=".14"/>`;
@@ -77,16 +78,15 @@ function dasapada(){ const C=15, X0=53, Y0=22; let g=T(128,14,'Count the nuts by
   g+=T(128,206,'Every piece starts lying down','zdc0')+T(128,206,'2 left over: Dvāpara, it rises','zdc1')+T(128,206,'3 left over: Tretā, it stands','zdc2')+T(128,206,'None left over: Kṛta, it walks 4','zdc3');
   return `<svg viewBox="0 0 256 216" class="ahd" role="img" aria-label="Dasapada: a piece lies down, rises, stands, then walks four rows up the ten-row board">${g}</svg>`; }
 
-/* Patolli: six numbered beans turn over, and a pebble runs along the X-shaped mat */
-function patolli(){ const C=9, O=128-7*C, Y=90-7*C; let g=`<g transform="rotate(45 128 90)">`;
-  const cells=[]; for(let k=0;k<6;k++){ cells.push([6,8+k],[7,8+k],[6,5-k],[7,5-k],[8+k,6],[8+k,7],[5-k,6],[5-k,7]); } cells.push([6,6],[7,6],[6,7],[7,7]);
-  for(const [gx,gy] of cells){ const end=gx===0||gx===13||gy===0||gy===13; g+=`<rect x="${O+gx*C+.6}" y="${Y+gy*C+.6}" width="${C-1.2}" height="${C-1.2}" rx="${end?3.5:1.4}" fill="currentColor" fill-opacity="${end?.36:.16}"/>`; }
+/* Patolli: the X-shaped mat, close up, and six numbered beans turning over; a pebble runs along one arm */
+function patolli(){ const C=17, N=10, O=128-N*C/2, Y=98-N*C/2; let g=`<g transform="rotate(45 128 98)">`;
+  const cells=[]; for(let k=0;k<4;k++){ cells.push([4,6+k],[5,6+k],[4,3-k],[5,3-k],[6+k,4],[6+k,5],[3-k,4],[3-k,5]); } cells.push([4,4],[5,4],[4,5],[5,5]);
+  for(const [gx,gy] of cells){ const end=gx===0||gx===9||gy===0||gy===9; g+=`<rect x="${O+gx*C+.7}" y="${Y+gy*C+.7}" width="${C-1.4}" height="${C-1.4}" rx="${end?4.5:2}" fill="currentColor" fill-opacity="${end?.38:.16}"/>`; }
   const at=(gx,gy)=>[O+gx*C+C/2,Y+gy*C+C/2];
-  g+=solid(...at(6,11),4.2)+open(...at(7,2),4.4)+open(...at(2,6),4.4)+`<g class="zpgo" style="--dx:0px;--dy:${6*C}px">${solid(...at(7,6),4.2)}</g></g>`;
-  for(let k=0;k<6;k++){ const x=53+k*30, y=188, up=[1,3].includes(k);
-    g+=`<g style="--i:${k}"><g class="zpb"><ellipse cx="${x}" cy="${y}" rx="9" ry="11.5" fill="currentColor"/></g>${up?`<g class="zpf"><circle cx="${x}" cy="${y}" r="6" fill="var(--cbg,var(--bg))"/><text x="${x}" y="${y+3.6}" text-anchor="middle" font-size="10" font-weight="800" fill="currentColor" font-family="var(--font-mono)">${k+1}</text></g>`:''}</g>`; }
-  g+=T(128,14,'Throw six numbered beans…','zpc1',12,700,true)+T(128,14,'2 and 4 face up: two moves','zpc2',12,700,true);
-  g+=T(128,212,'Every bean is its own move','',12);
+  g+=open(...at(5,1),7.4)+open(...at(1,4),7.4)+solid(...at(8,5),6.6)+`<g class="zpgo" style="--dx:0px;--dy:${3*C}px">${solid(...at(4,5),6.6)}</g></g>`;
+  for(let k=0;k<6;k++){ const x=68+k*24, y=198, up=[1,3].includes(k);
+    g+=`<g style="--i:${k}"><g class="zpb"><ellipse cx="${x}" cy="${y}" rx="8.5" ry="11" fill="currentColor"/></g>${up?`<g class="zpf"><circle cx="${x}" cy="${y}" r="6" fill="var(--cbg,var(--bg))"/><text x="${x}" y="${y+3.6}" text-anchor="middle" font-size="10" font-weight="800" fill="currentColor" font-family="var(--font-mono)">${k+1}</text></g>`:''}</g>`; }
+  g+=T(128,13,'Throw six beans…','zpc1',12,700,true)+T(128,13,'2 and 4 up: two moves','zpc2',12,700,true);
   return `<svg viewBox="0 0 256 216" class="ahp" role="img" aria-label="Patolli: six numbered beans turn over, two land face up, and a pebble runs along the X-shaped mat">${g}</svg>`; }
 
 window.ZF_HERITAGE_ART={morabaraba,chaupar,dasapada,patolli};

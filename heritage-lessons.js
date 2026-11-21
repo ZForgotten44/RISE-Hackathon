@@ -6,12 +6,12 @@ const L=window.ZLessons, X=window.ZFX, H=window.ZF_HERITAGE; if(!L||!X||!H) retu
 const {MB,CH,DP,PT}=H;
 const $=(t,c)=>{ const e=document.createElement(t); if(c) e.className=c; return e; };
 /* in the drawer the duck's note does the explaining, so the board drops its own key and hint line and gets the room */
-try{ const st=document.createElement('style'); st.id='hg-ls-css'; st.textContent='#lsStage .hg-key,#lsStage .hg-bar .hg-say{display:none}#lsStage .ls-real{max-width:480px}#lsStage .hg{width:min(100%,480px)}#lsStage .hg .cell{fill:var(--g2);stroke:var(--g3)}#lsStage .hg .cell.safe{fill:var(--g3)}#lsStage .hg .mark{opacity:.8}#lsStage .hg svg[data-crop]{overflow:hidden;height:min(44vh,400px);width:auto;max-width:100%;margin:0 auto}#lsStage .hg-bar{margin-top:8px}'; document.head.appendChild(st); }catch(e){}
+try{ const st=document.createElement('style'); st.id='hg-ls-css'; st.textContent='#lsStage .hg-key,#lsStage .hg-bar .hg-say{display:none}#lsStage .ls-real{max-width:480px}#lsStage .hg{width:min(100%,480px)}#lsStage .hg .cell{fill:var(--g3);stroke:var(--g4)}#lsStage .hg .cell.safe{fill:var(--g4)}#lsStage .hg .mark{opacity:.8}#lsStage .hg svg[data-crop]{overflow:hidden;height:min(44vh,400px);width:auto;max-width:100%;margin:0 auto}#lsStage .hg-bar{margin-top:8px}'; document.head.appendChild(st); }catch(e){}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const deny=(el,a,msg)=>{ if(el){ el.classList.add('ls-no'); setTimeout(()=>el.classList.remove('ls-no'),420); } a.note(msg); if(window.ZS) ZS.play('tap'); };
 /* draw a practice state with the game's own renderer; play(m) gets every move the learner makes */
 const real=(id,h,st,play,extra)=>{ h.innerHTML=''; const box=$('div','ls-real'); h.appendChild(box);
-  const o=Object.assign({human:!st.over,humanIs:1,opp:'ai',opt:{},demo:true,play:play||(()=>{})},extra||{}); X.def(id).render(box,st,o);
+  const o=Object.assign({human:!st.over,humanIs:1,opp:'2p',opt:{},demo:true,play:play||(()=>{})},extra||{}); X.def(id).render(box,st,o);
   if(o.crop){ const svg=box.querySelector('.hg svg'); if(svg){ svg.setAttribute("viewBox",o.crop.join(" ")); svg.dataset.crop="1"; } } return box; };
 const SOUTH=[111,150,286,358];   // Chaupar: the centre and your own (south) arm, close up
 /* a tap on the board that is not on a highlighted piece or point */
